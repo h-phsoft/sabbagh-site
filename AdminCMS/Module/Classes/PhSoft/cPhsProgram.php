@@ -1,0 +1,350 @@
+<?php
+
+class cPhsProgram {
+
+  var $Id = -999;
+  var $PId = -999;
+  var $vPName = '';
+  var $nGrp = 127;
+  var $nStatus = 1;
+  var $vStatus = '';
+  var $nSystem = 0;
+  var $vSystem = '';
+  var $nType = 0;
+  var $vType = '';
+  var $Open = 0;
+  var $Order = 0;
+  var $Name;
+  var $Icon;
+  var $File;
+  var $CSS;
+  var $JS;
+  var $Attributes;
+  var $aSub = array();
+
+  public static function getSelectStatement($vWhere = '', $vOrder = '', $vLimit = '') {
+    $sSQL = 'SELECT `id`, `prog_id`, `grp_id`, `open`, `ord`,'
+      . ' `name`, `icon`, `file`, `css`, `js`, `attributes`,'
+      . ' `sys_id`, `sys_name`, `status_id`, `status_name`, `type_id`, `type_name`'
+      . ' FROM `phs_vprogram`';
+    if ($vWhere != '') {
+      $sSQL .= ' WHERE (' . $vWhere . ') ';
+    }
+    if ($vOrder != '') {
+      $sSQL .= ' ORDER BY ' . $vOrder;
+    }
+    if ($vLimit != '') {
+      $sSQL .= ' LIMIT ' . $vLimit;
+    }
+    return $sSQL;
+  }
+
+  public static function getCount($vWhere = '') {
+    $nCount = 0;
+    $sSQL = 'SELECT count(*) nCnt FROM `phs_vprogram`';
+    if ($vWhere != '') {
+      $sSQL .= ' WHERE (' . $vWhere . ') ';
+    }
+    $res = ph_Execute($sSQL);
+    if ($res != '' && !$res->EOF) {
+      $nCount = intval($res->fields("nCnt"));
+      $res->Close();
+    }
+    return $nCount;
+  }
+
+  public static function getArray($vWhere = '', $vSubWhere = '') {
+    $aArray = array();
+    $nIdx = 0;
+    if ($vWhere == '') {
+      $vWhere = '(`status_id`=1)';
+    } else {
+      $vWhere .= ' AND (`status_id`=1)';
+    }
+    $res = ph_Execute(cPhsProgram::getSelectStatement($vWhere, '`sys_id`, `prog_id`, `ord`'));
+    if ($res != '') {
+      while (!$res->EOF) {
+        $aArray[$nIdx] = cPhsProgram::getFields($res, $vSubWhere);
+        $nIdx++;
+        $res->MoveNext();
+      }
+      $res->Close();
+    }
+    return $aArray;
+  }
+
+  public static function getInstance($nId) {
+    $cClass = new cPhsProgram();
+    $res = ph_Execute(cPhsProgram::getSelectStatement('(`id`="' . $nId . '")'));
+    if ($res != '') {
+      if (!$res->EOF) {
+        $cClass = cPhsProgram::getFields($res);
+      }
+      $res->Close();
+    }
+    return $cClass;
+  }
+
+  public static function getInstanceByFile($vFile) {
+    $cClass = new cPhsProgram();
+    if ($vFile != '' && $vFile != null) {
+      $res = ph_Execute(cPhsProgram::getSelectStatement('(`file`="' . $vFile . '")'));
+      if ($res != '') {
+        if (!$res->EOF) {
+          $cClass = cPhsProgram::getFields($res);
+        }
+        $res->Close();
+      }
+    }
+    return $cClass;
+  }
+
+  public static function getUserGroupMenu($nGrp, $nParent = 1) {
+    $aArray = array();
+    $vWhere = '(`prog_id`="' . $nParent . '"';
+    if ($nGrp > 0) {
+      $vWhere .= ' AND `id` IN (SELECT `prog_id` FROM `cpy_perm` AS `pr` WHERE `pr`.`type_id`="' . $nGrp . '" AND `isok`=1)';
+    }
+    $vWhere .= ')';
+    $res = ph_Execute(cPhsProgram::getSelectStatement($vWhere, '`ord`'));
+    if ($res != '') {
+      $nIdx = 0;
+      while (!$res->EOF) {
+        $cClass = new cPhsProgram();
+        $cClass->Id = intval($res->fields("id"));
+        $cClass->PId = intval($res->fields("prog_id"));
+        $cClass->vPName = ph_GetDBValue('name', 'phs_program', 'id=' . intval($res->fields("prog_id")));
+        $cClass->nGrp = intval($res->fields("grp_id"));
+        $cClass->nType = intval($res->fields("type_id"));
+        $cClass->vType = $res->fields("type_name");
+        $cClass->Name = $res->fields("name");
+        $cClass->Open = intval($res->fields("open"));
+        $cClass->Order = intval($res->fields("ord"));
+        $cClass->Icon = $res->fields("icon");
+        $cClass->File = $res->fields("file");
+        $cClass->CSS = $res->fields("css");
+        $cClass->JS = $res->fields("js");
+        $cClass->Attributes = $res->fields("attributes");
+        $cClass->aSub = cPhsProgram::getUserGroupMenu($nGrp, $cClass->Id);
+        $aArray[$nIdx] = $cClass;
+        $nIdx++;
+        $res->MoveNext();
+      }
+      $res->Close();
+    }
+    return $aArray;
+  }
+
+  public static function getFields($res, $vSubWhere = '') {
+    $cClass = new cPhsProgram();
+    $cClass->Id = intval($res->fields("id"));
+    $cClass->PId = intval($res->fields("prog_id"));
+    $cClass->vPName = ph_GetDBValue('name', 'phs_program', 'id=' . intval($res->fields("prog_id")));
+    $cClass->nGrp = intval($res->fields("grp_id"));
+    $cClass->nSystem = intval($res->fields("sys_id"));
+    $cClass->vSystem = $res->fields("sys_name");
+    $cClass->nStatus = intval($res->fields("status_id"));
+    $cClass->vStatus = intval($res->fields("status_name"));
+    $cClass->Open = intval($res->fields("open"));
+    $cClass->nType = intval($res->fields("type_id"));
+    $cClass->vType = $res->fields("type_name");
+    $cClass->Name = $res->fields("name");
+    $cClass->Order = intval($res->fields("ord"));
+    $cClass->Icon = $res->fields("icon");
+    $cClass->File = $res->fields("file");
+    $cClass->CSS = $res->fields("css");
+    $cClass->JS = $res->fields("js");
+    $cClass->Attributes = $res->fields("attributes");
+    $vWhere = '(`prog_id`="' . $cClass->Id . '")';
+    if ($vSubWhere != '') {
+      $vWhere .= ' AND ' . $vSubWhere;
+    }
+    $cClass->aSub = cPhsProgram::getArray($vWhere, $vSubWhere);
+    return $cClass;
+  }
+
+  public static function getTopButtons($vCopyURL, $aMenu) {
+    $vHtmlMenu = '';
+    if (count($aMenu) > 0) {
+      foreach ($aMenu as $menu) {
+        $vHtmlMenu .= '<div class="topbar-item">';
+        $vHtmlMenu .= '  <div id="' . $menu->Id . '" class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-4" data-toggle="tooltip" title="' . getLabel($menu->Name) . '">';
+        $vHtmlMenu .= '    <span class="text-dark-50 font-weight-bolder font-size-base topbar-item-link" data-id="' . $menu->Id . '" data-file="' . $vCopyURL . '/' . $menu->File . '" ' . $menu->Attributes . '>';
+        $vHtmlMenu .= '      <i class="icon-lg ' . $menu->Icon . '"></i>';
+        $vHtmlMenu .= '    </span>';
+        $vHtmlMenu .= '  </div>';
+        $vHtmlMenu .= '</div>';
+      }
+    }
+    return $vHtmlMenu;
+  }
+
+  public static function getUserMenu($vCopyURL, $aMenu) {
+    $vHtmlMenu = '';
+    if (count($aMenu) > 0) {
+      foreach ($aMenu as $menu) {
+        if (count($menu->aSub) <= 0) {
+          if ($menu->nType === 4) {
+            $vHtmlMenu .= '<div class="topbar-item">';
+            $vHtmlMenu .= '  <div id="' . $menu->Id . '" class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-4" data-toggle="tooltip" title="' . getLabel($menu->Name) . '">';
+            $vHtmlMenu .= '    <span class="text-dark-50 font-weight-bolder font-size-base topbar-item-link" data-id="' . $menu->Id . '" data-file="' . $vCopyURL . '/' . $menu->File . '" ' . $menu->Attributes . '>';
+            $vHtmlMenu .= '      <i class="icon-lg ' . $menu->Icon . '"></i>';
+            $vHtmlMenu .= '    </span>';
+            $vHtmlMenu .= '  </div>';
+            $vHtmlMenu .= '</div>';
+          } else if ($menu->nType === 5) {
+            $vHtmlMenu .= '<li class="navi-item">';
+            $vHtmlMenu .= '  <a href="javascipt:;" class="navi-link">';
+            $vHtmlMenu .= '    <i class="icon-lg ' . $menu->Icon . '"></i>';
+            $vHtmlMenu .= '    <span class="menu-text" ' . $menu->Attributes . '>&nbsp;&nbsp;&nbsp;' . getLabel($menu->Name) . '</span>';
+            $vHtmlMenu .= '  </a>';
+            $vHtmlMenu .= '</li>';
+          } else {
+            $vHtmlMenu .= '<li class="navi-item">';
+            $vHtmlMenu .= '  <a href="' . $vCopyURL . '/' . $menu->File . '" class="navi-link">';
+            $vHtmlMenu .= '    <i class="icon-lg ' . $menu->Icon . '"></i>';
+            $vHtmlMenu .= '    <span class="menu-text">&nbsp;&nbsp;&nbsp;' . getLabel($menu->Name) . '</span>';
+            $vHtmlMenu .= '  </a>';
+            $vHtmlMenu .= '</li>';
+          }
+        } else if (count($menu->aSub) > 0) {
+          $vHtmlMenu .= '<li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">';
+          $vHtmlMenu .= '  <a href="javascript:;" class="menu-link menu-toggle">';
+          $vHtmlMenu .= '    <span class="menu-text">' . getLabel($menu->Name) . '</span>';
+          $vHtmlMenu .= '    <span class="menu-desc"></span>';
+          $vHtmlMenu .= '    <i class="menu-arrow"></i>';
+          $vHtmlMenu .= '  </a>';
+          $vHtmlMenu .= '  <div class="menu-submenu menu-submenu-classic menu-submenu-left py-0">';
+          $vHtmlMenu .= '    <ul class="menu-subnav">';
+          $vHtmlMenu .= '      ' . cPhsProgram::getUserMenu($vCopyURL, $menu->aSub);
+          $vHtmlMenu .= '    </ul>';
+          $vHtmlMenu .= '  </div>';
+          $vHtmlMenu .= '</li>';
+        }
+      }
+    }
+    return $vHtmlMenu;
+  }
+
+  public static function getTopMenu($vCopyURL, $aMenu) {
+    $vHtmlMenu = '';
+    if (count($aMenu) > 0) {
+      foreach ($aMenu as $menu) {
+        if (count($menu->aSub) <= 0) {
+          if ($menu->nType === 4) {
+            $vHtmlMenu .= '<div class="topbar-item">';
+            $vHtmlMenu .= '  <div id="' . $menu->Id . '" class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-4" data-toggle="tooltip" title="' . getLabel($menu->Name) . '">';
+            $vHtmlMenu .= '    <span class="text-dark-50 font-weight-bolder font-size-base topbar-item-link" data-id="' . $menu->Id . '" data-file="' . $vCopyURL . '/' . $menu->File . '" ' . $menu->Attributes . '>';
+            $vHtmlMenu .= '      <i class="icon-lg ' . $menu->Icon . '"></i>';
+            $vHtmlMenu .= '    </span>';
+            $vHtmlMenu .= '  </div>';
+            $vHtmlMenu .= '</div>';
+          } else {
+            $vHtmlMenu .= '<li class="menu-item" aria-haspopup="true">';
+            $vHtmlMenu .= '  <a href="' . $vCopyURL . '/' . $menu->File . '" class="menu-link">';
+            $vHtmlMenu .= '    <span class="menu-text">' . getLabel($menu->Name) . '</span>';
+            $vHtmlMenu .= '  </a>';
+            $vHtmlMenu .= '</li>';
+          }
+        } else if (count($menu->aSub) > 0) {
+          $vHtmlMenu .= '<li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">';
+          $vHtmlMenu .= '  <a href="javascript:;" class="menu-link menu-toggle">';
+          $vHtmlMenu .= '    <span class="menu-text">' . getLabel($menu->Name) . '</span>';
+          $vHtmlMenu .= '    <span class="menu-desc"></span>';
+          $vHtmlMenu .= '    <i class="menu-arrow"></i>';
+          $vHtmlMenu .= '  </a>';
+          $vHtmlMenu .= '  <div class="menu-submenu menu-submenu-classic menu-submenu-left py-0">';
+          $vHtmlMenu .= '    <ul class="menu-subnav">';
+          $vHtmlMenu .= '      ' . cPhsProgram::getTopMenu($vCopyURL, $menu->aSub);
+          $vHtmlMenu .= '    </ul>';
+          $vHtmlMenu .= '  </div>';
+          $vHtmlMenu .= '</li>';
+        }
+      }
+    }
+    return $vHtmlMenu;
+  }
+
+  public static function getASideMenu($aMenu, $oUser, $vReqId) {
+    $vHtmlMenu = '';
+    if (count($aMenu) > 0) {
+      foreach ($aMenu as $menu) {
+        if (count($menu->aSub) > 0) {
+          $vCollapsed = 'collapsed';
+          $vCollapse = 'collapse';
+          $vParent = '';
+          if (substr(strval($vReqId), 0, strlen(strval($menu->Id))) === strval($menu->Id)) {
+            $vParent = 'active';
+            $vCollapsed = '';
+            $vCollapse = '';
+          }
+          $vHtmlMenu .= '<li class="nav-item">';
+          $vHtmlMenu .= '  <a class="nav-link d-flex align-items-center justify-content-between ' . $vCollapsed . ' ' . $vParent . '" data-bs-target="#PhsProg-' . $menu->Id . '" data-bs-toggle="collapse" href="#">';
+          $vHtmlMenu .= '    <span>';
+          $vHtmlMenu .= '      <i class="' . $menu->Icon . '"></i>';
+          $vHtmlMenu .= '      <span>' . getLabel($menu->Name) . '</span>';
+          $vHtmlMenu .= '    </span>';
+          $vHtmlMenu .= '    <i class="bi bi-chevron-down"></i>';
+          $vHtmlMenu .= '  </a>';
+          $vHtmlMenu .= '  <ul id="PhsProg-' . $menu->Id . '" class="nav-content ' . $vCollapse . '">';
+          $vHtmlMenu .= '    ' . cPhsProgram::getASideMenu($menu->aSub, $oUser, $vReqId);
+          $vHtmlMenu .= '  </ul>';
+          $vHtmlMenu .= '</li>';
+        } else {
+          $activ = '';
+          if (intval($vReqId) === intval($menu->Id)) {
+            $activ = 'active';
+          }
+          $vHtmlMenu .= '<li class="nav-item">';
+          $vHtmlMenu .= '  <a class="nav-link ' . $activ . '" href="' . $menu->File . '">';
+          $vHtmlMenu .= '    <i class="' . $menu->Icon . '"></i>';
+          $vHtmlMenu .= '    <span>' . getLabel($menu->Name) . '</span>';
+          $vHtmlMenu .= '  </a>';
+          $vHtmlMenu .= '</li>';
+        }
+      }
+    }
+    return $vHtmlMenu;
+  }
+
+  public static function getSideMenu($aMenu, $oUser, $vReqId) {
+    $vHtmlMenu = '';
+    if (count($aMenu) > 0) {
+      foreach ($aMenu as $menu) {
+        if (count($menu->aSub) > 0) {
+          $vParent = '';
+          if (substr(strval($vReqId), 0, strlen(strval($menu->Id))) === strval($menu->Id)) {
+            $vParent = 'active';
+          }
+          $vHtmlMenu .= '<li class="menu-item has-submenu ' . $vParent . '">';
+          $vHtmlMenu .= '  <a class="menu-link" href="' . $menu->File . '">';
+          $vHtmlMenu .= '    <i class="icon material-icons ' . $menu->Icon . '"></i>';
+          $vHtmlMenu .= '    <span class="text">' . getLabel($menu->Name) . '</span>';
+          $vHtmlMenu .= '  </a>';
+          $vHtmlMenu .= '  <div class="submenu">';
+          foreach ($menu->aSub as $smenu) {
+            $sactiv = '';
+            if (intval($vReqId) === intval($smenu->Id)) {
+              $sactiv = 'active';
+            }
+            $vHtmlMenu .= '  <a class="' . $sactiv . '" href="' . $smenu->File . '"><i class="icon material-icons ' . $smenu->Icon . '"></i>' . getLabel($smenu->Name) . '</a>';
+          }
+          $vHtmlMenu .= '  </div>';
+          $vHtmlMenu .= '</li>';
+        } else {
+          $activ = '';
+          if (intval($vReqId) === intval($menu->Id)) {
+            $activ = 'active';
+          }
+          $vHtmlMenu .= '<li class="menu-item ' . $activ . '">';
+          $vHtmlMenu .= '  <a class="menu-link" href="' . $menu->File . '">';
+          $vHtmlMenu .= '    <i class="icon material-icons ' . $menu->Icon . '"></i>';
+          $vHtmlMenu .= '    <span class="text">' . getLabel($menu->Name) . '</span>';
+          $vHtmlMenu .= '  </a>';
+          $vHtmlMenu .= '</li>';
+        }
+      }
+    }
+    return $vHtmlMenu;
+  }
+}

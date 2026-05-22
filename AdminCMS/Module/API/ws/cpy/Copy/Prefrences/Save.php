@@ -1,0 +1,27 @@
+<?php
+
+if (isset($oRest)) {
+
+  $nId = intval($oRest->getParameter('nId'));
+  if (($nId == 0 && $oUser->oGrp->getPermission($oRest->getHeaderParameter('progId'))->Insert) ||
+    ($nId > 0 && $oUser->oGrp->getPermission($oRest->getHeaderParameter('progId'))->Update)) {
+
+    $oInstance = cCpyPref::getInstanceById($nId);
+    $oInstance->Id = $nId;
+    $oInstance->Key = $oRest->getParameter('vKey');
+    $oInstance->Name = $oRest->getParameter('vName');
+    $oInstance->Value = $oRest->getParameter('vValue');
+    $oInstance->Rem = $oRest->getParameter('vRem');
+    $bIsAllOk = true;
+    try {
+      $oRest->setMessage(getLabel('lbl.cms.Master Not Saved'));
+      $nSavedId = $oInstance->save($oUser->Id);
+      $oRest->setStatus(true);
+      $oRest->setMessage('Done');
+      $oRest->addRowDataValue('Id', $nSavedId);
+    } catch (Exception $exc) {
+      $oRest->setStatus(false);
+      $oRest->setMessage($exc->getMessage());
+    }
+  }
+}
