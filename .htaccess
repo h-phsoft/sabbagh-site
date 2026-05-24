@@ -1,3 +1,5 @@
+SetEnv IS_ONLINE false
+
 # Disable Directory Browsing
 Options All -Indexes
 

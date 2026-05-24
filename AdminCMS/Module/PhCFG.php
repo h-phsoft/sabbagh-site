@@ -2,8 +2,10 @@
 
 define("PHS_VERSION", '1.5.2214');
 
-define("PHS_ISONLINE", FALSE);
-if (PHS_ISONLINE) {
+// get Environment Valiable from htaccess
+define("PHS_IS_ONLINE", getenv('IS_ONLINE') === 'true');
+
+if (PHS_IS_ONLINE) {
   define("PH_CONN_HOST", 'localhost');
   define("PH_CONN_PORT", 3306);
   define("PH_CONN_USER", 'root');
