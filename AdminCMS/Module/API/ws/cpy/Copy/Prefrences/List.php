@@ -70,7 +70,7 @@ if (isset($oRest)) {
     }
     $oRest->setRowData(array(
       'Status' => true,
-      'Message' => getLabel('lbl.cms.Done'),
+      'Message' => getLabel('Done'),
       'Data' => array(
         'last_page' => $nPages,
         'data' => $aData

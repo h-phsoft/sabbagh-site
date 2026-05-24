@@ -1,13 +1,16 @@
-<footer class="main-footer font-xs">
-    <div class="row pt-15">
-        <div class="col-sm-6">
-            <script>
-                2025;
-            </script>
-            &copy; PhSoft Team
-        </div>
-        <div class="col-sm-6">
-            <div class="text-sm-end">All rights reserved</div>
-        </div>
+<!-- ======= Footer ======= -->
+<div class="footer">
+  <div class="container-fluid">
+    <div class="row py-0">
+      <div class="col-12 col-sm-4 py-0 d-flex align-items-center justify-content-start">
+        <?php echo getLabel("Powered By") ?> <a href="https://www.phsoft.me" target="_BLANK">PhSoft Team</a>
+      </div>
+      <div class="col-12 col-sm-4 py-0 d-flex align-items-center justify-content-center">
+        <?php echo getLabel("All Rights Reserved") . " " . Date('Y') ?><strong>&copy;</strong>
+      </div>
+      <div class="col-12 col-sm-4 py-0 d-flex align-items-center justify-content-end">
+        <?php echo PHS_VERSION ?>
+      </div>
     </div>
-</footer>
+  </div>
+</div><!-- End Footer -->

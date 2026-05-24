@@ -2,7 +2,7 @@
 
 if (isset($oRest)) {
 
-  $oRest->setMessage(getLabel('lbl.cms.Error Declared Device'));
+  $oRest->setMessage(getLabel('Error Declared Device'));
   $oRCopy = cPhsCpy::getInstanceByGId($oRest->getParameter('vCId'));
   if ($oRCopy->GId == $oCopy->GId) {
     $oDevice = cCpyDevice::getInstanceByGId($oRest->getParameter('vDId'));

@@ -25,14 +25,14 @@ class cCpyUser {
   var $Logon;
   var $Password;
   var $Image;
-  var $GUID = '';
   //
   var $oGrp;
+  var $oBranch;
   var $oStatus;
   var $oGender;
 
   public static function getSelectStatement($vWhere = '', $vOrder = '', $vLimit = '') {
-    $sSQL = 'SELECT `id`, `grp_id`, `status_id`, `gender_id`, `name`, `logon`, `password`, `image`'
+    $sSQL = 'SELECT `id`, `bran_id`, `bran_name`, `grp_id`, `status_id`, `gender_id`, `name`, `logon`, `password`, `image`'
       . ' FROM `cpy_vuser`';
     if ($vWhere != '') {
       $sSQL .= ' WHERE (' . $vWhere . ') ';
@@ -125,6 +125,7 @@ class cCpyUser {
   public static function getFields($res) {
     $cClass = new cCpyUser();
     $cClass->Id = intval($res->fields('id'));
+    $cClass->BranId = intval($res->fields('bran_id'));
     $cClass->GrpId = intval($res->fields('grp_id'));
     $cClass->StatusId = intval($res->fields('status_id'));
     $cClass->GenderId = intval($res->fields('gender_id'));
@@ -134,6 +135,7 @@ class cCpyUser {
     $cClass->Image = $res->fields('image');
     //
     $cClass->oGrp = cCpyPGrp::getInstance($cClass->GrpId);
+    $cClass->oBranch = cCpyBranch::getInstance($cClass->BranId);
     $cClass->oStatus = cPhsCode::getInstance(cPhsCode::STATUS, $cClass->StatusId);
     $cClass->oGender = cPhsCode::getInstance(cPhsCode::GENDER, $cClass->GenderId);
     return $cClass;
@@ -164,11 +166,12 @@ class cCpyUser {
     $nId = 0;
     if ($this->Id == 0 || $this->Id == -999) {
       $vSQL = 'INSERT INTO `cpy_user` ('
-        . '  `grp_id`, `status_id`, `gender_id`, `name`, `logon`'
+        . '  `grp_id`, `status_id`, `gender_id`, `bran_id`, `name`, `logon`'
         . ') VALUES ('
         . '  "' . $this->GrpId . '"'
         . ', "' . $this->StatusId . '"'
         . ', "' . $this->GenderId . '"'
+        . ', "' . $this->BranId . '"'
         . ', "' . $this->Name . '"'
         . ', "' . $this->Logon . '"'
         . ')';
@@ -186,6 +189,7 @@ class cCpyUser {
         . '  `grp_id`="' . $this->GrpId . '"'
         . ', `status_id`="' . $this->StatusId . '"'
         . ', `gender_id`="' . $this->GenderId . '"'
+        . ', `bran_id`="' . $this->BranId . '"'
         . ', `name`="' . $this->Name . '"'
         . ', `logon`="' . $this->Logon . '"'
         . ' WHERE `id`="' . $this->Id . '"';

@@ -29,66 +29,32 @@ jQuery(document).ready(function () {
     }
   };
 
-  if (PhSettings.Perms.Insert) {
-    $('#ph-new').on('click', function () {
-      doNew();
-    });
-  }
+  $('#ph-new').on('click', function () {
+    doNew();
+  });
 
-  if (PhSettings.Perms.Update) {
-    $('#ph-edit').on('click', function () {
-      doEdit();
-    });
-  }
+  $('#ph-edit').on('click', function () {
+    doEdit();
+  });
 
-  if (PhSettings.Perms.Delete) {
-    $('#ph-delete').on('click', function () {
-      doDelete($('#lstPGrp').val());
-    });
-  }
+  $('#ph-delete').on('click', function () {
+    doDelete($('#lstPGrp').val());
+  });
 
-  if (PhSettings.Perms.Query) {
-    $('#lstPGrp').on('change', function () {
-      getPGrp($('#lstPGrp').val());
-    });
-  }
+  $('#lstPGrp').on('change', function () {
+    getPGrp($('#lstPGrp').val());
+  });
 
-  if (PhSettings.Perms.Insert || PhSettings.Perms.Update) {
-    $('#ph-submit').on('click', function () {
-      var $btn = $(this);
-      $btn.attr('disabled', true);
-      $btn.find('.spinner-border').removeClass('d-none');
-      setTimeout(function () {
-        $.when(doSave())
-          .always(function () {
-            $btn.attr('disabled', false);
-            $btn.find('.spinner-border').addClass('d-none');
-          });
-      }, 1);
-    });
-  }
+  $('#ph-submit').on('click', function () {
+    doSave();
+  });
 
-  if (PhSettings.Perms.Insert || PhSettings.Perms.Update) {
-    $('#ph-save').on('click', function () {
-      var $btn = $(this);
-      $btn.attr('disabled', true);
-      $btn.find('.spinner-border').removeClass('d-none');
-      setTimeout(function () {
-        $.when(doUpdatePermissions())
-          .always(function () {
-            $btn.attr('disabled', false);
-            $btn.find('.spinner-border').addClass('d-none');
-          });
-      }, 1);
-    });
-  }
+  $('#ph-save').on('click', function () {
+    doUpdatePermissions();
+  });
 
-  if (PhSettings.Perms.Insert || PhSettings.Perms.Update) {
-    initForm();
-  }
-  if (PhSettings.Perms.Query) {
-    getPGrps();
-  }
+  initForm();
+  getPGrps();
 });
 
 function getPGrps() {
@@ -112,31 +78,42 @@ function getPGrps() {
 
 function initForm() {
   let options = `<option value="-1" selected>----------</option>
-                       <option value="1">${getLabel('lbl.cms.Grant')}</option>
-                       <option value="0">${getLabel('lbl.cms.Ban')}</option>
-                       <option value="2">${getLabel('lbl.cms.Invert')}</option>`;
+                       <option value="1">${getLabel('Grant')}</option>
+                       <option value="0">${getLabel('Ban')}</option>
+                       <option value="2">${getLabel('Invert')}</option>`;
   let vHtml = '';
   vHtml += `<table id="permsTable" class="table table-striped table-bordered">
                     <thead>
                       <tr>
                         <th class="text-center"><select data-rel='Isok' class="change-perm form-control text-center">${options}</select></th>
-                        <th class="text-center" style="width: 50%;"></th>
+                        <th class="text-center"></th>
                         <th class="text-center"><select data-rel="Qry" class="change-perm form-control text-center">${options}</select></th>
                         <th class="text-center"><select data-rel="Ins" class="change-perm form-control text-center">${options}</select></th>
                         <th class="text-center"><select data-rel="Upd" class="change-perm form-control text-center">${options}</select></th>
                         <th class="text-center"><select data-rel="Del" class="change-perm form-control text-center">${options}</select></th>
+                        <th class="text-center"><select data-rel="Prt" class="change-perm form-control text-center">${options}</select></th>
+                        <th class="text-center"><select data-rel="Imp" class="change-perm form-control text-center">${options}</select></th>
+                        <th class="text-center"><select data-rel="Exp" class="change-perm form-control text-center">${options}</select></th>
+                        <th class="text-center"><select data-rel="Cmt" class="change-perm form-control text-center">${options}</select></th>
+                        <th class="text-center"><select data-rel="Rvk" class="change-perm form-control text-center">${options}</select></th>
+                        <th class="text-center"><select data-rel="Spc" class="change-perm form-control text-center">${options}</select></th>
                       </tr>
                       <tr>
                         <th class="text-center"></th>
-                        <th class="text-center" style="width: 50%;">${getLabel("lbl.cms.Name")}</th>
-                        <th class="text-center">${getLabel("lbl.cms.Query")}</th>
-                        <th class="text-center">${getLabel("lbl.cms.Insert")}</th>
-                        <th class="text-center">${getLabel("lbl.cms.Update")}</th>
-                        <th class="text-center">${getLabel("lbl.cms.Delete")}</th>
+                        <th class="text-center" style="width: 20%;">${getLabel("Name")}</th>
+                        <th class="text-center">${getLabel("Query")}</th>
+                        <th class="text-center">${getLabel("Insert")}</th>
+                        <th class="text-center">${getLabel("Update")}</th>
+                        <th class="text-center">${getLabel("Delete")}</th>
+                        <th class="text-center">${getLabel("Print")}</th>
+                        <th class="text-center">${getLabel("Import")}</th>
+                        <th class="text-center">${getLabel("Export")}</th>
+                        <th class="text-center">${getLabel("Commit")}</th>
+                        <th class="text-center">${getLabel("Revoke")}</th>
+                        <th class="text-center">${getLabel("Special")}</th>
                       </tr>
                     </thead>
                     <tbody>`;
-
   vHtml += `  </tbody>
             </table>`;
   $('#resultData').html(vHtml);
@@ -198,6 +175,7 @@ function drawPerms() {
   let vHtml = ``;
   for (var i = 0; i < aPerms.length; i++) {
     let perm = aPerms[i];
+    console.log(perm.oProg.vPName, getLabel(perm.oProg.vPName));
     vHtml += `<tr>
                 <th class="text-center"><input class="rowChange" data-idx="${i}" data-rel="Isok" type="checkbox" ${perm.Isok === 1 ? 'checked' : ''}/></th>
                 <th class="text-center">${getLabel(perm.oProg.vPName)}-${getLabel(perm.oProg.Name)}</th>
@@ -205,6 +183,12 @@ function drawPerms() {
                 <th class="text-center"><input class="rowChange" type="checkbox" data-idx="${i}" data-rel="Ins" ${perm.Ins === 1 ? 'checked' : ''}/></th>
                 <th class="text-center"><input class="rowChange" type="checkbox" data-idx="${i}" data-rel="Upd" ${perm.Upd === 1 ? 'checked' : ''}/></th>
                 <th class="text-center"><input class="rowChange" type="checkbox" data-idx="${i}" data-rel="Del" ${perm.Del === 1 ? 'checked' : ''}/></th>
+                <th class="text-center"><input class="rowChange" type="checkbox" data-idx="${i}" data-rel="Prt" ${perm.Prt === 1 ? 'checked' : ''}/></th>
+                <th class="text-center"><input class="rowChange" type="checkbox" data-idx="${i}" data-rel="Imp" ${perm.Imp === 1 ? 'checked' : ''}/></th>
+                <th class="text-center"><input class="rowChange" type="checkbox" data-idx="${i}" data-rel="Exp" ${perm.Exp === 1 ? 'checked' : ''}/></th>
+                <th class="text-center"><input class="rowChange" type="checkbox" data-idx="${i}" data-rel="Cmt" ${perm.Cmt === 1 ? 'checked' : ''}/></th>
+                <th class="text-center"><input class="rowChange" type="checkbox" data-idx="${i}" data-rel="Rvk" ${perm.Rvk === 1 ? 'checked' : ''}/></th>
+                <th class="text-center"><input class="rowChange" type="checkbox" data-idx="${i}" data-rel="Spc" ${perm.Spc === 1 ? 'checked' : ''}/></th>
               </tr>`;
   }
   $('#permsTable tbody').html(vHtml);
@@ -245,13 +229,13 @@ function doUpdatePermissions() {
     },
     success: function (response) {
       if (response.Status) {
-        showToast(getLabel('lbl.cms.Save'), 'INFO', response.Message);
+        showToast(getLabel('Save'), 'INFO', response.Message);
       } else {
-        showToast(getLabel('lbl.cms.Save'), 'WARNING', response.Message);
+        showToast(getLabel('Save'), 'WARNING', response.Message);
       }
     },
     error: function (response) {
-      showToast(getLabel('lbl.cms.Error'), 'DANGER', response.Message);
+      showToast(getLabel('Error'), 'DANGER', response.Message);
     }
   });
 }
@@ -270,7 +254,7 @@ function doSave() {
     },
     success: function (response) {
       if (response.Status) {
-        showToast(getLabel('lbl.cms.Save'), 'INFO', response.Message);
+        showToast(getLabel('Save'), 'INFO', response.Message);
         if (parseInt(response.Id) > 0) {
           getPGrps();
           $('#ph_Modal').modal('hide');
@@ -278,11 +262,11 @@ function doSave() {
           getPGrp(response.Id);
         }
       } else {
-        showToast(getLabel('lbl.cms.Save'), 'WARNING', response.Message);
+        showToast(getLabel('Save'), 'WARNING', response.Message);
       }
     },
     error: function (response) {
-      showToast(getLabel('lbl.cms.Error'), 'DANGER', response.Message);
+      showToast(getLabel('Error'), 'DANGER', response.Message);
     }
   });
 }
@@ -290,11 +274,11 @@ function doSave() {
 function doDelete(nId) {
   if (nId > 0) {
     swal.fire({
-      title: getLabel('lbl.cms.Delete'),
-      text: getLabel('lbl.cms.Are you sure ?'),
+      title: getLabel('Delete'),
+      text: getLabel('Are you sure ?'),
       showCancelButton: true,
-      confirmButtonText: "<i class='bi bi-check-lg'></i> " + getLabel('lbl.cms.Yes'),
-      cancelButtonText: "<i class='bi bi-x-lg'></i> " + getLabel('lbl.cms.No')
+      confirmButtonText: "<i class='bi bi-check-lg'></i> " + getLabel('Yes'),
+      cancelButtonText: "<i class='bi bi-x-lg'></i> " + getLabel('No')
     }).then(function (result) {
       if (result.value) {
         $.ajax({
@@ -307,13 +291,13 @@ function doDelete(nId) {
           },
           success: function (response) {
             if (response.Status) {
-              showToast(getLabel('lbl.cms.Delete'), 'SUCCESS', response.Message);
+              showToast(getLabel('Delete'), 'SUCCESS', response.Message);
               getPGrps();
             } else {
               swal.fire({
-                title: getLabel('lbl.cms.Delete'),
+                title: getLabel('Delete'),
                 text: response.Message,
-                confirmButtonText: "<i class='bi bi-check-lg'></i> " + getLabel('lbl.cms.ok')
+                confirmButtonText: "<i class='bi bi-check-lg'></i> " + getLabel('ok')
               }).then(function (result) {
                 if (result.value) {
                 }
@@ -321,7 +305,7 @@ function doDelete(nId) {
             }
           },
           error: function (response) {
-            showToast(getLabel('lbl.cms.Error'), 'DANGER', response.Message);
+            showToast(getLabel('Error'), 'DANGER', response.Message);
           }
         });
       } else if (result.dismiss === "cancel") {

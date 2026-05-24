@@ -14,7 +14,7 @@ if (isset($oRest)) {
     $oInstance->Rem = $oRest->getParameter('vRem');
     $bIsAllOk = true;
     try {
-      $oRest->setMessage(getLabel('lbl.cms.Master Not Saved'));
+      $oRest->setMessage(getLabel('Master Not Saved'));
       $nSavedId = $oInstance->save($oUser->Id);
       $oRest->setStatus(true);
       $oRest->setMessage('Done');

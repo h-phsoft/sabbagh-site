@@ -127,18 +127,6 @@ class cCpyPGrp {
       $cClass->Commit = 1;
       $cClass->Revoke = 1;
       $cClass->Special = 1;
-      //
-      $cClass->IsOK = true;
-      $cClass->IsInsert = true;
-      $cClass->IsUpdate = true;
-      $cClass->IsQuery = true;
-      $cClass->IsDelete = true;
-      $cClass->IsPrint = true;
-      $cClass->IsExport = true;
-      $cClass->IsImport = true;
-      $cClass->IsCommit = true;
-      $cClass->IsRevoke = true;
-      $cClass->IsSpecial = true;
     }
     return $cClass;
   }

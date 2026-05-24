@@ -30,7 +30,6 @@ class cCpyPerm {
   var $Cmt = 0;
   var $Rvk = 0;
   var $Spc = 0;
-  //
   var $Insert = 0;
   var $Update = 0;
   var $Query = 0;
@@ -41,18 +40,6 @@ class cCpyPerm {
   var $Commit = 0;
   var $Revoke = 0;
   var $Special = 0;
-  //
-  var $IsOK = false;
-  var $IsInsert = false;
-  var $IsUpdate = false;
-  var $IsQuery = false;
-  var $IsDelete = false;
-  var $IsPrint = false;
-  var $IsExport = false;
-  var $IsImport = false;
-  var $IsCommit = false;
-  var $IsRevoke = false;
-  var $IsSpecial = false;
   //
   var $oProg;
 
@@ -146,18 +133,6 @@ class cCpyPerm {
     $cClass->Commit = $cClass->Cmt;
     $cClass->Revoke = $cClass->Rvk;
     $cClass->Special = $cClass->Spc;
-    //
-    $cClass->IsOK = intval($res->fields('isok')) === 1;
-    $cClass->IsInsert = intval($res->fields('ins')) === 1;
-    $cClass->IsUpdate = intval($res->fields('upd')) === 1;
-    $cClass->IsQuery = intval($res->fields('qry')) === 1;
-    $cClass->IsDelete = intval($res->fields('del')) === 1;
-    $cClass->IsPrint = intval($res->fields('prt')) === 1;
-    $cClass->IsExport = intval($res->fields('exp')) === 1;
-    $cClass->IsImport = intval($res->fields('imp')) === 1;
-    $cClass->IsCommit = intval($res->fields('cmt')) === 1;
-    $cClass->IsRevoke = intval($res->fields('rvk')) === 1;
-    $cClass->IsSpecial = intval($res->fields('spc')) === 1;
     //
     $cClass->oProg = cPhsProgram::getInstance($cClass->ProgId);
     return $cClass;

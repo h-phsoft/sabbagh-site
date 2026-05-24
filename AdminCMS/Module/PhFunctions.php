@@ -128,7 +128,7 @@ if (!function_exists('getGUID')) {
     if (function_exists('com_create_guid')) {
       $vGUID = strtolower(com_create_guid());
     } else {
-      mt_srand((int) (microtime(true) * 10000)); //optional for php 4.2.0 and up.
+      mt_srand((float) microtime() * 10000); //optional for php 4.2.0 and up.
       $charid = strtolower(md5(uniqid(rand(), true)));
       $hyphen = chr(45); // "-"
       $vGUID = chr(123)// "{"
@@ -546,15 +546,11 @@ if (!function_exists('ph_Cookie')) {
 
 if (!function_exists('ph_SetCookie')) {
 
-  function ph_SetCookie($key, $value = '', $time = -1) {
-    if ($value != '') {
-      if ($time < 0) {
-        $time = time() + 10 * 365 * 24 * 60 * 60;
-      }
-      setcookie($key, $value, time() + $time, "/");
-    } else {
-      ph_DeleteCookie($key);
+  function ph_SetCookie($key, $value, $time = 0) {
+    if ($time < 0) {
+      $time = time() + 10 * 365 * 24 * 60 * 60;
     }
+    setcookie($key, $value, time() + $time, "/");
   }
 
 }
@@ -562,8 +558,8 @@ if (!function_exists('ph_SetCookie')) {
 if (!function_exists('ph_DeleteCookie')) {
 
   function ph_DeleteCookie($key) {
+    setcookie($key, null, time() - SECONDS_IN_A_HOUR, "/");
     unset($_COOKIE[$key]);
-    setcookie($key, '', -1, "/");
   }
 
 }

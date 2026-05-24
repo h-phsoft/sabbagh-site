@@ -17,8 +17,6 @@
 class cPhsPref {
 
   var $Id;
-  var $CmsId = 2;
-  var $TypeId = 2;
   var $Key;
   var $Name;
   var $Value;
@@ -27,7 +25,7 @@ class cPhsPref {
   public static $Prefs = array();
 
   public static function getSelectStatement($vWhere = '', $vOrder = '', $vLimit = '') {
-    $sSQL = 'SELECT `id`, `cms_id`, `type_id`, `key`, `name`, `value`, `rem`'
+    $sSQL = 'SELECT `id`, `key`, `name`, `value`, `rem`'
       . ' FROM `phs_pref`';
     if ($vWhere != '') {
       $sSQL .= ' WHERE (' . $vWhere . ') ';
@@ -104,8 +102,6 @@ class cPhsPref {
   public static function getFields($res) {
     $cClass = new cPhsPref();
     $cClass->Id = intval($res->fields('id'));
-    $cClass->CmsId = $res->fields('cms_id');
-    $cClass->TypeId = $res->fields('type_id');
     $cClass->Key = $res->fields('key');
     $cClass->Name = $res->fields('name');
     $cClass->Value = $res->fields('value');
@@ -114,18 +110,17 @@ class cPhsPref {
     return $cClass;
   }
 
-  public function save() {
+  public function save($nUId) {
     $nId = 0;
     if ($this->Id == 0 || $this->Id == -999) {
       $vSQL = 'INSERT INTO `phs_pref` ('
-        . '  `cms_id`, `type_id`, `key`, `name`, `value`, `rem`'
+        . '  `key`, `name`, `value`, `rem`, `ins_user`'
         . ') VALUES ('
-        . '  "' . $this->CmsId . '"'
-        . '  "' . $this->TypeId . '"'
         . '  "' . $this->Key . '"'
         . ', "' . $this->Name . '"'
         . ', "' . $this->Value . '"'
         . ', "' . $this->Rem . '"'
+        . ', "' . $nUId . '"'
         . ')';
       $res = ph_Execute($vSQL);
       if ($res || $res === 0) {
@@ -138,12 +133,11 @@ class cPhsPref {
     } else {
       $nId = $this->Id;
       $vSQL = 'UPDATE `phs_pref` SET'
-        . '  `cms_id`="' . $this->CmsId . '"'
-        . ', `type_id`="' . $this->TypeId . '"'
-        . ', `key`="' . $this->Key . '"'
+        . '  `key`="' . $this->Key . '"'
         . ', `name`="' . $this->Name . '"'
         . ', `value`="' . $this->Value . '"'
         . ', `rem`="' . $this->Rem . '"'
+        . ', `upd_user`="' . $nUId . '"'
         . ' WHERE `id`="' . $this->Id . '"';
       $res = ph_Execute($vSQL);
       if ($res || $res === 0) {
@@ -174,18 +168,18 @@ class cPhsPref {
   }
 
   public static function loadDBKeys() {
-    $aKeys = array();
-    $sSQL = 'SELECT `id`, `cms_id`, `type_id`, `key`, `name`, `value`, `rem`'
+    $keys = array();
+    $sSQL = 'SELECT `id`, `key`, `name`, `value`, `rem`'
       . ' FROM `phs_pref`';
     $res = ph_Execute($sSQL);
     if ($res != '') {
       while (!$res->EOF) {
-        $aKeys[strtoupper($res->fields("key"))] = $res->fields("value");
+        $keys[strtoupper($res->fields("key"))] = $res->fields("value");
         $res->MoveNext();
       }
       $res->Close();
     }
-    return $aKeys;
+    return $keys;
   }
 
   // Get DB Keys Value from Array
@@ -207,21 +201,16 @@ class cPhsPref {
   }
 
   public static function getPrefValue($sKey) {
-    return ph_GetDBValue('value', 'phs_pref', '(UPPER(`key`)=UPPER("' . $sKey . '"))');
+    $sRetVar = ph_GetDBValue('value', 'phs_pref', '(UPPER(`key`)=UPPER("' . $sKey . '"))');
+    if ($sRetVar == '') {
+      $sRetVar = $sKey;
+    }
+    return $sRetVar;
   }
 
   public static function setPrefValue($sKey, $vValue) {
     $sSQL = 'UPDATE `phs_pref` SET `value`="' . $vValue . '" WHERE (UPPER(`key`)=UPPER("' . $sKey . '"))';
     $res = ph_Execute($sSQL);
     return $res;
-  }
-
-  public static function isPref($sKey) {
-    $sRetVar = self::getPrefValue($sKey);
-    $bRet = false;
-    if (intval($sRetVar) === 1 || strtolower($sRetVar) === 'true') {
-      $bRet = true;
-    }
-    return $bRet;
   }
 }

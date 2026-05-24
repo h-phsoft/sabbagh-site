@@ -139,46 +139,35 @@ class cPhsRest extends cPhsRestBase {
   public function getParameter($key) {
     $vRetVal = null;
     if ($key) {
-      parse_str(file_get_contents('php://input'), $_Request);
-      $aKeys = array_keys($_Request);
-      if ((is_array($_Request) || is_object($_Request)) && isset($_Request[$key])) {
-        $vRetVal = $_Request[$key];
-      } else if (is_array($aKeys) && count($aKeys) === 1 && isset($aKeys[0])) {
-        $oData = json_decode($aKeys[0], true);
-        if (isset($oData[$key])) {
-          $vRetVal = $oData[$key];
-        }
-      } else {
-        switch ($this->method) {
-          case self::METHOD_PUT:
-            parse_str(file_get_contents('php://input'), $_PUT);
-            if (isset($_PUT[$key])) {
-              $vRetVal = $_PUT[$key];
-            }
-            break;
-          case self::METHOD_DELETE:
-            parse_str(file_get_contents('php://input'), $_DELETE);
-            if (isset($_DELETE[$key])) {
-              $vRetVal = $_DELETE[$key];
-            }
-            break;
-          case self::METHOD_OPTIONS:
-            parse_str(file_get_contents('php://input'), $_OPTIONS);
-            if (isset($_OPTIONS[$key])) {
-              $vRetVal = $_OPTIONS[$key];
-            }
-            break;
-          case self::METHOD_POST:
-          case self::METHOD_GET:
-          default:
-            if (!isset($GLOBALS['_GET_POST'])) {
-              $GLOBALS['_GET_POST'] = array_merge($_GET, $_POST);
-            }
-            if (isset($GLOBALS['_GET_POST'][$key])) {
-              $vRetVal = $GLOBALS['_GET_POST'][$key];
-            }
-            break;
-        }
+      switch ($this->method) {
+        case self::METHOD_PUT:
+          parse_str(file_get_contents('php://input'), $_PUT);
+          if (isset($_PUT[$key])) {
+            $vRetVal = $_PUT[$key];
+          }
+          break;
+        case self::METHOD_DELETE:
+          parse_str(file_get_contents('php://input'), $_DELETE);
+          if (isset($_DELETE[$key])) {
+            $vRetVal = $_DELETE[$key];
+          }
+          break;
+        case self::METHOD_OPTIONS:
+          parse_str(file_get_contents('php://input'), $_OPTIONS);
+          if (isset($_OPTIONS[$key])) {
+            $vRetVal = $_OPTIONS[$key];
+          }
+          break;
+        case self::METHOD_POST:
+        case self::METHOD_GET:
+        default:
+          if (!isset($GLOBALS['_GET_POST'])) {
+            $GLOBALS['_GET_POST'] = array_merge($_GET, $_POST);
+          }
+          if (isset($GLOBALS['_GET_POST'][$key])) {
+            $vRetVal = $GLOBALS['_GET_POST'][$key];
+          }
+          break;
       }
       if ($vRetVal && !is_array($vRetVal)) {
         $vRetVal = htmlspecialchars(stripslashes(trim(strip_tags($vRetVal))));

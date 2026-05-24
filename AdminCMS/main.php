@@ -1,24 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html <?php echo $vHTMLDirection; ?>  data-bs-theme="auto">
+
   <head>
     <base href="<?php echo $vRootPath; ?>">
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
     <title><?php echo cPhsPref::getPrefValue('Copy_Title'); ?></title>
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="description" content="PhSoft, Content Management" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:title" content="PhSoft Content Management" />
-    <meta property="og:type" content="" />
-    <meta property="og:url" content="" />
-    <meta property="og:image" content="" />
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/media/logos/favicon.png" />
-    <!-- Template CSS -->
-    <link rel="stylesheet" type="text/css" href="assets/vendors/bootstrap/css/bootstrap.<?php echo $vDir ?>.css" id="bootstrap"/>
-    <link rel="stylesheet" type="text/css" href="assets/css/ph-bootstrap-colors.css"/>
-    <link rel="stylesheet" type="text/css" href="assets/vendors/bootstrap/bootstrap-icons/bootstrap-icons.css"/>
-    <link rel="stylesheet" type="text/css" href="assets/vendors/jquery/jquery-ui/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicons -->
+    <link href="assets/media/logos/folly.png" rel="icon">
+    <link href="assets/media/logos/folly.png" rel="apple-touch-icon">
+
+    <!-- Highcharts CSS Files -->
+    <link rel="stylesheet" href="assets/plugins/highcharts/css/highcharts.css">
+
+    <!-- Vendor CSS Files -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.<?php echo $vDir ?>.min.css" id="bootstrap">
+    <link rel="stylesheet" href="assets/plugins/bootstrap/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/plugins/jquery/jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" href="assets/plugins/jstree/themes/default/style.css">
+
+    <!-- Template Main CSS File -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style-<?php echo $vDir ?>.css" id="app-style">
     <?php
     if ($isCssExist) {
       ?>
@@ -26,60 +33,47 @@
       <?php
     }
     ?>
-    <style>
-      html.theme-init body {
-        visibility: hidden;
-      }
-    </style>
-    <script>
-      var savedTheme = 'light';
-      const checkSavedHeadTheme = () => {
-        const themeKey = "theme";
-        const useDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else if (savedTheme === 'light') {
-          document.documentElement.classList.remove('dark');
-        }
-      };
-      checkSavedHeadTheme();
-      document.documentElement.classList.add('theme-init');
-      (function () {
-        var themeKey = "theme";
-        var savedTheme = localStorage.getItem(themeKey);
-        function applyTheme() {
-          if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-            document.body.classList.add("dark");
-          } else {
-            document.body.classList.remove("dark");
-          }
-          document.documentElement.classList.remove('theme-init');
-        }
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", applyTheme);
-        } else {
-          applyTheme();
-        }
-      })();
-    </script>
   </head>
 
-  <body class="<?php echo $vDir ?>">
-    <div class="screen-overlay"></div>
-    <?php include_once "./section/sidebar.php" ?>
-    <main class="main-wrap" style="min-height: 100vh">
-      <?php include_once "./section/header.php" ?>
-      <?php
-      if ($requestPage) {
-        if ($isPageExist) {
-          include $vPage;
-        } else {
-          include "pages/404.php";
-        }
-      }
-      ?>
-      <?php include_once "./section/footer.php" ?>
-    </main>
+  <body class="">
+
+    <!-- Header -->
+    <?php include 'section/header.php'; ?>
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <?php include 'section/sidebar.php'; ?>
+    <!-- End Sidebar-->
+
+    <!-- ======= Main ======= -->
+    <main id="main" class="main">
+      <div class="container-fluid">
+        <div class="row">
+
+          <?php
+          if ($requestPage) {
+            if ($isPageExist) {
+              include $vPage;
+            } else {
+              include "pages/404.php";
+            }
+          }
+          ?>
+        </div>
+      </div>
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <?php include 'section/footer.php'; ?>
+    <!-- End Footer -->
+
+    <!-- ======= Back to Top ======= -->
+    <?php include 'section/back_to_top.php'; ?>
+    <!-- End Back to Top -->
+
+    <!-- ======= Setting ======= -->
+    <?php include 'section/settingsbar.php'; ?>
+    <!-- End Setting -->
 
     <script>
       var PhSettings = {
@@ -93,17 +87,15 @@
           "Method": "DELETE",
           "URL": "Module/API/Authentication"
         },
+        "ChangeLanguage": {
+          "Method": "POST",
+          "URL": "Module/API/User/ChangeLanguage"
+        },
         "changePassword": {
           "Method": "POST",
           "URL": "Module/API/User/ChangePassword"
         },
-        "changeLanguage": {
-          "Method": "POST",
-          "URL": "Module/API/User/ChangeLanguage"
-        },
         "rootPath": "<?php echo $vRootPath; ?>",
-        "mediaPath": "<?php echo $vMediaPath; ?>",
-        "siteMediaPath": "<?php echo $vSiteMediaPath; ?>",
         "token": "0",
         "Perms": {
           "Query": <?php echo $perms->Query === 1 ? 'true' : 'false'; ?>,
@@ -123,6 +115,8 @@
           "Login": "<?php echo $oUser->Logon; ?>",
           "GrpId": "<?php echo $oUser->oGrp->Id; ?>",
           "GrpName": "<?php echo $oUser->oGrp->Name; ?>",
+          "BranId": "<?php echo $oUser->oBranch->Id; ?>",
+          "BranName": "<?php echo $oUser->oBranch->Name; ?>"
         },
         "display": {
           "lang": "<?php echo $vLangCode ?>",
@@ -134,23 +128,43 @@
         "Labels": <?php echo json_encode($aPhLables) ?>
       };
     </script>
-    <script src="assets/vendors/jquery/jquery.min.js"></script>
-    <script src="assets/vendors/jquery/jquery-ui/jquery-ui.js"></script>
-    <script src="assets/vendors/jquery/jquery.redirect.js"></script>
-    <script src="assets/vendors/jquery/jquery-paging/jquery.paging.min.js"></script>
-    <script src="assets/vendors/jquery/jquery.fullscreen.min.js"></script>
-    <script src="assets/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendors/bootstrap/bootstrap-toaster/bootstrap-toaster.js"></script>
-    <script src="assets/vendors/chart.js"></script>
-    <script src="assets/vendors/sweetalert/sweetalert2.min.js"></script>
-    <!-- Main Script -->
-    <script src="assets/js/main.js?v=1.7.1822" type="text/javascript"></script>
+
+    <script src="assets/plugins/jquery/jquery.min.js"></script>
+    <script src="assets/plugins/jquery/jquery-ui/jquery-ui.js"></script>
+    <script src="assets/plugins/jquery/jquery.redirect.js"></script>
+    <script src="assets/plugins/jquery/jquery-paging/jquery.paging.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/plugins/bootstrap/color-modes.js"></script>
+    <script src="assets/plugins/bootstrap/bootstrap-toaster/bootstrap-toaster.js"></script>
+    <script src="assets/plugins/jstree/jstree.js"></script>
+    <script src="assets/plugins/sweetalert/sweetalert2.min.js"></script>
+    <script src="assets/plugins/excel/xlsx.full.min.js"></script>
+
+    <script src="assets/plugins/highcharts/highcharts.js"></script>
+    <script src="assets/plugins/highcharts/highcharts-3d.js"></script>
+    <script src="assets/plugins/highcharts/highcharts-more.js"></script>
+
+    <script src="assets/plugins/highcharts/modules/series-label.js"></script>
+    <script src="assets/plugins/highcharts/modules/data.js"></script>
+    <script src="assets/plugins/highcharts/modules/exporting.js"></script>
+    <script src="assets/plugins/highcharts/modules/export-data.js"></script>
+    <script src="assets/plugins/highcharts/modules/sonification.js"></script>
+    <script src="assets/plugins/highcharts/modules/accessibility.js"></script>
+
+    <script src="assets/plugins/miscellaneous/toastr.js"></script>
+
+    <script src="assets/js/template.main.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/plugins/phsoft/PhsForm.js"></script>
+    <script src="assets/plugins/phsoft/PhsImportExcel.js"></script>
     <?php
     if ($isJSExist) {
       ?>
-      <script src="<?php echo $vPageJS; ?>?v=1.7.1822"></script>
+      <script src="<?php echo $vPageJS; ?>"></script>
       <?php
     }
     ?>
+
   </body>
+
 </html>

@@ -19,10 +19,6 @@ jQuery(document).ready(function () {
       "URL": PhSettings.serviceURL + "/User",
       "Method": "DELETE"
     },
-    "Count": {
-      "URL": PhSettings.serviceURL + "/User",
-      "Method": "PUT"
-    },
     "List": {
       "URL": PhSettings.serviceURL + "/User",
       "Method": "OPTIONS"
@@ -32,104 +28,39 @@ jQuery(document).ready(function () {
       "Method": "POST"
     }
   };
+  mettaData.ImagePath = 'assets/media/avatars/';
+  mettaData.DefaultImage = 'manager1.png';
 
-  mettaData.ImagePath = PhSettings.mediaPath + '/avatars/';
-  mettaData.DefaultImage = 'avatar-0.png';
-
-  if (PhSettings.Perms.Query) {
-    $('.result-type').off('click').on('click', function () {
-      $('.result-type').removeClass('btn-warning');
-      $('.result-type').addClass('btn-outline-warning');
-      $(this).removeClass('btn-outline-warning');
-      $(this).addClass('btn-warning');
-      resultType = parseInt($(this).data('val'));
-      phsDoSearch($('#ph-search-text').val(), mettaData, getPage);
-    });
-  }
-
-  if (PhSettings.Perms.Insert) {
-    $('#ph-new').on('click', function () {
-      doNew();
-    });
-  }
-
-  if (PhSettings.Perms.Query) {
-    $('#ph-search-text').off('keyup').on('keyup', function () {
-      phsDoSearch($('#ph-search-text').val(), mettaData, getPage);
-    });
-  }
-
-  if (PhSettings.Perms.Insert || PhSettings.Perms.Update) {
-    $('#ph-submit').off('click').on('click', function () {
-      if (PhSettings.Perms.Insert) {
-        var $btn = $(this);
-        $btn.attr('disabled', true);
-        $btn.find('.spinner-border').removeClass('d-none');
-        setTimeout(function () {
-          $.when(doAdd())
-            .always(function () {
-              $btn.attr('disabled', false);
-              $btn.find('.spinner-border').addClass('d-none');
-            });
-        }, 1);
-      }
-    });
-  }
-
-  if (PhSettings.Perms.Update) {
-    $('#ph-save').off('click').on('click', function () {
-      var $btn = $(this);
-      $btn.attr('disabled', true);
-      $btn.find('.spinner-border').removeClass('d-none');
-      setTimeout(function () {
-        $.when(doUpdate())
-          .always(function () {
-            $btn.attr('disabled', false);
-            $btn.find('.spinner-border').addClass('d-none');
-          });
-      }, 1);
-    });
-  }
-
-  if (PhSettings.Perms.Update) {
-    $('#ph-reset').off('click').on('click', function () {
-      var $btn = $(this);
-      $btn.attr('disabled', true);
-      $btn.find('.spinner-border').removeClass('d-none');
-      setTimeout(function () {
-        $.when(doResetPWD())
-          .always(function () {
-            $btn.attr('disabled', false);
-            $btn.find('.spinner-border').addClass('d-none');
-          });
-      }, 1);
-    });
-  }
-
-  if (PhSettings.Perms.Insert) {
+  $('#ph-new').on('click', function () {
     doNew();
-  }
-  if (PhSettings.Perms.Query) {
-    phsDoSearch($('#ph-search-text').val(), mettaData, getPage);
-  }
+    $('#addUserModal').modal('show');
+  });
+
+  $('#ph-search-text').off('keyup').on('keyup', function () {
+    doSearch($('#ph-search-text').val());
+  });
+
+  $('#ph-submit').off('click').on('click', function () {
+    doAdd();
+  });
+
+  $('#ph-reset').off('click').on('click', function () {
+    doResetPWD();
+  });
+
+  $('#ph-save').off('click').on('click', function () {
+    doUpdate();
+  });
+
+  doNew();
+  doSearch('');
 
 });
 
-function setResultType(nType) {
-  $('.result-type').removeClass('btn-warning');
-  $('.result-type').addClass('btn-outline-warning');
-  $('#result-type-' + nType).removeClass('btn-outline-warning');
-  $('#result-type-' + nType).addClass('btn-warning');
-  resultType = parseInt($('#result-type-' + nType).data('val'));
-}
-
 function doNew() {
-  $('#ph_add_form').addClass('d-none');
-  $('#ph_edit_form').addClass('d-none');
-  $('#ph_resetPassword_form').addClass('d-none');
   resetFormValid('ph_Form');
-  $('#ph_add_form').trigger('reset');
-  $('#ph_add_form').removeClass('was-validated');
+  $('ph_add_form').trigger('reset');
+  $('ph_add_form').removeClass('was-validated');
   $('#fldId').val(0);
   $('#addStatusId').val($('#addStatusId :first').val());
   $('#addUserType').val($('#addUserType :first').val());
@@ -139,10 +70,9 @@ function doNew() {
   $('#addUserLogon').val('');
   $('#addnpassword').val('');
   $('#addvpassword').val('');
-  $('#ph_add_form').removeClass('d-none');
 }
 
-function getPage(vText, nStart, nEnd, nPage, nPerPage) {
+function doSearch(vText) {
 
   if (PhSettings.Perms.Query) {
     $.ajax({
@@ -151,16 +81,71 @@ function getPage(vText, nStart, nEnd, nPage, nPerPage) {
       url: mettaData.URLS.List.URL,
       headers: PhSettings.Headers,
       data: {
-        start: nStart,
-        end: nEnd,
-        page: nPage,
-        perpage: nPerPage,
         "vText": vText
       },
       success: function (response) {
         if (response.Status) {
           resultData = response.Data;
-          renderTable();
+          let vHtml = '';
+          for (var i = 0; i < resultData.length; i++) {
+            let item = resultData[i];
+            let editBtn = '';
+            let resetBtn = '';
+            let deleteBtn = '';
+            if (PhSettings.Perms.Update) {
+              editBtn = `<span class="btn btn-success btn-edit" data-rid="${i}" data-toggle="tooltip" data-placement="bottom" title="${getLabel("Edit")}"><i class="bi bi-pencil"></i></span>`;
+              resetBtn = `<span class="btn btn-warning btn-reset" data-rid="${i}" data-toggle="tooltip" data-placement="bottom" title="${getLabel("Reset Password")}"><i class="bi bi-key"></i></span>`;
+            }
+            if (PhSettings.Perms.Delete) {
+              deleteBtn = `<span class="btn btn-danger btn-delete" data-rid="${i}" data-toggle="tooltip" data-placement="bottom" title="${getLabel("Delete")}"><i class="bi bi-trash"></i></span>`;
+            }
+            vHtml += `<div class="col-sm-3 p-2 mx-auto">
+                <div id="item-${item.nId}" class="card card-custom result-card h-100" data-rid="${i}">
+                  <div class="card-header">
+                    <span>${item.vName}</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-2">
+                        <img src="${mettaData.ImagePath}manager${item.nGender}.png" width="100%"/>
+                      </div>
+                      <div class="col-10">
+                        <div class="row">
+                          <div class="col-12 col-sm-6">
+                            <span>${item.vLogon}</span>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <span>${item.vGenderName}</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12 col-sm-6">
+                            <span>${item.vBranName}</span>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <span>${item.vStatusName}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="row pt-2">
+                      <div class="col-3 text-start"">
+                        ${editBtn}
+                      </div>
+                      <div class="col-6 text-center">
+                        ${resetBtn}
+                      </div>
+                      <div class="col-3 text-end">
+                        ${deleteBtn}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+          }
+          $('#resultData').html(vHtml);
           $('.btn-edit').off('click').on('click', function (e) {
             e.preventDefault();
             resultId = parseInt($(this).data('rid'));
@@ -204,10 +189,10 @@ function doAdd() {
       success: function (response) {
         if (response.Status) {
           doNew();
-          phsDoSearch($('#ph-search-text').val(), mettaData, getPage);
-          showToast(getLabel('lbl.cms.Save'), 'WARNING', response.Message);
+          doSearch('');
+          showToast(getLabel('Save'), 'WARNING', response.Message);
         } else {
-          showToast(getLabel('lbl.cms.Error'), 'DANGER', response.Message);
+          showToast(getLabel('Error'), 'DANGER', response.Message);
         }
       }
     });
@@ -235,10 +220,10 @@ function doUpdate() {
         success: function (response) {
           if (response.Status) {
             doNew();
-            phsDoSearch($('#ph-search-text').val(), mettaData, getPage);
-            showToast(getLabel('lbl.cms.Save'), 'WARNING', response.Message);
+            doSearch('');
+            showToast(getLabel('Save'), 'WARNING', response.Message);
           } else {
-            showToast(getLabel('lbl.cms.Error'), 'DANGER', response.Message);
+            showToast(getLabel('Error'), 'DANGER', response.Message);
           }
         }
       });
@@ -253,11 +238,11 @@ function doDelete(nIdx) {
     let nId = item.nId;
     if (nId > 0) {
       swal.fire({
-        title: getLabel('lbl.cms.Delete'),
-        text: getLabel('lbl.cms.Are you sure ?'),
+        title: getLabel('Delete'),
+        text: getLabel('Are you sure ?'),
         showCancelButton: true,
-        confirmButtonText: "<i class='bi bi-check-lg'></i> " + getLabel('lbl.cms.Yes'),
-        cancelButtonText: "<i class='bi bi-x-lg'></i> " + getLabel('lbl.cms.No')
+        confirmButtonText: "<i class='bi bi-check-lg'></i> " + getLabel('Yes'),
+        cancelButtonText: "<i class='bi bi-x-lg'></i> " + getLabel('No')
       }).then(function (result) {
         if (result.value) {
           $.ajax({
@@ -271,10 +256,10 @@ function doDelete(nIdx) {
             success: function (response) {
               if (response.Status) {
                 doNew();
-                phsDoSearch($('#ph-search-text').val(), mettaData, getPage);
-                showToast(getLabel('lbl.cms.Delete'), 'SUCCESS', response.Message);
+                doSearch('');
+                showToast(getLabel('Delete'), 'SUCCESS', response.Message);
               } else {
-                showToast(getLabel('lbl.cms.Error'), 'DANGER', response.Message);
+                showToast(getLabel('Error'), 'DANGER', response.Message);
               }
             }
           });
@@ -287,9 +272,6 @@ function doDelete(nIdx) {
 
 function doEdit(nIdx) {
 
-  $('#ph_add_form').addClass('d-none');
-  $('#ph_edit_form').addClass('d-none');
-  $('#ph_resetPassword_form').addClass('d-none');
   resetFormValid('ph_edit_form');
   let item = resultData[nIdx];
   $('#editUserId').val(item.nId);
@@ -299,20 +281,17 @@ function doEdit(nIdx) {
   $('#editUserBranch').val(item.nBranId);
   $('#editUserName').val(item.vName);
   $('#editUserLogon').val(item.vLogon);
-  $('#ph_edit_form').removeClass('d-none');
+  $('#editUserModal').modal('show');
 }
 
 function doReset(nIdx) {
 
-  $('#ph_add_form').addClass('d-none');
-  $('#ph_edit_form').addClass('d-none');
-  $('#ph_resetPassword_form').addClass('d-none');
   resetFormValid('ph_Form');
   let item = resultData[nIdx];
   $('#resetUserId').val(item.nId);
   $('#resetNPassword').val('');
   $('#resetVPassword').val('');
-  $('#ph_resetPassword_form').removeClass('d-none');
+  $('#resetPasswordModal').modal('show');
 }
 
 function doResetPWD() {
@@ -332,10 +311,10 @@ function doResetPWD() {
         success: function (response) {
           if (response.Status) {
             doNew();
-            phsDoSearch($('#ph-search-text').val(), mettaData, getPage);
-            showToast(getLabel('lbl.cms.Reset Password'), 'WARNING', response.Message);
+            doSearch('');
+            showToast(getLabel('Reset Password'), 'WARNING', response.Message);
           } else {
-            showToast(getLabel('lbl.cms.Error'), 'DANGER', response.Message);
+            showToast(getLabel('Error'), 'DANGER', response.Message);
           }
         }
       });
@@ -343,29 +322,3 @@ function doResetPWD() {
   }
 }
 
-function renderTable() {
-  let vHtml = '';
-  for (var i = 0; i < resultData.length; i++) {
-    let item = resultData[i];
-    vHtml += `<tr>
-                <td class="text-start">
-                  <div class="dropdown">
-                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm" aria-expanded="false">
-                      <i class="icon bi bi-three-dots"></i>
-                    </a>
-                    <div class="dropdown-menu" style="margin: 0px;">
-                      ${PhSettings.Perms.Update ? `<a class="dropdown-item btn-edit w-100" data-rid="${i}"><i class="bi bi-pencil"></i>&nbsp;${getLabel("lbl.cms.Edit")}</a>` : ``}
-                      ${PhSettings.Perms.Update ? `<a class="dropdown-item text-warning btn-reset" data-rid="${i}" data-toggle="tooltip" data-placement="bottom" title="${getLabel("lbl.cms.Reset Password")}"><i class="bi bi-key"></i>${getLabel("lbl.cms.Reset Password")}</a>` : ``}
-                      <hr>
-                      ${(PhSettings.Perms.Delete) ? `<a class="dropdown-item btn-delete w-100 text-danger" data-rid="${i}"><i class="bi bi-trash"></i>&nbsp;${getLabel("lbl.cms.Delete")}</a>` : ``}
-                    </div>
-                  </div>
-                </td>
-                <td>${item.vName}</td>
-                <td>${item.vLogon}</td>
-                <td>${item.vGenderName}</td>
-                <td>${item.vStatusName}</td>
-              </tr>`;
-  }
-  $('#result-Table tbody').html(vHtml);
-}

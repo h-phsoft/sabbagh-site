@@ -10,13 +10,6 @@ if (session_id() == "") {
 <?php include_once "Module/CpyFunctions.php" ?>
 <?php
 
-ph_PrepareGets();
-ph_PreparePosts();
-/*
-  $vPass = ph_EncodePassword('admin123');
-  $oUser = cCpyUser::checkUserLogin('admin', $vPass);
-  ph_SetSession('User', serialize($oUser));
- */
 $vAppVersion = PHS_VERSION;
 
 cPhsPref::getDBKeys();
@@ -32,20 +25,13 @@ if ($oLang->Code) {
 if ($oLang->Dir) {
   $vDir = strtolower($oLang->Dir);
 }
-$vLabelsFile = "Module/PhLabels-" . $vLangCode . ".php";
-if (!file_exists($vLabelsFile)) {
-  $vLabelsFile = "Module/PhLabels-en.php";
-  $vDir = 'ltr';
-  $nDir = 0;
-}
-include_once $vLabelsFile;
-initLabels();
-
 $vHTMLDirection = 'lang="' . $vLang . '" style="direction: ' . $vDir . ';"';
 
-$vRootPath = PHS_CMS_ROOT_PATH;
-$vMediaPath = PHS_CMS_MEDIA_PATH;
-$vSiteMediaPath = PHS_SITE_MEDIA_PATH;
+ph_PrepareGets();
+ph_PreparePosts();
+
+$vRootPath = PHS_ROOT_PATH;
+$vMediaPath = PHS_MEDIA_PATH;
 $aURI = getURIArray();
 //
 $requestPage = getRequestPage(PHS_URI_IDX);
@@ -67,7 +53,6 @@ $vPageJS = 'assets/js/pages/' . $requestPage . '.js';
 $isJSExist = file_exists($vPageJS);
 $vReqId = $requestProg->Id;
 //
-$aLangs = cPhsLang::getArray();
 $nDir = 0;
 $vMainPage = 'login.php';
 if (ph_Session('User')) {
@@ -90,13 +75,7 @@ if (ph_Session('User')) {
         $nDir = 1;
       }
       $vHTMLDirection = 'lang="' . $vLang . '" style="direction: ' . $vDir . ';"';
-      $vLabelsFile = "Module/PhLabels-" . $vLangCode . ".php";
-      if (!file_exists($vLabelsFile)) {
-        $vLabelsFile = "Module/PhLabels-en.php";
-        $vDir = 'ltr';
-        $nDir = 0;
-      }
-      include_once $vLabelsFile;
+      include_once "Module/PhLabels-" . $vLangCode . ".php";
       initLabels();
       //
       $vMainPage = 'main.php';

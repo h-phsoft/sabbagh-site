@@ -110,16 +110,17 @@ class cPhsLang {
     return $cClass;
   }
 
-  public function save() {
+  public function save($nUId) {
     $nId = 0;
     if ($this->Id == 0 || $this->Id == -999) {
       $vSQL = 'INSERT INTO `phs_lang` ('
-        . '  `name`, `code`, `dir`, `rem`'
+        . '  `name`, `code`, `dir`, `rem`, `ins_user`'
         . ') VALUES ('
         . '  "' . $this->Name . '"'
         . ', "' . $this->Code . '"'
         . ', "' . $this->Dir . '"'
         . ', "' . $this->Rem . '"'
+        . ', "' . $nUId . '"'
         . ')';
       $res = ph_Execute($vSQL);
       if ($res || $res === 0) {
@@ -136,6 +137,7 @@ class cPhsLang {
         . ', `code`="' . $this->Code . '"'
         . ', `dir`="' . $this->Dir . '"'
         . ', `rem`="' . $this->Rem . '"'
+        . ', `upd_user`="' . $nUId . '"'
         . ' WHERE `id`="' . $this->Id . '"';
       $res = ph_Execute($vSQL);
       if ($res || $res === 0) {

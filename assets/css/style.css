@@ -1103,17 +1103,23 @@ footer {
 }
 
 .about-header{
-  height: 600px;
   background-image: url('../media/img/head-about-00.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  height: 600px;
+  text-align: left;
+  position: relative;
 }
 
-.about-header h1{
+.about-header .container{
   position: absolute;
-  top: 30%;
-  left: 10%;
+  top: 25%;
+  left: 8%;
+}
+
+.about-header div h1{
+  color: var(--white);
   font-size: 60px;
 }
 
@@ -1131,11 +1137,6 @@ footer {
   position: relative;
 }
 
-.prod-haeder{
-  height: 600px;
-  text-align: left;
-  position: relative;
-}
 .prod-header .container{
   position: absolute;
   top: 25%;

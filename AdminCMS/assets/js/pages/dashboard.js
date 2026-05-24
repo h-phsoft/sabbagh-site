@@ -1,220 +1,293 @@
+/* global PhSettings, PhUtility, swal, KTUtil */
+var resultId = 0;
+var resultData = [];
+var mettaData = {};
 
-const newBarChart = (ctx, aLabels, aDatasets) => {
-  return new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: aLabels,
-      datasets: aDatasets
+jQuery(document).ready(function () {
+
+  mettaData.URLS = {
+    "Save": {
+      "URL": PhSettings.serviceURL + "/Customers",
+      "Method": "POST"
     },
-    options: {
-      plugins: {
-        legend: {
-          display: false,
-          labels: {
-            usePointStyle: false
-          }
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-};
-
-const newLineChart = (ctx, aLabels, aDatasets) => {
-  return new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: aLabels,
-      datasets: aDatasets
+    "Get": {
+      "URL": PhSettings.serviceURL + "/Customers",
+      "Method": "GET"
     },
-    options: {
-      plugins: {
-        legend: {
-          labels: {
-            usePointStyle: true
-          }
-        }
-      }
+    "Delete": {
+      "URL": PhSettings.serviceURL + "/Customers",
+      "Method": "DELETE"
+    },
+    "List": {
+      "URL": PhSettings.serviceURL + "/Customers",
+      "Method": "OPTIONS"
+    },
+    "ResetPWD": {
+      "URL": PhSettings.serviceURL + "/Customers/ResetPassword",
+      "Method": "POST"
     }
-  });
-};
+  };
 
-(function ($) {
-  "use strict";
-  $.ajax({
-    type: 'POST',
-    async: false,
-    url: PhSettings.serviceURL + '/Dashboard/Orders',
-    data: {},
-    success: function (response) {
-      var ctx = document.getElementById('lineChartSales').getContext('2d');
-      newLineChart(ctx, response.Labels, [{
-          label: 'Sales',
-          tension: 0.3,
-          fill: true,
-          backgroundColor: 'rgba(44, 120, 220, 0.2)',
-          borderColor: 'rgba(44, 120, 220)',
-          data: response.Sales
-        },
-        {
-          label: 'Cost',
-          tension: 0.3,
-          fill: true,
-          backgroundColor: 'rgba(4, 209, 130, 0.2)',
-          borderColor: 'rgb(4, 209, 130)',
-          data: response.Costs
-        }
-      ]);
-    }
+  $('#ph-new').on('click', function () {
+    doNew();
+    $('#addUserModal').modal('show');
   });
 
-  $.ajax({
-    type: 'POST',
-    async: false,
-    url: PhSettings.serviceURL + '/Dashboard/OrdersByCategory',
-    data: {},
-    success: function (response) {
-      let aLabels = [];
-      let aData = [];
-      let aColor = [];
-      for (var i = 0; i < response.Data.length; i++) {
-        aLabels[i] = response.Data[i].Name;
-        aData[i] = response.Data[i].nTotAmt;
-        aColor[i] = response.Data[i].bgColor;
-      }
-      var ctx = document.getElementById("barChartCats");
-      newBarChart(ctx, aLabels, [{
-          label: 'Sales',
-          data: aData,
-          backgroundColor: aColor,
-          borderWidth: 1
-        }]);
-    }
+  $('#ph-search-text').off('keyup').on('keyup', function () {
+    doSearch($('#ph-search-text').val());
   });
 
-  $.ajax({
-    type: 'POST',
-    async: false,
-    url: PhSettings.serviceURL + '/Dashboard/OrdersByBrand',
-    data: {},
-    success: function (response) {
-      let aLabels = [];
-      let aData = [];
-      let aColor = [];
-      for (var i = 0; i < response.Data.length; i++) {
-        aLabels[i] = response.Data[i].Name;
-        aData[i] = response.Data[i].nTotAmt;
-        aColor[i] = response.Data[i].bgColor;
-      }
-      var ctx = document.getElementById("barChartBrands");
-      newBarChart(ctx, aLabels, [{
-          label: 'Sales',
-          data: aData,
-          backgroundColor: aColor,
-          borderWidth: 1
-        }]);
-    }
+  $('#ph-submit').off('click').on('click', function () {
+    doAdd();
   });
 
-  $.ajax({
-    type: 'POST',
-    async: false,
-    url: PhSettings.serviceURL + '/Dashboard/OrdersByTag',
-    data: {},
-    success: function (response) {
-      let aLabels = [];
-      let aData = [];
-      let aColor = [];
-      for (var i = 0; i < response.Data.length; i++) {
-        aLabels[i] = response.Data[i].Name;
-        aData[i] = response.Data[i].nTotAmt;
-        aColor[i] = response.Data[i].bgColor;
-      }
-      var ctx = document.getElementById("barChartTags");
-      newBarChart(ctx, aLabels, [{
-          label: 'Sales',
-          data: aData,
-          backgroundColor: aColor,
-          borderWidth: 1
-        }]);
-    }
+  $('#ph-reset').off('click').on('click', function () {
+    doResetPWD();
   });
 
-  $.ajax({
-    type: 'POST',
-    async: false,
-    url: PhSettings.serviceURL + '/Dashboard/OrdersByMonths',
-    data: {},
-    success: function (response) {
-      let aLabels = [];
-      let aData = [];
-      let aColor = [];
-      for (var i = 0; i < response.Data.length; i++) {
-        aLabels[i] = response.Data[i].Name;
-        aData[i] = response.Data[i].nTotAmt;
-        aColor[i] = response.Data[i].bgColor;
-      }
-      var ctx = document.getElementById("barChartMonths");
-      newBarChart(ctx, aLabels, [{
-          label: 'Sales',
-          data: aData,
-          backgroundColor: aColor,
-          borderWidth: 1
-        }]);
-    }
+  $('#ph-save').off('click').on('click', function () {
+    doUpdate();
   });
 
-  $.ajax({
-    type: 'POST',
-    async: false,
-    url: PhSettings.serviceURL + '/Dashboard/OrdersByWeekDays',
-    data: {},
-    success: function (response) {
-      let aLabels = [];
-      let aData = [];
-      let aColor = [];
-      for (var i = 0; i < response.Data.length; i++) {
-        aLabels[i] = response.Data[i].Name;
-        aData[i] = response.Data[i].nTotAmt;
-        aColor[i] = response.Data[i].bgColor;
-      }
-      var ctx = document.getElementById("barChartWeekDays");
-      newBarChart(ctx, aLabels, [{
-          label: 'Sales',
-          data: aData,
-          backgroundColor: aColor,
-          borderWidth: 1
-        }]);
-    }
-  });
+  doNew();
+  doSearch('');
 
-  $.ajax({
-    type: 'POST',
-    async: false,
-    url: PhSettings.serviceURL + '/Dashboard/OrdersByHours',
-    data: {},
-    success: function (response) {
-      let aLabels = [];
-      let aData = [];
-      let aColor = [];
-      for (var i = 0; i < response.Data.length; i++) {
-        aLabels[i] = response.Data[i].Name;
-        aData[i] = response.Data[i].nTotAmt;
-        aColor[i] = response.Data[i].bgColor;
-      }
-      var ctx = document.getElementById("barChartHours");
-      newBarChart(ctx, aLabels, [{
-          label: 'Sales',
-          data: aData,
-          backgroundColor: aColor,
-          borderWidth: 1
-        }]);
-    }
-  });
+});
 
+function doNew() {
+  resetFormValid('ph_Form');
+  $('ph_add_form').trigger('reset');
+  $('ph_add_form').removeClass('was-validated');
+  $('#addStatusId').val($('#addStatusId :first').val());
+  $('#addUserName').val('');
+  $('#addUserOrgnum').val('');
+  $('#addUserLogon').val('');
+  $('#addnpassword').val('');
+  $('#addvpassword').val('');
+  $('#addUserMobile').val('');
+  $('#addUserPhone').val('');
+  $('#addUserAddress').val('');
 }
-)(jQuery);
+
+function doSearch(vText) {
+
+  $.ajax({
+    async: false,
+    type: mettaData.URLS.List.Method,
+    url: mettaData.URLS.List.URL,
+    headers: PhSettings.Headers,
+    data: {
+      "vText": vText
+    },
+    success: function (response) {
+      if (response.Status) {
+        resultData = response.Data;
+        let vHtml = '';
+        for (var i = 0; i < resultData.length; i++) {
+          let item = resultData[i];
+          vHtml += `<div class="col-sm-4 p-2 mx-auto">
+                <div id="item-${item.nId}" class="card card-custom result-card p-2 h-100" data-rid="${i}">
+                  <div class="card-body">
+                    <div class="row pt-2">
+                      <div class="col-10">
+                        <div class="row pt-2">
+                          <div class="col-12">
+                            <h4><i class="bi bi-file-person"></i> ${item.vName}</h4>
+                            <h6><i class="bi bi-calculator"></i> ${item.vOrgnum}</h6>
+                            <h5>${item.vLogon}</h5>
+                            <h6><i class="bi bi-${parseInt(item.nStatusId) === 1 ? 'hand-thumbs-up' : 'hand-thumbs-down'}"></i> ${item.vStatusName}</h6>
+                            <h6><i class="bi bi-phone"></i> ${item.vMobile}</h6>
+                            <h6><i class="bi bi-telephone"></i> ${item.vPhone}</h6>
+                            <h6><i class="bi bi-geo-alt"></i> ${item.vAddress}</h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="row pt-2">
+                      <div class="col-3 text-start"">
+                        <span class="btn btn-success btn-edit" data-rid="${i}" data-toggle="tooltip" data-placement="bottom" title="${getLabel("Edit")}"><i class="bi bi-pencil"></i></span>
+                      </div>
+                      <div class="col-6 text-center">
+                        <span class="btn btn-warning btn-reset" data-rid="${i}" data-toggle="tooltip" data-placement="bottom" title="${getLabel("Reset Password")}"><i class="bi bi-key"></i></span>
+                      </div>
+                      <div class="col-3 text-end">
+                        <span class="btn btn-danger btn-delete" data-rid="${i}" data-toggle="tooltip" data-placement="bottom" title="${getLabel("Delete")}"><i class="bi bi-trash"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+        }
+        $('#resultData').html(vHtml);
+        $('.btn-edit').off('click').on('click', function (e) {
+          e.preventDefault();
+          resultId = parseInt($(this).data('rid'));
+          doEdit(resultId);
+        });
+        $('.btn-reset').off('click').on('click', function (e) {
+          e.preventDefault();
+          resultId = parseInt($(this).data('rid'));
+          doReset(resultId);
+        });
+        $('.btn-delete').off('click').on('click', function (e) {
+          e.preventDefault();
+          resultId = parseInt($(this).data('rid'));
+          doDelete(resultId);
+        });
+      }
+    }
+  });
+}
+
+function doAdd() {
+
+  if (isValidForm('ph_add_form')) {
+    $.ajax({
+      async: false,
+      type: mettaData.URLS.Save.Method,
+      url: mettaData.URLS.Save.URL,
+      headers: PhSettings.Headers,
+      data: {
+        "nId": 0,
+        "nStatusId": $('#addUserStatus').val(),
+        "vName": $('#addUserName').val(),
+        "vOrgnum": $('#addUserOrgnum').val(),
+        "vLogon": $('#addUserLogon').val(),
+        "vMobile": $('#addUserMobile').val(),
+        "vPhone": $('#addUserPhone').val(),
+        "vAddress": $('#addUserAddress').val(),
+        "vNPassword": $('#addnpassword').val(),
+        "vCPassword": $('#addvpassword').val()
+      },
+      success: function (response) {
+        if (response.Status) {
+          doNew();
+          doSearch('');
+          showToast(getLabel('Save'), 'WARNING', response.Message);
+        } else {
+          showToast(getLabel('Error'), 'DANGER', response.Message);
+        }
+      }
+    });
+  }
+}
+
+function doUpdate() {
+
+  if (isValidForm('ph_edit_form')) {
+    $.ajax({
+      async: false,
+      type: mettaData.URLS.Save.Method,
+      url: mettaData.URLS.Save.URL,
+      headers: PhSettings.Headers,
+      data: {
+        "nId": $('#editUserId').val(),
+        "nStatusId": $('#editUserStatus').val(),
+        "vName": $('#editUserName').val(),
+        "vOrgnum": $('#editUserOrgnum').val(),
+        "vLogon": $('#editUserLogon').val(),
+        "vMobile": $('#editUserMobile').val(),
+        "vPhone": $('#editUserPhone').val(),
+        "vAddress": $('#editUserAddress').val()
+      },
+      success: function (response) {
+        if (response.Status) {
+          doNew();
+          doSearch('');
+          showToast(getLabel('Save'), 'WARNING', response.Message);
+        } else {
+          showToast(getLabel('Error'), 'DANGER', response.Message);
+        }
+      }
+    });
+  }
+}
+
+function doDelete(nIdx) {
+  let item = resultData[nIdx];
+  let nId = item.nId;
+  if (nId > 0) {
+    swal.fire({
+      title: getLabel('Delete'),
+      text: getLabel('Are you sure ?'),
+      showCancelButton: true,
+      confirmButtonText: "<i class='bi bi-check-lg'></i> " + getLabel('Yes'),
+      cancelButtonText: "<i class='bi bi-x-lg'></i> " + getLabel('No')
+    }).then(function (result) {
+      if (result.value) {
+        $.ajax({
+          async: false,
+          type: mettaData.URLS.Delete.Method,
+          url: mettaData.URLS.Delete.URL,
+          headers: PhSettings.Headers,
+          data: {
+            "nId": nId
+          },
+          success: function (response) {
+            if (response.Status) {
+              doNew();
+              doSearch('');
+              showToast(getLabel('Delete'), 'SUCCESS', response.Message);
+            } else {
+              showToast(getLabel('Error'), 'DANGER', response.Message);
+            }
+          }
+        });
+      } else if (result.dismiss === "cancel") {
+      }
+    });
+  }
+}
+
+function doEdit(nIdx) {
+
+  resetFormValid('ph_Form');
+  let item = resultData[nIdx];
+  $('#editUserId').val(item.nId);
+  $('#editUserStatus').val(item.nStatusId);
+  $('#editUserName').val(item.vName);
+  $('#editUserLogon').val(item.vLogon);
+  $('#editUserOrgnum').val(item.vOrgnum);
+  $('#editUserMobile').val(item.vMobile);
+  $('#editUserPhone').val(item.vPhone);
+  $('#editUserAddress').val(item.vAddress);
+  $('#editUserModal').modal('show');
+}
+
+function doReset(nIdx) {
+
+  resetFormValid('ph_Form');
+  let item = resultData[nIdx];
+  $('#resetUserId').val(item.nId);
+  $('#resetNPassword').val('');
+  $('#resetVPassword').val('');
+  $('#resetPasswordModal').modal('show');
+}
+
+function doResetPWD() {
+
+  if (isValidForm('ph_resetPassword_form')) {
+    $.ajax({
+      async: false,
+      type: mettaData.URLS.ResetPWD.Method,
+      url: mettaData.URLS.ResetPWD.URL,
+      headers: PhSettings.Headers,
+      data: {
+        "nId": $('#resetUserId').val(),
+        "vNPassword": $('#resetNPassword').val(),
+        "vVPassword": $('#resetVPassword').val()
+      },
+      success: function (response) {
+        if (response.Status) {
+          doNew();
+          doSearch('');
+          showToast(getLabel('Reset Password'), 'WARNING', response.Message);
+        } else {
+          showToast(getLabel('Error'), 'DANGER', response.Message);
+        }
+      }
+    });
+  }
+}

@@ -17,7 +17,6 @@ jQuery(document).ready(function () {
 });
 
 function doSignIn() {
-  $('#loginStatus').text('');
   let vUsername = $('#username').val();
   let vPassword = $('#password').val();
   if (isValidForm('login-form')) {
@@ -32,7 +31,7 @@ function doSignIn() {
       },
       success: function (response) {
         if (response.Status) {
-          window.location.href = PhSettings.rootPath;
+          window.location.href = window.location.href
         } else {
           $('#loginStatus').text(response.Message);
         }

@@ -10,13 +10,11 @@ class cPhsCode {
     'status' => 'phs_cod_status',
     'gender' => 'phs_cod_gender',
     'yesno' => 'phs_cod_yes_no',
-    'data-type' => 'phs_cod_data_type',
   );
 
   const STATUS = 'status';
   const GENDER = 'gender';
   const YESNO = 'yesno';
-  const DATA_TYPE = 'data-type';
 
   public static function getSelectStatement($vTableName, $vWhere = '', $vOrder = '') {
     $sSQL = 'SELECT id, name, rem'
@@ -110,4 +108,5 @@ class cPhsCode {
       throw new Exception($vMsgs);
     }
   }
+
 }

@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header px-2 py-1">
-        <h5><?php echo getLabel("lbl.cms.Match fields"); ?></h5>
+        <h5><?php echo getLabel("Match fields"); ?></h5>
       </div>
       <div class="modal-body" style="height: 70vh; overflow-y: auto;">
         <form id="">
@@ -38,8 +38,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td><?php echo getLabel("lbl.cms.Required Columns"); ?></td>
-                    <td><?php echo getLabel("lbl.cms.File Columns"); ?></td>
+                    <td><?php echo getLabel("Required Columns"); ?></td>
+                    <td><?php echo getLabel("File Columns"); ?></td>
                     <td></td>
                   </tr>
                 </thead>
@@ -51,10 +51,10 @@
         </form>
       </div>
       <div class="modal-footer p-1">
-        <button type="button" class="btn btn-secondary" title="<?php echo getLabel("lbl.cms.Close"); ?>" data-bs-dismiss="modal">
+        <button type="button" class="btn btn-secondary" title="<?php echo getLabel("Close"); ?>" data-bs-dismiss="modal">
           <i class="bi bi-x-lg"></i>
         </button>
-        <button id="submit-import-file" class="btn btn-primary toolbar-btn" title="<?php echo getLabel("lbl.cms.Save"); ?>" data-bs-title="<?php echo getLabel("lbl.cms.Save"); ?>" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover focus">
+        <button id="submit-import-file" class="btn btn-primary toolbar-btn" title="<?php echo getLabel("Save"); ?>" data-bs-title="<?php echo getLabel("Save"); ?>" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover focus">
           <i class="bi bi-check-lg"></i>
         </button>
       </div>

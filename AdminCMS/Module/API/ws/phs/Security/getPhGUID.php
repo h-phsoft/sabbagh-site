@@ -2,7 +2,7 @@
 
 if (isset($oRest)) {
 
-  $oRest->setMessage(getLabel('lbl.cms.Somthing Wrong!!!'));
+  $oRest->setMessage(getLabel('Somthing Wrong!!!'));
   $oToken = cCpyToken::getNewInstance(ph_ServerVar('REMOTE_ADDR'));
   if ($oToken->Id > 0) {
     $oRest->setRowData(array(

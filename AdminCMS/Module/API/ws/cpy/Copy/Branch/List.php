@@ -11,12 +11,14 @@ if (isset($oRest)) {
     if ($nPageSize === 0) {
       $nPageSize = 25;
     }
-    $vSearchFld = $oRest->getParameter('vSFld');
     $vSearchText = $oRest->getParameter('vText');
     if ($vSearchText) {
       $vSearchText = str_replace(" ", "%", $vSearchText);
     }
-    $vWhere = getCondition($vSearchText, $vSearchFld, 'branch');
+    $vWhere = 'id>0';
+    if ($vSearchText != '') {
+      $vWhere .= ' AND (`name` LIKE "%' . $vSearchText . '%" OR `address` LIKE "%' . $vSearchText . '%" OR `phone` LIKE "%' . $vSearchText . '%")';
+    }
     $aList = cCpyBranch::getArray($vWhere, '', $nPage, $nPageSize);
     $aData = array();
     $nIdx = 0;

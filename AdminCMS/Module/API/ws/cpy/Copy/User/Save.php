@@ -21,7 +21,7 @@ if (isset($oRest)) {
         if ($nId == 0) {
           $oNewUser = cCpyUser::getInstance($nSavedId);
           $vNPassword = $oRest->getParameter('vNPassword');
-          $vVPassword = $oRest->getParameter('vCPassword');
+          $vVPassword = $oRest->getParameter('vVPassword');
           $oNewUser->resetPassword($vNPassword, $vVPassword);
         }
         $oRest->setStatus(true);

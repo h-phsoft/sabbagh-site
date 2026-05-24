@@ -1,8 +1,8 @@
 <?php
-if ($perms->IsImport) {
+if ($perms->Import) {
   ?>
-  <span id="ph-import" class="btn btn-info mx-1" data-toggle="tooltip" data-placement="bottom" title="<?php echo getLabel("lbl.cms.Import Excel File"); ?>">
-    <i class="bi bi-upload"></i>&nbsp;<?php echo getLabel('lbl.cms.Upload'); ?>
+  <span id="ph-import" class="btn btn-info mx-1" data-toggle="tooltip" data-placement="bottom" title="<?php echo getLabel("Import Excel File"); ?>">
+    <i class="bi bi-upload"></i>
   </span>
   <?php
 }

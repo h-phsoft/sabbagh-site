@@ -1,0 +1,28 @@
+:root, [data-bs-theme="dark"] {
+  --bs-tertiary-bg: #3c424a;
+  --ph-body-color: #202124;
+}
+
+body {
+  background-color: var(--ph-body-color);
+}
+
+.form-control {
+  background-color: var(--bs-tertiary-bg) !important;
+}
+.form-select {
+  background-color: var(--bs-tertiary-bg) !important;
+}
+
+.swal2-modal, .swal2-popup, .swal2-title, .swal2-show {
+  color: var(--bs-body-color) !important;
+  background-color: var(--bs-body-bg) !important;
+}
+
+/****************************************************************/
+.result-card:hover {
+  border: 1px solid var(--ph-main-outside-color) !important;
+  /*box-shadow: 0px 0px 5px 0px var(--ph-main-outside-color) !important;*/
+  box-shadow: 0 5px 20px 0 rgba(255, 255, 255, 0.5) !important;
+}
+/****************************************************************/

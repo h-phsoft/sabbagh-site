@@ -1,150 +1,251 @@
 <?php
-$vBreadCrumb = Ph_getBreadCrumb($requestProg);
-$nProdCounts = ph_GetDBValue('count(*)', 'ecom_product', 'status_id=1');
-$nCategories = ph_GetDBValue('count(*)', 'ecom_cat', 'status_id=1');
-$nOrders = ph_GetDBValue('count(*)', 'ecom_order', '`status_id`=0 and `addat`<DATE_ADD(CURDATE(), INTERVAL 1 DAY) and `addat`>DATE_SUB(CURDATE(), INTERVAL 1 DAY)');
-$n7DaysRevenue = ph_GetDBValue('CEIL(sum(item_amt-item_cost))', 'ecom_vorder_items', '`ord_status_id`=2 and `ord_addat`<DATE_ADD(CURDATE(), INTERVAL 1 DAY) and `ord_addat`>=DATE_SUB(CURDATE(), INTERVAL 7  DAY)');
-$nMonthRevenue = ph_GetDBValue('CEIL(sum(item_amt-item_cost))', 'ecom_vorder_items', '`ord_status_id`=2 and `ord_addat`<DATE_ADD(CURDATE(), INTERVAL 1 DAY) and `ord_addat`>=DATE_SUB(CURDATE(), INTERVAL 30 DAY)');
-if (!$n7DaysRevenue) {
-  $n7DaysRevenue = 0;
-}
-if (!$nMonthRevenue) {
-  $nMonthRevenue = 0;
-}
+$aStatuss = cPhsCode::getArray(cPhsCode::STATUS);
 ?>
-<section class="content-main">
-  <div class="content-header">
-    <div>
-      <h2 class="content-title">
-        <i class="icon-xxl <?php echo $requestProg->Icon; ?>"></i>
-        <?php echo getLabel($requestProg->Name); ?>
-      </h2>
-      <div>
-        <?php echo $vBreadCrumb; ?>
-      </div>
-    </div>
-    <div>
-      <!--<a href="#" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>Create report</a>-->
-    </div>
-  </div>
+<div class="pagetitle">
   <div class="row">
-    <div class="col-sm-3">
-      <div class="card card-body mb-4">
-        <article class="icontext">
-          <span class="icon icon-sm rounded-circle bg-primary-light">
-            <i class="hz-icon-color icon-xxl bi bi-currency-dollar"></i>
-          </span>
-          <div class="text">
-            <h6 class="mb-1 card-title">Revenue Last 7 Days</h6>
-            <span><?php echo $n7DaysRevenue; ?></span>
-            <span class="text-sm"> Done orders </span>
-          </div>
-        </article>
+    <div class="col-12 col-sm-3">
+      <div class="row">
+        <div class="col-12">
+          <h1><?php echo getLabel($requestProg->Name); ?></h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <?php echo Ph_getBreadCrumb($requestProg); ?>
+        </div>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="card card-body mb-4">
-        <article class="icontext">
-          <span class="icon icon-sm rounded-circle bg-primary-light">
-            <i class="hz-icon-color icon-xxl bi bi-truck"></i>
-          </span>
-          <div class="text">
-            <h6 class="mb-1 card-title">Orders</h6>
-            <span><?php echo $nOrders; ?></span>
-            <span class="text-sm"> New orders </span>
-          </div>
-        </article>
-      </div>
+    <div class="col-12 col-sm-3 pt-1 pt-sm-0 d-flex align-items-center justify-content-center justify-content-sm-start">
     </div>
-    <div class="col-sm-3">
-      <div class="card card-body mb-4">
-        <article class="icontext">
-          <span class="icon icon-sm rounded-circle bg-primary-light">
-            <i class="hz-icon-color icon-xxl bi bi-qr-code-scan"></i>
-          </span>
-          <div class="text">
-            <h6 class="mb-1 card-title">Products</h6>
-            <span><?php echo $nProdCounts; ?></span>
-            <span class="text-sm"> In <?php echo $nCategories; ?> Categories </span>
-          </div>
-        </article>
-      </div>
+    <div class="col-12 col-sm-3 pt-1 pt-sm-0 d-flex align-items-center justify-content-center">
     </div>
-    <div class="col-sm-3">
-      <div class="card card-body mb-4">
-        <article class="icontext">
-          <span class="icon icon-sm rounded-circle bg-primary-light">
-            <i class="hz-icon-color icon-xxl bi bi-basket"></i>
-          </span>
-          <div class="text">
-            <h6 class="mb-1 card-title">Earning Last 30 Days</h6>
-            <span><?php echo $nMonthRevenue; ?></span>
-            <span class="text-sm"> Done orders </span>
+    <div class="col-12 col-sm-3 pt-1 pt-sm-0 d-flex align-items-center justify-content-center justify-content-sm-end">
+      <?php include "section/btn_new.php" ?>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row pt-2">
+    <div class="col-sm-12">
+      <div class="card card-custom">
+        <div class="card-body">
+          <div class="row pt-2">
+            <div class="col-sm-2 text-center">
+              <button id="result-type-0" class="result-type btn btn-light d-none" data-val="0"><i class="bi bi-grid"></i></button>
+              <button id="result-type-1" class="result-type btn btn-light d-none" data-val="1"><i class="bi bi-view-stacked"></i></button>
+              <button id="result-type-2" class="result-type btn btn-light d-none" data-val="2"><i class="bi bi-hdd-stack"></i></button>
+            </div>
+            <div class="col-sm-8 text-center">
+              <input id="ph-search-text" class="form-control form-control-sm text-center" type="text" value="" autocomplete="off" required="true" />
+            </div>
+            <div class="col-sm-2 text-center">
+            </div>
           </div>
-        </article>
+          <div class="row pt-2 g-3" id="resultData">
+
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card mb-4">
-        <article class="card-body">
-          <h5 class="card-title">Sale Last Year</h5>
-          <canvas id="lineChartSales" width="100%" height="25vh"></canvas>
-        </article>
+</div>
+
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editUserModalLabel"><?php echo getLabel($requestProg->Name); ?></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="ph_edit_form">
+          <div class="row pt-1">
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Name'); ?></label>
+            <div class="col-sm-4">
+              <input id="editUserId" type="hidden" value="" />
+              <input id="editUserName" class="form-control form-control-sm" type="text" value="" required="true" />
+            </div>
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Logon'); ?></label>
+            <div class="col-sm-4">
+              <input id="editUserLogon" class="form-control form-control-sm" type="text" value="" required="true" />
+            </div>
+          </div>
+          <div class="row pt-1">
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('OrgNum'); ?></label>
+            <div class="col-sm-4">
+              <input id="editUserOrgnum" class="form-control form-control-sm" type="text" value="" required="true" />
+            </div>
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Status'); ?></label>
+            <div class="col-sm-4">
+              <select id="editUserStatus" class="form-control form-control-sm form-select">
+                <?php
+                foreach ($aStatuss as $element) {
+                  ?>
+                  <option value="<?php echo $element->Id; ?>"><?php echo $element->Name; ?></option>
+                  <?php
+                }
+                ?>
+              </select>
+            </div>
+          </div>
+          <div class="row pt-1">
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Mobile'); ?></label>
+            <div class="col-sm-4">
+              <input id="editUserMobile" class="form-control form-control-sm" type="text" value="" required="true" />
+            </div>
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Phone'); ?></label>
+            <div class="col-sm-4">
+              <input id="editUserPhone" class="form-control form-control-sm" type="text" value="" />
+            </div>
+          </div>
+          <div class="row pt-1">
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Address'); ?></label>
+            <div class="col-sm-10">
+              <input id="editUserAddress" class="form-control form-control-sm" type="text" value="" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="ph-modal-footer">
+        <div class="row pt-1">
+          <div class="col-4 pt-1 pt-sm-0 d-flex align-items-center justify-content-start">
+            <?php include "section/btn_save.php" ?>
+          </div>
+          <div class="col-4 pt-1 pt-sm-0 d-flex align-items-center justify-content-center justify-content-sm-start">
+          </div>
+          <div class="col-4 pt-1 pt-sm-0 d-flex align-items-center justify-content-end justify-content-sm-end">
+            <span class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" data-toggle="tooltip" data-placement="bottom" title="<?php echo getLabel("Close"); ?>">
+              <i class="bi bi-box-arrow-left"></i>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xl-4 col-lg-12">
-      <div class="card mb-4">
-        <article class="card-body">
-          <h5 class="card-title">Sales Last Year By Brands</h5>
-          <canvas id="barChartBrands" width="100%"></canvas>
-        </article>
+</div>
+
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="resetPasswordModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resetPasswordModalLabel"><?php echo getLabel('Reset Password'); ?></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-    </div>
-    <div class="col-xl-4 col-lg-12">
-      <div class="card mb-4">
-        <article class="card-body">
-          <h5 class="card-title">Sales Last Year By Category</h5>
-          <canvas id="barChartCats" width="100%"></canvas>
-        </article>
+      <div class="modal-body">
+        <form id="ph_resetPassword_form">
+          <div class="row pt-1">
+            <label class="col-form-label col-sm-4 text-center"><?php echo getLabel('New Password'); ?></label>
+            <div class="col-8">
+              <input id="resetUserId" type="hidden" value="" />
+              <input class="form-control form-control-sm" type="password" name="resetNPassword" id="resetNPassword" value="" required="true"/>
+            </div>
+          </div>
+          <div class="row pt-1">
+            <label class="col-form-label col-sm-4 text-center"><?php echo getLabel('Verify Password'); ?></label>
+            <div class="col-8">
+              <input class="form-control form-control-sm" type="password"  name="resetVPassword" id="resetVPassword" value="" required="true"/>
+            </div>
+          </div>
+        </form>
       </div>
-    </div>
-    <div class="col-xl-4 col-lg-12">
-      <div class="card mb-4">
-        <article class="card-body">
-          <h5 class="card-title">Sales Last Year By Tags</h5>
-          <canvas id="barChartTags" width="100%"></canvas>
-        </article>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xl-4 col-lg-12">
-      <div class="card mb-4">
-        <article class="card-body">
-          <h5 class="card-title">Sales Last Year By Months</h5>
-          <canvas id="barChartMonths" width="100%"></canvas>
-        </article>
-      </div>
-    </div>
-    <div class="col-xl-4 col-lg-12">
-      <div class="card mb-4">
-        <article class="card-body">
-          <h5 class="card-title">Sales Last Year By Week Days</h5>
-          <canvas id="barChartWeekDays" width="100%"></canvas>
-        </article>
-      </div>
-    </div>
-    <div class="col-xl-4 col-lg-12">
-      <div class="card mb-4">
-        <article class="card-body">
-          <h5 class="card-title">Sales Last Year By Hours</h5>
-          <canvas id="barChartHours" width="100%"></canvas>
-        </article>
+      <div class="ph-modal-footer">
+        <div class="row pt-1">
+          <div class="col-6 pt-1 pt-sm-0 d-flex align-items-center justify-content-start">
+            <span id="ph-reset" class="btn btn-warning mx-1" data-toggle="tooltip" data-placement="bottom" title="<?php echo getLabel('Reset Password'); ?>">
+              <i class="bi bi-key"></i>
+            </span>
+          </div>
+          <div class="col-6 pt-1 pt-sm-0 d-flex align-items-center justify-content-end justify-content-sm-end">
+            <span class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" data-toggle="tooltip" data-placement="bottom" title="<?php echo getLabel("Close"); ?>">
+              <i class="bi bi-box-arrow-left"></i>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>
+
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addUserModalLabel"><?php echo $requestProg->Name ?></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="ph_add_form">
+          <div class="row pt-1">
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Name'); ?></label>
+            <div class="col-sm-4">
+              <input id="addUserName" class="form-control form-control-sm" type="text" value="" required="true"/>
+            </div>
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Logon'); ?></label>
+            <div class="col-sm-4">
+              <input id="addUserLogon" class="form-control form-control-sm" type="text" value="" required="true"/>
+            </div>
+          </div>
+          <div class="row pt-1">
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('OrgNum'); ?></label>
+            <div class="col-sm-4">
+              <input id="addUserOrgnum" class="form-control form-control-sm" type="text" value="" required="true"/>
+            </div>
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Status'); ?></label>
+            <div class="col-sm-4">
+              <select id="addUserStatus" class="form-control form-control-sm form-select">
+                <?php
+                foreach ($aStatuss as $element) {
+                  ?>
+                  <option value="<?php echo $element->Id; ?>"><?php echo $element->Name; ?></option>
+                  <?php
+                }
+                ?>
+              </select>
+            </div>
+          </div>
+          <div class="row pt-1">
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Password'); ?></label>
+            <div class="col-sm-4">
+              <input class="form-control form-control-sm" type="password" name="addUsernpassword" id="addnpassword" value="" required="true"/>
+            </div>
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Verify Password'); ?></label>
+            <div class="col-sm-4">
+              <input class="form-control form-control-sm" type="password"  name="addUservpassword" id="addvpassword" value="" required="true"/>
+            </div>
+          </div>
+          <div class="row pt-1">
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Mobile'); ?></label>
+            <div class="col-sm-4">
+              <input id="addUserMobile" class="form-control form-control-sm" type="text" value="" required="true"/>
+            </div>
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Phone'); ?></label>
+            <div class="col-sm-4">
+              <input id="addUserPhone" class="form-control form-control-sm" type="text" value="" />
+            </div>
+          </div>
+          <div class="row pt-1">
+            <label class="col-form-label col-sm-2 text-center"><?php echo getLabel('Address'); ?></label>
+            <div class="col-sm-10">
+              <input id="addUserAddress" class="form-control form-control-sm" type="text" value="" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="ph-modal-footer">
+        <div class="row pt-1">
+          <div class="col-4 pt-1 pt-sm-0 d-flex align-items-center justify-content-start">
+            <?php include "section/btn_submit.php" ?>
+          </div>
+          <div class="col-4 pt-1 pt-sm-0 d-flex align-items-center justify-content-center justify-content-sm-start">
+          </div>
+          <div class="col-4 pt-1 pt-sm-0 d-flex align-items-center justify-content-end justify-content-sm-end">
+            <span class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" data-toggle="tooltip" data-placement="bottom" title="<?php echo getLabel("Close"); ?>">
+              <i class="bi bi-box-arrow-left"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

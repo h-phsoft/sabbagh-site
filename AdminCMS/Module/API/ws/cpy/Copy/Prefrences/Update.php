@@ -13,7 +13,7 @@ if (isset($oRest)) {
     $oInstance->Rem = ph_Get_Post('vRem');
     $bIsAllOk = true;
     try {
-      $oRest->setMessage(getLabel('lbl.cms.Master Not Saved'));
+      $oRest->setMessage(getLabel('Master Not Saved'));
       $nSavedId = $oInstance->save($oUser->Id);
       if ($nSavedId > 0) {
 
@@ -28,7 +28,7 @@ if (isset($oRest)) {
         ph_CommitTransaction();
         $oRest->setRowData(array(
           'Status' => true,
-          'Message' => getLabel('lbl.cms.Done'),
+          'Message' => getLabel('Done'),
           'Id' => $nSavedId
         ));
       } else {

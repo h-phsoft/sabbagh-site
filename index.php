@@ -24,7 +24,7 @@ if (is_array($aURI) && count($aURI) > 0 && count($aURI) >= PHS_SITE_URI_IDX) {
 if (!file_exists('page/page-' . $vPage . '.php')) {
   $vPage = 'main';
 }
-$aProducts = cDistProducts::getArray();
+//$aProducts = cEcomProducts::getArray();
 ?>
 <!DOCTYPE html>
 <html lang="en">

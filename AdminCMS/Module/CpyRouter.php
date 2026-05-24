@@ -7,60 +7,52 @@
 /* Authentication */
 cPhsRest::addRoute('Authentication', 'cpy/Authentication/Login', cPhsRest::METHOD_POST, false);
 cPhsRest::addRoute('Authentication', 'cpy/Authentication/Logout', cPhsRest::METHOD_DELETE);
+/* Check Warranty */
+cPhsRest::addRoute('CheckWarranty', 'cpy/Ecom/Sales/CheckWarranty', cPhsRest::METHOD_GET, false);
+cPhsRest::addRoute('Ticket', 'cpy/Ecom/Ticket/addTicket', cPhsRest::METHOD_POST, false);
 /* Site */
-cPhsRest::addRoute('InitSite', 'site/Site/InitSite', cPhsRest::METHOD_POST, false);
-cPhsRest::addRoute('getSupplierBrand', 'site/Site/getSupplierBrand', cPhsRest::METHOD_POST, false);
-cPhsRest::addRoute('Email', 'site/Ecom/Cont/contactForm', cPhsRest::METHOD_POST);
-cPhsRest::addRoute('Categories', 'site/Ecom/Cat/CatList', cPhsRest::METHOD_OPTIONS);
-cPhsRest::addRoute('Products', 'site/Ecom/Product/ProductList', cPhsRest::METHOD_OPTIONS);
-cPhsRest::addRoute('Search', 'site/Ecom/Product/Search', cPhsRest::METHOD_OPTIONS);
-cPhsRest::addRoute('GetProduct', 'site/Ecom/Product/GetProduct', cPhsRest::METHOD_GET);
-cPhsRest::addRoute('AddToCart', 'site/Ecom/Cart/Add', cPhsRest::METHOD_POST);
-cPhsRest::addRoute('UpdateCart', 'site/Ecom/Cart/Update', cPhsRest::METHOD_POST);
-cPhsRest::addRoute('ClearCart', 'site/Ecom/Cart/Clear', cPhsRest::METHOD_POST);
-cPhsRest::addRoute('DeleteCart', 'site/Ecom/Cart/Delete', cPhsRest::METHOD_POST);
-cPhsRest::addRoute('Checkout', 'site/Ecom/Cart/Checkout', cPhsRest::METHOD_POST);
+cPhsRest::addRoute('Categories', 'cpy/Ecom/Cat/CatList', cPhsRest::METHOD_OPTIONS, false);
+cPhsRest::addRoute('Products', 'cpy/Ecom/Product/ProductList', cPhsRest::METHOD_OPTIONS, false);
 /* User */
 cPhsRest::addRoute('User/ResetPassword', 'cpy/Copy/User/ResetPassword');
 cPhsRest::addRoute('User/ResetPwdCode', 'cpy/Copy/User/ResetPasswordCode');
 cPhsRest::addRoute('User/ChangePassword', 'cpy/Copy/User/ChangePassword');
 cPhsRest::addRoute('User/ChangeLanguage', 'cpy/Copy/User/ChangeLanguage');
-cPhsRest::addFullRoute('Logo', 'cpy/Copy/Logo');
 cPhsRest::addFullRoute('PGrp', 'cpy/Copy/PGrp');
 cPhsRest::addRoute('PGrp/Perms', 'cpy/Copy/PGrp/UpdatePermissions');
 cPhsRest::addFullRoute('User', 'cpy/Copy/User');
 cPhsRest::addFullRoute('Branch', 'cpy/Copy/Branch');
-cPhsRest::addFullRoute('Language', 'cpy/Copy/Language');
-/* ECom Queries */
-cPhsRest::addRoute('Query/Orders', 'cpy/Ecom/Query/Orders', cPhsRest::METHOD_OPTIONS);
-cPhsRest::addRoute('Query/Sales', 'cpy/Ecom/Query/Sales', cPhsRest::METHOD_OPTIONS);
-/* ECom Dashboard */
-cPhsRest::addRoute('Dashboard/Orders', 'cpy/Ecom/Dashboard/Orders', cPhsRest::METHOD_POST, false);
-cPhsRest::addRoute('Dashboard/OrdersByBrand', 'cpy/Ecom/Dashboard/OrdersByBrand', cPhsRest::METHOD_POST);
-cPhsRest::addRoute('Dashboard/OrdersByCategory', 'cpy/Ecom/Dashboard/OrdersByCategory', cPhsRest::METHOD_POST);
-cPhsRest::addRoute('Dashboard/OrdersByTag', 'cpy/Ecom/Dashboard/OrdersByTag', cPhsRest::METHOD_POST);
-cPhsRest::addRoute('Dashboard/OrdersByMonths', 'cpy/Ecom/Dashboard/OrdersByMonths', cPhsRest::METHOD_POST);
-cPhsRest::addRoute('Dashboard/OrdersByWeekDays', 'cpy/Ecom/Dashboard/OrdersByWeekDays', cPhsRest::METHOD_POST);
-cPhsRest::addRoute('Dashboard/OrdersByHours', 'cpy/Ecom/Dashboard/OrdersByHours', cPhsRest::METHOD_POST);
-/* Dist CMS */
-cPhsRest::addFullRoute('About', 'cpy/Dist/About');
-cPhsRest::addFullRoute('Blog', 'cpy/Dist/Blog');
-cPhsRest::addFullRoute('Categories', 'cpy/Dist/Categories');
-cPhsRest::addFullRoute('Color', 'cpy/Dist/Color');
-cPhsRest::addFullRoute('Country', 'cpy/Dist/Country');
-cPhsRest::addFullRoute('Distination', 'cpy/Dist/Distination');
-cPhsRest::addFullRoute('Gallery', 'cpy/Dist/Gallery');
-cPhsRest::addFullRoute('Groups', 'cpy/Dist/Groups');
-cPhsRest::addFullRoute('Team', 'cpy/Dist/Team');
-cPhsRest::addFullRoute('Prefs', 'cpy/Dist/Prefs');
-cPhsRest::addFullRoute('Products', 'cpy/Dist/Products');
-cPhsRest::addFullRoute('Services', 'cpy/Dist/Services');
-cPhsRest::addFullRoute('Slider', 'cpy/Dist/Slider');
-cPhsRest::addFullRoute('Social', 'cpy/Dist/Social');
-cPhsRest::addFullRoute('Suppliers', 'cpy/Dist/Suppliers');
-cPhsRest::addFullRoute('Tag', 'cpy/Dist/Tag');
-cPhsRest::addFullRoute('Testimonial', 'cpy/Dist/Testimonial');
-cPhsRest::addFullRoute('Vpackages', 'cpy/Dist/Vpackages');
-cPhsRest::addFullRoute('Vtags', 'cpy/Dist/Vtags');
-cPhsRest::addFullRoute('Vtypes', 'cpy/Dist/Vtypes');
+
+/* ECom */
+cPhsRest::addRoute('Dashboard/BrandSales', 'cpy/Ecom/Dashboard/SalesByBrand', cPhsRest::METHOD_OPTIONS);
+cPhsRest::addRoute('Dashboard/CategorySales', 'cpy/Ecom/Dashboard/SalesByCategory', cPhsRest::METHOD_OPTIONS);
+cPhsRest::addRoute('Dashboard/BranchSales', 'cpy/Ecom/Dashboard/SalesByBranch', cPhsRest::METHOD_OPTIONS);
+cPhsRest::addRoute('Dashboard/UserSales', 'cpy/Ecom/Dashboard/SalesByUser', cPhsRest::METHOD_OPTIONS);
+cPhsRest::addRoute('Dashboard/ProductSales', 'cpy/Ecom/Dashboard/SalesByProducts', cPhsRest::METHOD_OPTIONS);
+cPhsRest::addRoute('Dashboard/BrandTickets', 'cpy/Ecom/Dashboard/TicketsByBrand', cPhsRest::METHOD_OPTIONS);
+cPhsRest::addRoute('Dashboard/CategoryTickets', 'cpy/Ecom/Dashboard/TicketsByCategory', cPhsRest::METHOD_OPTIONS);
+cPhsRest::addRoute('Dashboard/BranchTickets', 'cpy/Ecom/Dashboard/TicketsByBranch', cPhsRest::METHOD_OPTIONS);
+//
+cPhsRest::addFullRoute('About', 'cpy/Ecom/About');
+cPhsRest::addFullRoute('Adv', 'cpy/Ecom/Adv');
+cPhsRest::addFullRoute('FAQ', 'cpy/Ecom/Faq');
+cPhsRest::addFullRoute('Tag', 'cpy/Ecom/Tag');
+cPhsRest::addFullRoute('Service', 'cpy/Ecom/Service');
+cPhsRest::addFullRoute('Category', 'cpy/Ecom/Cat');
+cPhsRest::addFullRoute('Banner', 'cpy/Ecom/Banner');
+cPhsRest::addFullRoute('Brand', 'cpy/Ecom/Brand');
+cPhsRest::addFullRoute('Product', 'cpy/Ecom/Product');
+cPhsRest::addFullRoute('ProductImages', 'cpy/Ecom/ProdImage');
+cPhsRest::addFullRoute('ProductSizes', 'cpy/Ecom/ProdSize');
+cPhsRest::addFullRoute('ProductFacts', 'cpy/Ecom/ProdFacts');
+//cPhsRest::addRoute('Products', 'cpy/Ecom/Product/Products', cPhsRest::METHOD_OPTIONS);
+cPhsRest::addRoute('Product/Autocomplete', 'cpy/Ecom/Product/Autocomplete');
+cPhsRest::addFullRoute('Serials', 'cpy/Ecom/ProdSerial');
+cPhsRest::addRoute('Serials/Import', 'cpy/Ecom/ProdSerial/Import');
+cPhsRest::addRoute('Serial/Autocomplete', 'cpy/Ecom/ProdSerial/Autocomplete');
+cPhsRest::addFullRoute('Orders', 'cpy/Ecom/Orders');
+cPhsRest::addFullRoute('Sales', 'cpy/Ecom/Sales');
+cPhsRest::addFullRoute('Tickets', 'cpy/Ecom/Ticket');
+cPhsRest::addFullRoute('Customers', 'cpy/Ecom/Customers');
+cPhsRest::addRoute('Customers/ResetPassword', 'cpy/Ecom/Customers/ResetPassword');
 //

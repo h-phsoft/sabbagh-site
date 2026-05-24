@@ -1,0 +1,28 @@
+:root, [data-bs-theme="light"]{
+  --bs-tertiary-bg: #e6e6e6;
+  --ph-body-color: #FFFFFFFF;
+}
+
+body {
+  background-color: var(--ph-body-color);
+}
+
+.form-control {
+
+}
+.form-select {
+
+}
+
+.swal2-modal, .swal2-popup, .swal2-title, .swal2-show {
+  color: var(--bs-body-color) !important;
+  background-color: var(--bs-tertiary-bg) !important;
+}
+
+/****************************************************************/
+.result-card:hover {
+  border: 1px solid var(--ph-main-outside-color) !important;
+  /*box-shadow: 0px 0px 5px 0px var(--ph-main-outside-color) !important;*/
+  box-shadow: 0 5px 20px 0 rgba(29, 233, 182, .5) !important;
+}
+/****************************************************************/

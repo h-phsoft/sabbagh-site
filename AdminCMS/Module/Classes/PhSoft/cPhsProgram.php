@@ -306,45 +306,4 @@ class cPhsProgram {
     }
     return $vHtmlMenu;
   }
-
-  public static function getSideMenu($aMenu, $oUser, $vReqId) {
-    $vHtmlMenu = '';
-    if (count($aMenu) > 0) {
-      foreach ($aMenu as $menu) {
-        if (count($menu->aSub) > 0) {
-          $vParent = '';
-          if (substr(strval($vReqId), 0, strlen(strval($menu->Id))) === strval($menu->Id)) {
-            $vParent = 'active';
-          }
-          $vHtmlMenu .= '<li class="menu-item has-submenu ' . $vParent . '">';
-          $vHtmlMenu .= '  <a class="menu-link" href="' . $menu->File . '">';
-          $vHtmlMenu .= '    <i class="icon material-icons ' . $menu->Icon . '"></i>';
-          $vHtmlMenu .= '    <span class="text">' . getLabel($menu->Name) . '</span>';
-          $vHtmlMenu .= '  </a>';
-          $vHtmlMenu .= '  <div class="submenu">';
-          foreach ($menu->aSub as $smenu) {
-            $sactiv = '';
-            if (intval($vReqId) === intval($smenu->Id)) {
-              $sactiv = 'active';
-            }
-            $vHtmlMenu .= '  <a class="' . $sactiv . '" href="' . $smenu->File . '"><i class="icon material-icons ' . $smenu->Icon . '"></i>' . getLabel($smenu->Name) . '</a>';
-          }
-          $vHtmlMenu .= '  </div>';
-          $vHtmlMenu .= '</li>';
-        } else {
-          $activ = '';
-          if (intval($vReqId) === intval($menu->Id)) {
-            $activ = 'active';
-          }
-          $vHtmlMenu .= '<li class="menu-item ' . $activ . '">';
-          $vHtmlMenu .= '  <a class="menu-link" href="' . $menu->File . '">';
-          $vHtmlMenu .= '    <i class="icon material-icons ' . $menu->Icon . '"></i>';
-          $vHtmlMenu .= '    <span class="text">' . getLabel($menu->Name) . '</span>';
-          $vHtmlMenu .= '  </a>';
-          $vHtmlMenu .= '</li>';
-        }
-      }
-    }
-    return $vHtmlMenu;
-  }
 }

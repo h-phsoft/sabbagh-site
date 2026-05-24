@@ -11,24 +11,16 @@ if ($oUser != null) {
     $vReqId = '';
   }
   ?>
-  <?php
-}
-?>
-<aside class="navbar-aside" id="offcanvas_aside">
-  <div class="aside-top">
-    <div></div>
-    <a href="<?php echo $vRootPath; ?>" class="brand-wrap">
-      <img src="assets/media/logos/logo.png" class="logo" alt="Nest Dashboard" />
-    </a>
-    <div>
-      <button class="btn btn-icon btn-aside-minimize"><i class="icon bi bi-text-indent-right"></i></button>
-    </div>
-  </div>
-  <nav>
-    <ul class="menu-aside">
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
       <?php
-      echo cPhsProgram::getSideMenu($aMenu, $oUser, $vReqId);
+      echo cPhsProgram::getASideMenu($aMenu, $oUser, $vReqId);
       ?>
     </ul>
-  </nav>
-</aside>
+
+  </aside><!-- End Sidebar-->
+  <div class="sidebar-backdrop d-none"></div>
+  <?php
+}

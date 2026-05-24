@@ -22,7 +22,7 @@ if (isset($oRest)) {
     $nCount = intval(cCpyUser::getCount($vWhere));
     $oRest->setRowData(array(
       'Status' => true,
-      'Message' => getLabel('lbl.cms.Done'),
+      'Message' => getLabel('Done'),
       'Count' => $nCount
     ));
   }

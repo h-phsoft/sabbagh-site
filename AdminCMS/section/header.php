@@ -1,57 +1,104 @@
-<header class="main-header navbar">
-  <div class="col-search">
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center justify-content-between">
 
-  </div>
-  <div class="col-nav">
-    <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside">
-      <i class="icon bi bi-text-indent-right"></i>
-    </button>
-    <ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link btn-icon darkmode">
-          <i class="icon bi bi-sun-fill"></i>
+  <div class="d-flex align-items-center justify-content-between">
+
+    <div class="d-flex">
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+
+    <div class="d-none d-sm-block d-flex align-items-center justify-content-center justify-content-sm-start px-3">
+      <h4 class="d-none d-sm-block"></h4>
+    </div>
+
+  </div><!-- End Logo -->
+
+  <nav class="header-nav text-end">
+    <ul class="d-flex align-items-center">
+
+      <li class="nav-item dropdown">
+        <a class="dir-toggle d-flex align-items-center fs-3">
+          <i id="dir-rtl" class="bi bi-caret-right" alt="<?php echo getLabel("Arabic"); ?>" title="<?php echo getLabel("Arabic"); ?>"></i>
+          <i id="dir-ltr" class="bi bi-caret-left" alt="<?php echo getLabel("English"); ?>" title="<?php echo getLabel("English"); ?>"></i>
         </a>
       </li>
-      <li class="nav-item">
-        <a href="#" class="requestfullscreen nav-link btn-icon">
-          <i class="icon bi bi-arrows-angle-expand"></i>
-        </a>
+
+      <li class="nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+          <symbol id="check2" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+          </symbol>
+          <symbol id="circle-half" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+          </symbol>
+          <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+            <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"></path>
+            <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"></path>
+          </symbol>
+          <symbol id="sun-fill" viewBox="0 0 16 16">
+            <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"></path>
+          </symbol>
+        </svg>
+        <div class="dropdown bd-mode-toggle">
+          <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (light)">
+            <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#sun-fill"></use></svg>
+            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text" style="">
+            <li>
+              <button type="button" class="dropdown-item text-auto d-flex align-items-center" data-bs-theme-value="light" aria-pressed="true">
+                <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#sun-fill"></use></svg>
+                Light
+                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="dropdown-item text-auto d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
+                Dark
+                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="dropdown-item text-auto d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="false">
+                <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#circle-half"></use></svg>
+                Auto
+                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+              </button>
+            </li>
+          </ul>
+        </div>
       </li>
-      <li class="nav-item">
-        <a href="#" class="exitfullscreen nav-link btn-icon" style="display: none;">
-          <i class="icon bi bi-arrows-angle-contract"></i>
+
+      <li class="nav-item dropdown pe-3">
+
+        <a class="nav-link nav-profile d-flex align-items-center px-0" href="#" data-bs-toggle="dropdown">
+          <span class="d-none d-md-block dropdown-toggle px-2"><?php echo $oUser->Name; ?></span>
+          <img src="assets/media/avatars/manager<?php echo $oUser->GenderId; ?>.png" alt="Profile" class="rounded-circle">
         </a>
-      </li>
-      <li class="dropdown nav-item">
-        <a class="dropdown-toggle btn-icon" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false">
-          <i class="icon bi bi-translate"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-          <?php
-          foreach ($aLangs as $lang) {
-            ?>
-            <a class="dropdown-item change-language <?php echo ($lang->Id === $oLang->Id ? 'active' : ''); ?>" data-value="<?php echo $lang->Id; ?>" data-code="<?php echo $lang->Code; ?>" data-dir="<?php echo $lang->Dir; ?>" data-name="<?php echo $lang->Name; ?>">
-              <?php echo $lang->Name; ?>
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile mt-0 pt-0">
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="user/changePassword">
+              <i class="bi bi-key"></i>
+              <span><?php echo getLabel("Change Password"); ?></span>
             </a>
-            <?php
-          }
-          ?>
-        </div>
-      </li>
-      <li class="dropdown nav-item">
-        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false">
-          <img class="img-xs rounded-circle" src="assets/media/avatars/manager<?php echo $oUser->GenderId; ?>.png" alt="User" />
-        </a>
-        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-          <a class="dropdown-item" href="user/changePassword">
-            <i class="icon bi bi-key"></i><?php echo getLabel("lbl.cms.Change Password"); ?>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item text-danger logout" href="#">
-            <i class="icon bi bi-box-arrow-right"></i><?php echo getLabel("lbl.cms.Sign Out"); ?>
-          </a>
-        </div>
-      </li>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="logout">
+            <a class="dropdown-item d-flex align-items-center" href="#">
+              <i class="bi bi-box-arrow-right"></i>
+              <span><?php echo getLabel("Sign Out"); ?></span>
+            </a>
+          </li>
+
+        </ul><!-- End Profile Dropdown Items -->
+      </li><!-- End Profile Nav -->
+
     </ul>
-  </div>
-</header>
+  </nav><!-- End Icons Navigation -->
+
+</header><!-- End Header -->
