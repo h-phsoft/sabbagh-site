@@ -11,12 +11,6 @@ jobs:
       - name: 📥 جلب الكود
         uses: actions/checkout@v4
 
-      - name: 🛠️ بناء المشروع (اختياري)
-        run: |
-          npm ci
-          npm run build
-        # ⚠️ احذف هذا القسم كاملاً إذا كان موقعك PHP/HTML/CSS جاهزاً للنشر
-
       - name: 📤 النشر إلى cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
