@@ -1,0 +1,36 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches: [ "main" ] # غيّر إلى الفرع الذي تريد النشر التلقائي منه
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 جلب الكود
+        uses: actions/checkout@v4
+
+      - name: 🛠️ بناء المشروع (اختياري)
+        run: |
+          npm ci
+          npm run build
+        # ⚠️ احذف هذا القسم كاملاً إذا كان موقعك PHP/HTML/CSS جاهزاً للنشر
+
+      - name: 📤 النشر إلى cPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          protocol: ${{ secrets.FTP_PROTOCOL }}
+          local-dir: ./
+          server-dir: /public_html/sabbagh/
+          exclude: |
+            .git*
+            .github/**
+            node_modules/**
+            *.log
+            .env
+            *.map
