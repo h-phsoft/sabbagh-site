@@ -25,7 +25,7 @@ if (!file_exists('page/page-' . $vPage . '.php')) {
   $vPage = 'main';
 }
 //$aProducts = cEcomProducts::getArray();
-echo 'test auto deploy';
+echo 'test auto deploy 1';
 ?>
 <!DOCTYPE html>
 <html lang="en">
