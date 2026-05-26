@@ -8,7 +8,7 @@ if (PHS_IS_ONLINE) {
   define("PH_CONN_HOST", 'localhost');
   define("PH_CONN_PORT", 3306);
   define("PH_CONN_USER", 'root');
-  define("PH_CONN_PASS", 'RootPass');
+  define("PH_CONN_PASS", '');
   define("PH_CONN_DB", 'phsoftme_std_sabbagh');
 
   define('PHS_URI_IDX', 2);
