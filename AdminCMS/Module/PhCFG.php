@@ -4,6 +4,7 @@ define("PHS_VERSION", '1.5.2617');
 
 // get Environment Valiable from htaccess
 define("PHS_ISONLINE", getenv('IS_ONLINE') === 'true');
+
 if (PHS_IS_ONLINE) {
   define("PH_CONN_HOST", 'localhost');
   define("PH_CONN_PORT", 3306);
