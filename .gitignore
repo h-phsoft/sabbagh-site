@@ -1,1 +1,5 @@
+## يمسح فهرس Git ويعيد بناءه مع احترام .gitignore الجديد
+#git rm -r --cached .
+#git add .
+#git commit -m "Apply updated .gitignore to tracked files"
 **/PhCFG.php
