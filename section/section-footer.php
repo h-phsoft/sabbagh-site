@@ -54,7 +54,7 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contact With Us</h4>
+        <h4>Follow Us</h4>
         <div class="social-icons">
           <?php
           foreach ($aSocial as $social) {
