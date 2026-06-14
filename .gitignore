@@ -2,6 +2,7 @@
 #git rm -r --cached .
 #git add .
 #git commit -m "Apply updated .gitignore to tracked files"
+**/.htaccess
 **/PhCFG.php
 **/PhCFG_SITE.php
 **/PhCFG_CMS.php
