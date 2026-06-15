@@ -29,14 +29,14 @@
     <main style="overflow-y: auto;">
 
       <!-- ======= Main ======= -->
-      <div class="container-fluid">
+      <div class="container-fluid mt-5">
         <div class="row">
-          <div class="col-10 mx-auto d-flex align-items-center justify-content-center" style="height: 50vh;">
+          <div class="col-10 mx-auto d-flex align-items-center justify-content-center">
             <div class="card card-login-custom" style="min-width: 25vw; max-width: 60vw">
               <div class="card-body">
                 <div class="row">
                   <div class="col-12 text-center">
-                    <img  src="assets/media/logos/folly.png" alt="Logo" style="max-width: 200px; max-height: 200px;">
+                    <img  src="assets/media/logos/logo.png" alt="Logo" style="max-width: 200px; max-height: 200px;">
                   </div>
                 </div>
                 <form id="login-form" class="needs-validation" novalidate="">
