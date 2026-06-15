@@ -1,24 +1,24 @@
 <?php
 $vModulePath = "AdminCMS/Module/";
-include_once $vModulePath . "PhCFG.php";
+include_once $vModulePath . "PhCFG_SITE.php";
 include_once $vModulePath . "MySQL.php";
 include_once $vModulePath . "PhFunctions.php";
 include_once $vModulePath . "CpyFunctions.php";
 include_once $vModulePath . "Data.php";
 
-$vRootPath = PHS_SITE_ROOT_PATH;
-$vMediaPath = PHS_SITE_MEDIA_PATH;
+$vRootPath = PHS_ROOT_PATH;
+$vMediaPath = PHS_MEDIA_PATH;
 
 $aURI = getURIArray();
 $vPage = 'main';
 $nQId = 0;
-if (is_array($aURI) && count($aURI) > 0 && count($aURI) >= PHS_SITE_URI_IDX) {
+if (is_array($aURI) && count($aURI) > 0 && count($aURI) >= PHS_URI_IDX) {
 
-  if (isset($aURI[PHS_SITE_URI_IDX])) {
-    $vPage = $aURI[PHS_SITE_URI_IDX];
+  if (isset($aURI[PHS_URI_IDX])) {
+    $vPage = $aURI[PHS_URI_IDX];
   }
-  if (isset($aURI[PHS_SITE_URI_IDX + 1])) {
-    $nQId = intval($aURI[PHS_SITE_URI_IDX + 1]);
+  if (isset($aURI[PHS_URI_IDX + 1])) {
+    $nQId = intval($aURI[PHS_URI_IDX + 1]);
   }
 }
 if (!file_exists('page/page-' . $vPage . '.php')) {
@@ -28,7 +28,7 @@ if (!file_exists('page/page-' . $vPage . '.php')) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <base href="<?= PHS_SITE_ROOT_PATH ?>">
+  <base href="<?= PHS_ROOT_PATH ?>">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
