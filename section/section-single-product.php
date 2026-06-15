@@ -23,7 +23,6 @@ for ($ii = 0; $ii < count($aCats); $ii++) {
         <h2 class="mb-3"> <?= $oProduct['Name'] ?></h2>
         <p class="text-muted mb-4">A short description or subtitle for the product goes here.</p>
         <ul class="list-unstyled mb-4">
-          <li><strong>Price:</strong> $00.00</li>
           <li><strong>Size:</strong> 00 cm x 00 cm</li>
           <li><strong>Material:</strong> Premium aluminum</li>
           <li><strong>Availability:</strong> In stock</li>
