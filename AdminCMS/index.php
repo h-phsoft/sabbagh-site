@@ -4,7 +4,7 @@ if (session_id() == "") {
   @session_start();
 }
 ?>
-<?php include_once "Module/PhCFG.php" ?>
+<?php include_once "Module/PhCFG_CMS.php" ?>
 <?php include_once "Module/MySQL.php" ?>
 <?php include_once "Module/PhFunctions.php" ?>
 <?php include_once "Module/CpyFunctions.php" ?>
