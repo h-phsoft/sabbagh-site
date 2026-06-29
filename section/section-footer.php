@@ -59,7 +59,7 @@
           <?php
           foreach ($aSocial as $social) {
             ?>
-            <a href="<?= $social->url ?>"><?= $social->icon ?></a>
+            <a href="<?= $social['url'] ?>"><?= $social['icon'] ?></a>
             <?php
           }
           ?>
