@@ -37,7 +37,7 @@
           <?php
           foreach ($aCats as $cat) {
             ?>
-            <li><a href="products.php?qid=<?= $cat->Id ?>#cat-<?= $cat->Id ?>"><?= $cat->Name1 ?></a></li>
+            <li><a href="products.php?qid=<?= $cat->Id ?>#cat-<?= $cat->Id ?>"><?= $vLang == 'en' ? $cat->Name1 : $cat->Name2 ?></a></li>
             <?php
           }
           ?>
