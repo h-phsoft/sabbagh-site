@@ -4,7 +4,7 @@ include_once $vModulePath . "PhCFG_SITE.php";
 include_once $vModulePath . "MySQL.php";
 include_once $vModulePath . "PhFunctions.php";
 include_once $vModulePath . "CpyFunctions.php";
-//include_once $vModulePath . "Data.php";
+include_once $vModulePath . "Data.php";
 
 $vRootPath = PHS_ROOT_PATH;
 $vMediaPath = PHS_MEDIA_PATH;
