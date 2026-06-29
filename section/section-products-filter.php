@@ -5,11 +5,11 @@
       <?php
       $vActive = '';
       foreach ($aCats as $cat) {
-        if ($nQId == $cat['Id']) {
+        if ($nQId == $cat->Id) {
           $vActive = 'active';
         }
         ?>
-        <a class="filter-btn mx-auto <?= $vActive ?>" href="products/#cat-<?= $cat['Id'] ?>" data-catid="<?= $cat['Id'] ?>"><?= $cat['Name'] ?></a>
+        <a class="filter-btn mx-auto <?= $vActive ?>" href="products/#cat-<?= $cat->Id ?>" data-catid="<?= $cat->Id ?>"><?= $vLang == 'en' ? $cat->Name1 : $cat->Name2 ?></a>
         <?php
         $vActive = '';
       }
