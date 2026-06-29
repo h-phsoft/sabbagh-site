@@ -37,7 +37,7 @@
           <?php
           foreach ($aCats as $cat) {
             ?>
-            <li><a href="products.php?qid=<?= $cat['Id'] ?>#cat-<?= $cat['Id'] ?>"><?= $cat['Name'] ?></a></li>
+            <li><a href="products.php?qid=<?= $cat->Id ?>#cat-<?= $cat->Id ?>"><?= $cat->Name ?></a></li>
             <?php
           }
           ?>
@@ -59,7 +59,7 @@
           <?php
           foreach ($aSocial as $social) {
             ?>
-            <a href="<?= $social['url'] ?>"><?= $social['icon'] ?></a>
+            <a href="<?= $social->url ?>"><?= $social->icon ?></a>
             <?php
           }
           ?>
