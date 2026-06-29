@@ -15,7 +15,7 @@ if (session_id() == "") {
 ?>
 <?php include_once "../Classes/PhSoft/cPhsRestBase.php" ?>
 <?php include_once "../Classes/PhSoft/cPhsRest.php" ?>
-<?php include_once "../PhCFG.php" ?>
+<?php include_once "../PhCFG_CMS.php" ?>
 <?php include_once "../MySQL.php" ?>
 <?php include_once "../PhFunctions.php" ?>
 <?php include_once "../CpyFunctions.php" ?>
