@@ -394,6 +394,7 @@ footer {
   margin-bottom: 20px;
   position: relative;
   padding-bottom: 10px;
+  text-align: center;
 }
 
 .footer-col h4::after {
@@ -447,7 +448,8 @@ footer {
   margin-top: 20px;
   display: flex;
   gap: 15px;
-  text-align: center;
+  justify-content: center; /* Adds horizontal centering for the flex items */
+  align-items: center;     /* Optional: ensures vertical alignment if icons vary in size */
 }
 
 .social-icons a {
@@ -1039,14 +1041,11 @@ footer {
   margin-bottom: 40px;
 }
 
-.footer-col {
-  text-align: center;
-}
-
 .footer-col h4 {
   color: var(--white);
   margin-bottom: 20px;
   font-family: 'Roboto', sans-serif;
+  text-align: center;
 }
 
 .footer-col ul {
