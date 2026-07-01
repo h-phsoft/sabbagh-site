@@ -1,17 +1,6 @@
 <?php
 $oProduct = cEcomProduct::getInstance($nQId);
 $oCat = cEcomCat::getInstance($oProduct->CatId);
-/*
-  for ($ii = 0; $ii < count($aCats); $ii++) {
-  $aProducts = $aCats[$ii]->aProducts;
-  for ($jj = 0; $jj < count($aProducts); $jj++) {
-  if ($aProducts[$jj]->Id == $nQId) {
-  $oCat = $aCats[$ii];
-  $oProduct = $aProducts[$jj];
-  }
-  }
-  }
- */
 ?>
 <section class="single-product-section py-5">
   <div class="container">
