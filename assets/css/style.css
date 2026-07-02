@@ -1157,3 +1157,54 @@ footer {
 .single-product-section .container h1 {
   text-shadow: none;
 }
+
+/* ===== تحسين فلتر المنتجات للتمرير الأفقي ===== */
+.filter-container {
+  display: flex;
+  flex-wrap: nowrap; /* منع الانتقال لسطر جديد */
+  overflow-x: auto; /* تفعيل السكرول الأفقي */
+  overflow-y: hidden;
+  gap: 15px;
+  padding: 10px 15px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* تمرير سلس في iOS */
+  scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */
+}
+
+/* إخفاء شريط التمرير في Chrome و Safari */
+.filter-container::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-btn {
+  flex: 0 0 auto; /* منع انكماش الأزرار */
+  white-space: nowrap; /* منع نزول النص لسطر جديد */
+  padding: 10px 25px;
+  border: 2px solid var(--primary-blue) !important;
+  background: var(--white);
+  color: var(--primary-blue) !important;
+  border-radius: 525px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 15px;
+  scroll-snap-align: start; /* محاذاة عند التمرير */
+}
+
+/* إضافة snap scrolling */
+.filter-container {
+  scroll-snap-type: x mandatory;
+}
+
+/* تحسين للشاشات الصغيرة جداً */
+@media (max-width: 576px) {
+  .filter-btn {
+    padding: 8px 18px;
+    font-size: 13px;
+  }
+
+  .filter-container {
+    gap: 10px;
+    padding: 8px 10px;
+  }
+}

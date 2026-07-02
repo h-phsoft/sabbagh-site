@@ -14,10 +14,10 @@
             <?php
             foreach ($aProds as $prod) {
               ?>
-              <div class="col-2 text-center mx-auto">
+              <div class="col-4 col-sm-2 p-2 text-center mx-auto">
                 <a href="product/<?= $prod->Id ?>">
                   <img src="assets/media/products/<?= $prod->Image ?>" alt="Shampoo" width="100%">
-                  <h5><?= $prod->Name1 ?></h5>
+                  <h6><?= $prod->Name1 ?></h6>
                 </a>
               </div>
               <?php

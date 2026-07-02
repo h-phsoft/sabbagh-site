@@ -1,7 +1,6 @@
 <section class="filter-section">
   <div class="container-fluid">
     <div class="filter-container text-center">
-      <!--<a class="filter-btn active" href="#cat-0">All Products</a>-->
       <?php
       $vActive = '';
       foreach ($aCats as $cat) {
