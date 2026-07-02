@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.3
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Jun 29, 2026 at 08:55 AM
--- Server version: 8.4.7
--- PHP Version: 8.5.0
+-- Host: localhost:3306
+-- Generation Time: Jul 02, 2026 at 10:56 AM
+-- Server version: 8.4.9
+-- PHP Version: 8.4.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,15 +27,12 @@ SET time_zone = "+00:00";
 -- Table structure for table `cpy_branch`
 --
 
-DROP TABLE IF EXISTS `cpy_branch`;
-CREATE TABLE IF NOT EXISTS `cpy_branch` (
-  `id` smallint NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `cpy_branch` (
+  `id` smallint NOT NULL COMMENT 'PK',
   `name` varchar(250) NOT NULL COMMENT 'Name',
   `phone` varchar(50) DEFAULT NULL COMMENT 'Phone Number',
-  `address` varchar(256) DEFAULT NULL COMMENT 'Address',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `address` varchar(256) DEFAULT NULL COMMENT 'Address'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `cpy_branch`
@@ -50,9 +47,8 @@ INSERT INTO `cpy_branch` (`id`, `name`, `phone`, `address`) VALUES
 -- Table structure for table `cpy_perm`
 --
 
-DROP TABLE IF EXISTS `cpy_perm`;
-CREATE TABLE IF NOT EXISTS `cpy_perm` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `cpy_perm` (
+  `id` int NOT NULL COMMENT 'PK',
   `grp_id` int NOT NULL COMMENT 'Permission Group',
   `prog_id` int NOT NULL COMMENT 'Menu Program',
   `isok` tinyint NOT NULL DEFAULT '0' COMMENT 'Permission',
@@ -65,11 +61,8 @@ CREATE TABLE IF NOT EXISTS `cpy_perm` (
   `imp` tinyint NOT NULL DEFAULT '0' COMMENT 'Import',
   `cmt` tinyint NOT NULL DEFAULT '0' COMMENT 'Commit',
   `rvk` tinyint NOT NULL DEFAULT '0' COMMENT 'Revoke',
-  `spc` tinyint NOT NULL DEFAULT '0' COMMENT 'Special',
-  PRIMARY KEY (`id`),
-  KEY `prog_id` (`prog_id`),
-  KEY `grp_id` (`grp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1051 DEFAULT CHARSET=utf8mb3;
+  `spc` tinyint NOT NULL DEFAULT '0' COMMENT 'Special'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `cpy_perm`
@@ -101,16 +94,12 @@ INSERT INTO `cpy_perm` (`id`, `grp_id`, `prog_id`, `isok`, `ins`, `upd`, `qry`, 
 -- Table structure for table `cpy_perm_grp`
 --
 
-DROP TABLE IF EXISTS `cpy_perm_grp`;
-CREATE TABLE IF NOT EXISTS `cpy_perm_grp` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `cpy_perm_grp` (
+  `id` int NOT NULL COMMENT 'PK',
   `name` varchar(100) NOT NULL COMMENT 'Name',
   `wpstatus_id` tinyint NOT NULL DEFAULT '2' COMMENT 'Workperiod Status',
-  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  KEY `wpstatus_id` (`wpstatus_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `cpy_perm_grp`
@@ -128,9 +117,8 @@ INSERT INTO `cpy_perm_grp` (`id`, `name`, `wpstatus_id`, `rem`) VALUES
 -- Table structure for table `cpy_token`
 --
 
-DROP TABLE IF EXISTS `cpy_token`;
-CREATE TABLE IF NOT EXISTS `cpy_token` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `cpy_token` (
+  `id` int NOT NULL COMMENT 'PK',
   `gid` varchar(100) NOT NULL COMMENT 'GUID',
   `user_id` int NOT NULL COMMENT 'User',
   `status_id` tinyint NOT NULL DEFAULT '1' COMMENT 'Status',
@@ -141,11 +129,7 @@ CREATE TABLE IF NOT EXISTS `cpy_token` (
   `pbkey` varchar(3072) DEFAULT NULL COMMENT 'Public Key',
   `ip` varchar(100) DEFAULT NULL COMMENT 'IP',
   `port` varchar(100) DEFAULT NULL COMMENT 'Port',
-  `host` varchar(100) DEFAULT NULL COMMENT 'Host',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `gid` (`gid`),
-  KEY `user_id` (`user_id`),
-  KEY `status_id` (`status_id`)
+  `host` varchar(100) DEFAULT NULL COMMENT 'Host'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
@@ -154,9 +138,8 @@ CREATE TABLE IF NOT EXISTS `cpy_token` (
 -- Table structure for table `cpy_user`
 --
 
-DROP TABLE IF EXISTS `cpy_user`;
-CREATE TABLE IF NOT EXISTS `cpy_user` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `cpy_user` (
+  `id` int NOT NULL COMMENT 'PK',
   `bran_id` smallint NOT NULL DEFAULT '0' COMMENT 'Branch',
   `grp_id` int NOT NULL COMMENT 'Permission Group',
   `gender_id` tinyint NOT NULL DEFAULT '1' COMMENT 'Gender',
@@ -164,14 +147,8 @@ CREATE TABLE IF NOT EXISTS `cpy_user` (
   `name` varchar(100) NOT NULL COMMENT 'Name',
   `logon` varchar(50) NOT NULL COMMENT 'Logon Name',
   `password` varchar(512) DEFAULT NULL COMMENT 'Password',
-  `image` varchar(512) DEFAULT NULL COMMENT 'User Image',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `logon` (`logon`),
-  KEY `grp_id` (`grp_id`),
-  KEY `status_id` (`status_id`),
-  KEY `gender_id` (`gender_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb3;
+  `image` varchar(512) DEFAULT NULL COMMENT 'User Image'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `cpy_user`
@@ -180,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `cpy_user` (
 INSERT INTO `cpy_user` (`id`, `bran_id`, `grp_id`, `gender_id`, `status_id`, `name`, `logon`, `password`, `image`) VALUES
 (-9, 0, -1, 1, 1, 'System', 'system', 'eb0a191797624dd3a48fa681d3061212', NULL),
 (-1, 0, -1, 1, 1, 'Supervisor', 'super', 'eb0a191797624dd3a48fa681d3061212', NULL),
-(0, 0, 0, 1, 1, 'Admin', 'admin', '569f50178522af3982442682e5575642', NULL),
+(0, 0, 0, 1, 1, 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', NULL),
 (93, 0, 3, 1, 1, 'مدير المحتوى', 'treats', '152df8c4a937be35f5f0663c541eec01', NULL);
 
 -- --------------------------------------------------------
@@ -189,18 +166,17 @@ INSERT INTO `cpy_user` (`id`, `bran_id`, `grp_id`, `gender_id`, `status_id`, `na
 -- Stand-in structure for view `cpy_vuser`
 -- (See below for the actual view)
 --
-DROP VIEW IF EXISTS `cpy_vuser`;
-CREATE TABLE IF NOT EXISTS `cpy_vuser` (
-`bran_id` smallint
+CREATE TABLE `cpy_vuser` (
+`id` int
+,`bran_id` smallint
 ,`bran_name` varchar(250)
-,`gender_id` tinyint
 ,`grp_id` int
-,`id` int
-,`image` varchar(512)
-,`logon` varchar(50)
-,`name` varchar(100)
-,`password` varchar(512)
 ,`status_id` tinyint
+,`gender_id` tinyint
+,`name` varchar(100)
+,`logon` varchar(50)
+,`password` varchar(512)
+,`image` varchar(512)
 );
 
 -- --------------------------------------------------------
@@ -209,14 +185,12 @@ CREATE TABLE IF NOT EXISTS `cpy_vuser` (
 -- Table structure for table `ecom_about`
 --
 
-DROP TABLE IF EXISTS `ecom_about`;
-CREATE TABLE IF NOT EXISTS `ecom_about` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_about` (
+  `id` int NOT NULL COMMENT 'PK',
   `image` varchar(512) NOT NULL COMMENT 'Image',
   `text1` text NOT NULL COMMENT 'Text 1',
-  `text2` text NOT NULL COMMENT 'Text 2',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+  `text2` text NOT NULL COMMENT 'Text 2'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -224,13 +198,11 @@ CREATE TABLE IF NOT EXISTS `ecom_about` (
 -- Table structure for table `ecom_adv`
 --
 
-DROP TABLE IF EXISTS `ecom_adv`;
-CREATE TABLE IF NOT EXISTS `ecom_adv` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_adv` (
+  `id` int NOT NULL COMMENT 'PK',
   `text1` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Text1',
-  `text2` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Text2',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `text2` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Text2'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -238,12 +210,10 @@ CREATE TABLE IF NOT EXISTS `ecom_adv` (
 -- Table structure for table `ecom_amt_type`
 --
 
-DROP TABLE IF EXISTS `ecom_amt_type`;
-CREATE TABLE IF NOT EXISTS `ecom_amt_type` (
+CREATE TABLE `ecom_amt_type` (
   `id` tinyint NOT NULL COMMENT 'PK',
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Name',
-  `rem` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Remarks',
-  PRIMARY KEY (`id`)
+  `rem` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Remarks'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -260,14 +230,12 @@ INSERT INTO `ecom_amt_type` (`id`, `name`, `rem`) VALUES
 -- Table structure for table `ecom_banner`
 --
 
-DROP TABLE IF EXISTS `ecom_banner`;
-CREATE TABLE IF NOT EXISTS `ecom_banner` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Id',
+CREATE TABLE `ecom_banner` (
+  `id` int NOT NULL COMMENT 'Id',
   `order` int NOT NULL DEFAULT '0' COMMENT 'Order',
   `name` varchar(100) NOT NULL COMMENT 'Name',
-  `image` varchar(512) NOT NULL COMMENT 'Image',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `image` varchar(512) NOT NULL COMMENT 'Image'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -275,18 +243,13 @@ CREATE TABLE IF NOT EXISTS `ecom_banner` (
 -- Table structure for table `ecom_brand`
 --
 
-DROP TABLE IF EXISTS `ecom_brand`;
-CREATE TABLE IF NOT EXISTS `ecom_brand` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_brand` (
+  `id` int NOT NULL COMMENT 'PK',
   `status_id` tinyint NOT NULL DEFAULT '1' COMMENT 'Status',
   `name1` varchar(100) NOT NULL COMMENT 'Name 1',
   `name2` varchar(100) NOT NULL COMMENT 'Name 2',
-  `image` varchar(512) NOT NULL COMMENT 'Logo',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name1` (`name1`),
-  UNIQUE KEY `name2` (`name2`),
-  KEY `status_id` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3;
+  `image` varchar(512) NOT NULL COMMENT 'Logo'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `ecom_brand`
@@ -302,9 +265,8 @@ INSERT INTO `ecom_brand` (`id`, `status_id`, `name1`, `name2`, `image`) VALUES
 -- Table structure for table `ecom_cart`
 --
 
-DROP TABLE IF EXISTS `ecom_cart`;
-CREATE TABLE IF NOT EXISTS `ecom_cart` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_cart` (
+  `id` int NOT NULL COMMENT 'PK',
   `cust_id` int NOT NULL COMMENT 'Customer',
   `addat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date Time',
   `status_id` tinyint NOT NULL DEFAULT '1' COMMENT 'Status',
@@ -315,12 +277,8 @@ CREATE TABLE IF NOT EXISTS `ecom_cart` (
   `cprice` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Price By Customer Currency',
   `amt` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Amount',
   `disc` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Discount',
-  `net` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Net Amount',
-  PRIMARY KEY (`id`),
-  KEY `prod_id` (`prod_id`),
-  KEY `cart_token` (`cust_id`),
-  KEY `size_id` (`size_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb3;
+  `net` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Net Amount'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -328,19 +286,16 @@ CREATE TABLE IF NOT EXISTS `ecom_cart` (
 -- Table structure for table `ecom_cat`
 --
 
-DROP TABLE IF EXISTS `ecom_cat`;
-CREATE TABLE IF NOT EXISTS `ecom_cat` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_cat` (
+  `id` int NOT NULL COMMENT 'PK',
   `status_id` tinyint NOT NULL COMMENT 'Status',
   `order` int NOT NULL DEFAULT '0' COMMENT 'Order',
   `wdays` smallint NOT NULL DEFAULT '365' COMMENT 'Warranty',
   `name1` varchar(100) NOT NULL COMMENT 'Name 1',
   `name2` varchar(100) NOT NULL COMMENT 'Name 2',
   `image` varchar(512) DEFAULT NULL COMMENT 'Image',
-  `descrip` text NOT NULL COMMENT 'Description',
-  PRIMARY KEY (`id`),
-  KEY `status_id` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+  `descrip` text NOT NULL COMMENT 'Description'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `ecom_cat`
@@ -363,18 +318,14 @@ INSERT INTO `ecom_cat` (`id`, `status_id`, `order`, `wdays`, `name1`, `name2`, `
 -- Table structure for table `ecom_curn`
 --
 
-DROP TABLE IF EXISTS `ecom_curn`;
-CREATE TABLE IF NOT EXISTS `ecom_curn` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_curn` (
+  `id` int NOT NULL COMMENT 'PK',
   `status_id` tinyint NOT NULL DEFAULT '1' COMMENT 'Status',
   `name` varchar(100) NOT NULL COMMENT 'Name',
   `rate` decimal(10,2) NOT NULL DEFAULT '1.00' COMMENT 'Rate',
   `color` varchar(100) DEFAULT NULL COMMENT 'Color',
-  `symbole` varchar(512) DEFAULT NULL COMMENT 'Symbole',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `curn_name` (`name`),
-  KEY `status_id` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+  `symbole` varchar(512) DEFAULT NULL COMMENT 'Symbole'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `ecom_curn`
@@ -391,9 +342,8 @@ INSERT INTO `ecom_curn` (`id`, `status_id`, `name`, `rate`, `color`, `symbole`) 
 -- Table structure for table `ecom_customer`
 --
 
-DROP TABLE IF EXISTS `ecom_customer`;
-CREATE TABLE IF NOT EXISTS `ecom_customer` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_customer` (
+  `id` int NOT NULL COMMENT 'PK',
   `status_id` tinyint NOT NULL DEFAULT '2' COMMENT 'Status',
   `name` varchar(256) NOT NULL COMMENT 'Company Name',
   `orgnum` varchar(15) NOT NULL COMMENT 'Organization Number',
@@ -401,11 +351,8 @@ CREATE TABLE IF NOT EXISTS `ecom_customer` (
   `pwd` varchar(1024) NOT NULL COMMENT 'Password',
   `mobile` varchar(25) NOT NULL COMMENT 'Mobile',
   `phone` varchar(25) DEFAULT NULL COMMENT 'Phone',
-  `address` varchar(256) DEFAULT NULL COMMENT 'Address',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `cust_logon` (`logon`),
-  KEY `status_id` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb3;
+  `address` varchar(256) DEFAULT NULL COMMENT 'Address'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -413,14 +360,12 @@ CREATE TABLE IF NOT EXISTS `ecom_customer` (
 -- Table structure for table `ecom_faq`
 --
 
-DROP TABLE IF EXISTS `ecom_faq`;
-CREATE TABLE IF NOT EXISTS `ecom_faq` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_faq` (
+  `id` int NOT NULL COMMENT 'PK',
   `ord` smallint NOT NULL DEFAULT '0' COMMENT 'Order',
   `qtext` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Question',
-  `atext` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Answer',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `atext` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Answer'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ecom_faq`
@@ -445,19 +390,14 @@ INSERT INTO `ecom_faq` (`id`, `ord`, `qtext`, `atext`) VALUES
 -- Table structure for table `ecom_order`
 --
 
-DROP TABLE IF EXISTS `ecom_order`;
-CREATE TABLE IF NOT EXISTS `ecom_order` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_order` (
+  `id` int NOT NULL COMMENT 'PK',
   `cust_id` int NOT NULL COMMENT 'Customer',
   `curn_id` int NOT NULL COMMENT 'Currency',
   `status_id` tinyint NOT NULL DEFAULT '0' COMMENT 'Status',
   `rate` decimal(10,5) NOT NULL DEFAULT '1.00000' COMMENT 'Currency Rate',
-  `addat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date Time',
-  PRIMARY KEY (`id`),
-  KEY `cust_id` (`cust_id`),
-  KEY `curn_id` (`curn_id`),
-  KEY `status_id` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+  `addat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date Time'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -465,9 +405,8 @@ CREATE TABLE IF NOT EXISTS `ecom_order` (
 -- Table structure for table `ecom_order_item`
 --
 
-DROP TABLE IF EXISTS `ecom_order_item`;
-CREATE TABLE IF NOT EXISTS `ecom_order_item` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_order_item` (
+  `id` int NOT NULL COMMENT 'PK',
   `order_id` int NOT NULL COMMENT 'Order',
   `prod_id` int NOT NULL COMMENT 'Product',
   `size_id` int NOT NULL COMMENT 'Size',
@@ -476,12 +415,8 @@ CREATE TABLE IF NOT EXISTS `ecom_order_item` (
   `cprice` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Price By Customer Currency',
   `amt` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Amount',
   `disc` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Discount',
-  `net` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Net Amount',
-  PRIMARY KEY (`id`),
-  KEY `order_id` (`order_id`),
-  KEY `prod_id` (`prod_id`),
-  KEY `size_id` (`size_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb3;
+  `net` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Net Amount'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -489,17 +424,13 @@ CREATE TABLE IF NOT EXISTS `ecom_order_item` (
 -- Table structure for table `ecom_order_service`
 --
 
-DROP TABLE IF EXISTS `ecom_order_service`;
-CREATE TABLE IF NOT EXISTS `ecom_order_service` (
+CREATE TABLE `ecom_order_service` (
   `id` int NOT NULL COMMENT 'PK',
   `order_id` int NOT NULL COMMENT 'Order',
   `service_id` int NOT NULL COMMENT 'Service',
   `type_id` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Service Type Amount OR Percent',
   `amtperc` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Amount OR Percent',
-  `amt` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Amount',
-  KEY `order_id` (`order_id`),
-  KEY `service_id` (`service_id`),
-  KEY `type_id` (`type_id`)
+  `amt` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Amount'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -508,11 +439,9 @@ CREATE TABLE IF NOT EXISTS `ecom_order_service` (
 -- Table structure for table `ecom_order_status`
 --
 
-DROP TABLE IF EXISTS `ecom_order_status`;
-CREATE TABLE IF NOT EXISTS `ecom_order_status` (
+CREATE TABLE `ecom_order_status` (
   `id` tinyint NOT NULL COMMENT 'PK',
-  `name` varchar(100) NOT NULL COMMENT 'Name',
-  PRIMARY KEY (`id`)
+  `name` varchar(100) NOT NULL COMMENT 'Name'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -530,9 +459,8 @@ INSERT INTO `ecom_order_status` (`id`, `name`) VALUES
 -- Table structure for table `ecom_product`
 --
 
-DROP TABLE IF EXISTS `ecom_product`;
-CREATE TABLE IF NOT EXISTS `ecom_product` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_product` (
+  `id` int NOT NULL COMMENT 'PK',
   `mnum` int NOT NULL DEFAULT '0' COMMENT 'Number',
   `brand_id` int NOT NULL DEFAULT '0' COMMENT 'Brand',
   `status_id` tinyint NOT NULL DEFAULT '1' COMMENT 'Status',
@@ -548,14 +476,8 @@ CREATE TABLE IF NOT EXISTS `ecom_product` (
   `desc3` text COMMENT 'Contain',
   `desc4` text COMMENT 'May Contain',
   `desc5` text COMMENT 'Description 5',
-  `image` varchar(512) DEFAULT NULL COMMENT 'Image',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `mnum` (`mnum`),
-  KEY `brand_id` (`brand_id`),
-  KEY `cat_id` (`cat_id`),
-  KEY `tag_id` (`tag_id`),
-  KEY `status_id` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=276 DEFAULT CHARSET=utf8mb3;
+  `image` varchar(512) DEFAULT NULL COMMENT 'Image'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `ecom_product`
@@ -563,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `ecom_product` (
 
 INSERT INTO `ecom_product` (`id`, `mnum`, `brand_id`, `status_id`, `cat_id`, `tag_id`, `name1`, `name2`, `qnt`, `price`, `cprice`, `desc1`, `desc2`, `desc3`, `desc4`, `desc5`, `image`) VALUES
 (11, 11, 0, 1, 1, 0, 'Aloe Vera', '', 0.00, 0.00, 0.00, '', '', '', '', '', 'Joelle 2L Aloe Vera.png'),
-(12, 12, 0, 1, 1, 0, 'Antidandruff', '', 0.00, 0.00, 0.00, '', '', '', '', '', 'Joelle 2L Antidandruff.png'),
+(12, 12, 0, 1, 1, 0, 'Antidandruff', 'Antidandruff', 0.00, 0.00, 0.00, 'Aqua, Sodium Laureth Sulfate, Lanolin, Cocamidopropyl Betaine, Cocamide DEA and Glycerin, Sodium Chloride, Glycol Didtearate, Glycerin, Perfume, Disodium hydrogen Phosphate, Monosodium Phosphate, Methylchloroiso-thiazolinone / Methylisothiazolinone, Citric Acid, polyquaternium-10, Pirocton Olamine,C.l:42090.', 'PARABEN FREE', 'In case of content with eyes, rinse immediately with water. For external use only.', 'Keep away from sunlight, in a cool and dry place.', '', 'Joelle 2L Antidandruff.png'),
 (13, 13, 0, 1, 1, 0, 'Conditioner', '', 0.00, 0.00, 0.00, '', '', '', '', '', 'Joelle 2L Conditioner.png'),
 (14, 14, 0, 1, 1, 0, 'Dry Hair', '', 0.00, 0.00, 0.00, '', '', '', '', '', 'Joelle 2L Dry Hair.png'),
 (15, 15, 0, 1, 1, 0, 'Greasy Hair', '', 0.00, 0.00, 0.00, '', '', '', '', '', 'Joelle 2L Greasy Hair.png'),
@@ -636,18 +558,15 @@ INSERT INTO `ecom_product` (`id`, `mnum`, `brand_id`, `status_id`, `cat_id`, `ta
 -- Table structure for table `ecom_prod_facts`
 --
 
-DROP TABLE IF EXISTS `ecom_prod_facts`;
-CREATE TABLE IF NOT EXISTS `ecom_prod_facts` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_prod_facts` (
+  `id` int NOT NULL COMMENT 'PK',
   `prod_id` int NOT NULL COMMENT 'Product',
   `ord` smallint NOT NULL DEFAULT '0' COMMENT 'Order',
   `name1` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Name1',
   `name2` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Name2',
   `val1` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Value 1',
-  `val2` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Value 2',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `prod_id` (`prod_id`,`name1`)
-) ENGINE=InnoDB AUTO_INCREMENT=307 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `val2` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Value 2'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -655,14 +574,11 @@ CREATE TABLE IF NOT EXISTS `ecom_prod_facts` (
 -- Table structure for table `ecom_prod_image`
 --
 
-DROP TABLE IF EXISTS `ecom_prod_image`;
-CREATE TABLE IF NOT EXISTS `ecom_prod_image` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_prod_image` (
+  `id` int NOT NULL COMMENT 'PK',
   `prod_id` int NOT NULL COMMENT 'Product',
-  `image` varchar(512) NOT NULL COMMENT 'Image',
-  PRIMARY KEY (`id`),
-  KEY `prod_id` (`prod_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8mb3;
+  `image` varchar(512) NOT NULL COMMENT 'Image'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -670,18 +586,14 @@ CREATE TABLE IF NOT EXISTS `ecom_prod_image` (
 -- Table structure for table `ecom_prod_review`
 --
 
-DROP TABLE IF EXISTS `ecom_prod_review`;
-CREATE TABLE IF NOT EXISTS `ecom_prod_review` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_prod_review` (
+  `id` int NOT NULL COMMENT 'PK',
   `prod_id` int NOT NULL COMMENT 'Product',
   `status_id` tinyint NOT NULL DEFAULT '2' COMMENT 'Status',
   `addat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datetime',
   `name` varchar(100) NOT NULL COMMENT 'Reviewer Name',
   `email` varchar(100) NOT NULL COMMENT 'Reviewer Email',
-  `text` text NOT NULL COMMENT 'Review Text',
-  PRIMARY KEY (`id`),
-  KEY `prod_id` (`prod_id`),
-  KEY `status_id` (`status_id`)
+  `text` text NOT NULL COMMENT 'Review Text'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
@@ -690,9 +602,8 @@ CREATE TABLE IF NOT EXISTS `ecom_prod_review` (
 -- Table structure for table `ecom_prod_size`
 --
 
-DROP TABLE IF EXISTS `ecom_prod_size`;
-CREATE TABLE IF NOT EXISTS `ecom_prod_size` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_prod_size` (
+  `id` int NOT NULL COMMENT 'PK',
   `prod_id` int NOT NULL COMMENT 'Product',
   `unit_id` smallint NOT NULL DEFAULT '0',
   `snum` int NOT NULL COMMENT 'Sub Number',
@@ -701,12 +612,8 @@ CREATE TABLE IF NOT EXISTS `ecom_prod_size` (
   `box` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Quantity in Box',
   `qnt` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Quantity',
   `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Normal Price',
-  `cprice` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Current Price',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `prod_id_uk` (`prod_id`,`name`),
-  KEY `prod_id` (`prod_id`),
-  KEY `unit_id` (`unit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8mb3;
+  `cprice` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Current Price'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -714,16 +621,13 @@ CREATE TABLE IF NOT EXISTS `ecom_prod_size` (
 -- Table structure for table `ecom_service`
 --
 
-DROP TABLE IF EXISTS `ecom_service`;
-CREATE TABLE IF NOT EXISTS `ecom_service` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_service` (
+  `id` int NOT NULL COMMENT 'PK',
   `Name1` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Name',
   `Name2` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Name',
   `type_id` tinyint NOT NULL COMMENT 'Type',
-  `amtperc` decimal(10,5) NOT NULL DEFAULT '0.00000' COMMENT 'Amount or Percent',
-  PRIMARY KEY (`id`),
-  KEY `type_id` (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `amtperc` decimal(10,5) NOT NULL DEFAULT '0.00000' COMMENT 'Amount or Percent'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ecom_service`
@@ -739,13 +643,11 @@ INSERT INTO `ecom_service` (`id`, `Name1`, `Name2`, `type_id`, `amtperc`) VALUES
 -- Table structure for table `ecom_slider_mst`
 --
 
-DROP TABLE IF EXISTS `ecom_slider_mst`;
-CREATE TABLE IF NOT EXISTS `ecom_slider_mst` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_slider_mst` (
+  `id` int NOT NULL COMMENT 'PK',
   `name` varchar(200) NOT NULL COMMENT 'Name',
-  `rem` text COMMENT 'Remarks',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+  `rem` text COMMENT 'Remarks'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `ecom_slider_mst`
@@ -760,19 +662,16 @@ INSERT INTO `ecom_slider_mst` (`id`, `name`, `rem`) VALUES
 -- Table structure for table `ecom_slider_trn`
 --
 
-DROP TABLE IF EXISTS `ecom_slider_trn`;
-CREATE TABLE IF NOT EXISTS `ecom_slider_trn` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_slider_trn` (
+  `id` int NOT NULL COMMENT 'PK',
   `slid_id` int NOT NULL COMMENT 'Slider',
   `order` smallint NOT NULL DEFAULT '0' COMMENT 'Order',
   `header` varchar(200) DEFAULT NULL COMMENT 'Header',
   `text` text COMMENT 'Text',
   `image` varchar(200) NOT NULL COMMENT 'Image',
   `link` varchar(200) DEFAULT NULL COMMENT 'Link',
-  `label` varchar(100) DEFAULT NULL COMMENT 'Label',
-  PRIMARY KEY (`id`),
-  KEY `slid_id` (`slid_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+  `label` varchar(100) DEFAULT NULL COMMENT 'Label'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `ecom_slider_trn`
@@ -790,16 +689,12 @@ INSERT INTO `ecom_slider_trn` (`id`, `slid_id`, `order`, `header`, `text`, `imag
 -- Table structure for table `ecom_tag`
 --
 
-DROP TABLE IF EXISTS `ecom_tag`;
-CREATE TABLE IF NOT EXISTS `ecom_tag` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_tag` (
+  `id` int NOT NULL COMMENT 'PK',
   `status_id` tinyint NOT NULL DEFAULT '1' COMMENT 'Status',
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Name',
-  `classname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Class Name',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  KEY `status_id` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `classname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Class Name'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ecom_tag`
@@ -818,14 +713,11 @@ INSERT INTO `ecom_tag` (`id`, `status_id`, `name`, `classname`) VALUES
 -- Table structure for table `ecom_unit`
 --
 
-DROP TABLE IF EXISTS `ecom_unit`;
-CREATE TABLE IF NOT EXISTS `ecom_unit` (
-  `id` smallint NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_unit` (
+  `id` smallint NOT NULL COMMENT 'PK',
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Name',
-  `rem` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Rearks',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `rem` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Rearks'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ecom_unit`
@@ -844,27 +736,26 @@ INSERT INTO `ecom_unit` (`id`, `name`, `rem`) VALUES
 -- Stand-in structure for view `ecom_vorders`
 -- (See below for the actual view)
 --
-DROP VIEW IF EXISTS `ecom_vorders`;
-CREATE TABLE IF NOT EXISTS `ecom_vorders` (
-`curn_color` varchar(100)
-,`curn_id` int
-,`curn_name` varchar(100)
-,`curn_rate` decimal(10,2)
-,`curn_status_id` tinyint
-,`curn_symbole` varchar(512)
-,`cust_address` varchar(256)
-,`cust_id` int
-,`cust_logon` varchar(100)
-,`cust_mobile` varchar(25)
-,`cust_name` varchar(256)
-,`cust_orgnum` varchar(15)
-,`cust_phone` varchar(25)
-,`cust_status_id` tinyint
-,`ord_addat` datetime
+CREATE TABLE `ecom_vorders` (
+`ord_id` int
 ,`ord_curn_rate` decimal(10,5)
-,`ord_id` int
+,`ord_addat` datetime
 ,`status_id` tinyint
 ,`status_name` varchar(100)
+,`curn_id` int
+,`curn_name` varchar(100)
+,`curn_status_id` tinyint
+,`curn_rate` decimal(10,2)
+,`curn_color` varchar(100)
+,`curn_symbole` varchar(512)
+,`cust_id` int
+,`cust_status_id` tinyint
+,`cust_name` varchar(256)
+,`cust_orgnum` varchar(15)
+,`cust_logon` varchar(100)
+,`cust_mobile` varchar(25)
+,`cust_phone` varchar(25)
+,`cust_address` varchar(256)
 );
 
 -- --------------------------------------------------------
@@ -873,69 +764,68 @@ CREATE TABLE IF NOT EXISTS `ecom_vorders` (
 -- Stand-in structure for view `ecom_vorder_items`
 -- (See below for the actual view)
 --
-DROP VIEW IF EXISTS `ecom_vorder_items`;
-CREATE TABLE IF NOT EXISTS `ecom_vorder_items` (
-`brand_id` int
-,`brand_image` varchar(512)
-,`brand_name1` varchar(100)
-,`brand_name2` varchar(100)
-,`brand_status_id` tinyint
-,`cat_id` int
-,`cat_image` varchar(512)
-,`cat_name1` varchar(100)
-,`cat_name2` varchar(100)
-,`cat_order` int
-,`cat_status_id` tinyint
-,`curn_color` varchar(100)
+CREATE TABLE `ecom_vorder_items` (
+`ord_id` int
+,`ord_curn_rate` decimal(10,5)
+,`ord_addat` datetime
+,`ord_status_id` tinyint
 ,`curn_id` int
 ,`curn_name` varchar(100)
-,`curn_rate` decimal(10,2)
 ,`curn_status_id` tinyint
+,`curn_rate` decimal(10,2)
+,`curn_color` varchar(100)
 ,`curn_symbole` varchar(512)
-,`cust_address` varchar(256)
 ,`cust_id` int
-,`cust_logon` varchar(100)
-,`cust_mobile` varchar(25)
+,`cust_status_id` tinyint
 ,`cust_name` varchar(256)
 ,`cust_orgnum` varchar(15)
+,`cust_logon` varchar(100)
+,`cust_mobile` varchar(25)
 ,`cust_phone` varchar(25)
-,`cust_status_id` tinyint
-,`item_amt` decimal(10,2)
-,`item_cprice` decimal(10,2)
-,`item_disc` decimal(10,2)
+,`cust_address` varchar(256)
 ,`item_id` int
-,`item_net` decimal(10,2)
-,`item_price` decimal(10,2)
 ,`item_prod_id` int
-,`item_qnt` decimal(10,2)
 ,`item_size_id` int
-,`ord_addat` datetime
-,`ord_curn_rate` decimal(10,5)
-,`ord_id` int
-,`ord_status_id` tinyint
+,`item_qnt` decimal(10,2)
+,`item_price` decimal(10,2)
+,`item_cprice` decimal(10,2)
+,`item_amt` decimal(10,2)
+,`item_disc` decimal(10,2)
+,`item_net` decimal(10,2)
+,`brand_id` int
+,`brand_status_id` tinyint
+,`brand_name1` varchar(100)
+,`brand_name2` varchar(100)
+,`brand_image` varchar(512)
+,`cat_id` int
+,`cat_status_id` tinyint
+,`cat_order` int
+,`cat_name1` varchar(100)
+,`cat_name2` varchar(100)
+,`cat_image` varchar(512)
+,`tag_id` int
+,`tag_status_id` tinyint
+,`tag_name` varchar(100)
+,`tag_classname` varchar(100)
+,`prod_id` int
+,`prod_mnum` int
+,`prod_status_id` tinyint
+,`prod_name1` varchar(256)
+,`prod_name2` varchar(256)
+,`prod_qnt` decimal(10,2)
+,`prod_price` decimal(10,2)
 ,`prod_cprice` decimal(10,2)
 ,`prod_desc1` text
 ,`prod_desc2` text
-,`prod_id` int
 ,`prod_image` varchar(512)
-,`prod_mnum` int
-,`prod_name1` varchar(256)
-,`prod_name2` varchar(256)
-,`prod_price` decimal(10,2)
-,`prod_qnt` decimal(10,2)
-,`prod_status_id` tinyint
-,`size_anum` int
-,`size_box` decimal(10,2)
-,`size_cprice` decimal(10,2)
 ,`size_id` int
-,`size_name` varchar(20)
-,`size_price` decimal(10,2)
-,`size_qnt` decimal(10,2)
 ,`size_snum` int
-,`tag_classname` varchar(100)
-,`tag_id` int
-,`tag_name` varchar(100)
-,`tag_status_id` tinyint
+,`size_anum` int
+,`size_name` varchar(20)
+,`size_box` decimal(10,2)
+,`size_qnt` decimal(10,2)
+,`size_price` decimal(10,2)
+,`size_cprice` decimal(10,2)
 ,`unit_id` smallint
 ,`unit_name` varchar(100)
 ,`unit_rem` varchar(100)
@@ -947,34 +837,33 @@ CREATE TABLE IF NOT EXISTS `ecom_vorder_items` (
 -- Stand-in structure for view `ecom_vproducts`
 -- (See below for the actual view)
 --
-DROP VIEW IF EXISTS `ecom_vproducts`;
-CREATE TABLE IF NOT EXISTS `ecom_vproducts` (
+CREATE TABLE `ecom_vproducts` (
 `brand_id` int
-,`brand_image` varchar(512)
+,`brand_status_id` tinyint
 ,`brand_name1` varchar(100)
 ,`brand_name2` varchar(100)
-,`brand_status_id` tinyint
+,`brand_image` varchar(512)
 ,`cat_id` int
-,`cat_image` varchar(512)
+,`cat_status_id` tinyint
+,`cat_order` int
 ,`cat_name1` varchar(100)
 ,`cat_name2` varchar(100)
-,`cat_order` int
-,`cat_status_id` tinyint
+,`cat_image` varchar(512)
+,`tag_id` int
+,`tag_status_id` tinyint
+,`tag_name` varchar(100)
+,`tag_classname` varchar(100)
+,`prod_id` int
+,`prod_mnum` int
+,`prod_status_id` tinyint
+,`prod_name1` varchar(256)
+,`prod_name2` varchar(256)
+,`prod_qnt` decimal(10,2)
+,`prod_price` decimal(10,2)
 ,`prod_cprice` decimal(10,2)
 ,`prod_desc1` text
 ,`prod_desc2` text
-,`prod_id` int
 ,`prod_image` varchar(512)
-,`prod_mnum` int
-,`prod_name1` varchar(256)
-,`prod_name2` varchar(256)
-,`prod_price` decimal(10,2)
-,`prod_qnt` decimal(10,2)
-,`prod_status_id` tinyint
-,`tag_classname` varchar(100)
-,`tag_id` int
-,`tag_name` varchar(100)
-,`tag_status_id` tinyint
 );
 
 -- --------------------------------------------------------
@@ -983,42 +872,41 @@ CREATE TABLE IF NOT EXISTS `ecom_vproducts` (
 -- Stand-in structure for view `ecom_vproduct_sizes`
 -- (See below for the actual view)
 --
-DROP VIEW IF EXISTS `ecom_vproduct_sizes`;
-CREATE TABLE IF NOT EXISTS `ecom_vproduct_sizes` (
+CREATE TABLE `ecom_vproduct_sizes` (
 `brand_id` int
-,`brand_image` varchar(512)
+,`brand_status_id` tinyint
 ,`brand_name1` varchar(100)
 ,`brand_name2` varchar(100)
-,`brand_status_id` tinyint
+,`brand_image` varchar(512)
 ,`cat_id` int
-,`cat_image` varchar(512)
+,`cat_status_id` tinyint
+,`cat_order` int
 ,`cat_name1` varchar(100)
 ,`cat_name2` varchar(100)
-,`cat_order` int
-,`cat_status_id` tinyint
+,`cat_image` varchar(512)
+,`tag_id` int
+,`tag_status_id` tinyint
+,`tag_name` varchar(100)
+,`tag_classname` varchar(100)
+,`prod_id` int
+,`prod_mnum` int
+,`prod_status_id` tinyint
+,`prod_name1` varchar(256)
+,`prod_name2` varchar(256)
+,`prod_qnt` decimal(10,2)
+,`prod_price` decimal(10,2)
 ,`prod_cprice` decimal(10,2)
 ,`prod_desc1` text
 ,`prod_desc2` text
-,`prod_id` int
 ,`prod_image` varchar(512)
-,`prod_mnum` int
-,`prod_name1` varchar(256)
-,`prod_name2` varchar(256)
-,`prod_price` decimal(10,2)
-,`prod_qnt` decimal(10,2)
-,`prod_status_id` tinyint
-,`size_anum` int
-,`size_box` decimal(10,2)
-,`size_cprice` decimal(10,2)
 ,`size_id` int
-,`size_name` varchar(20)
-,`size_price` decimal(10,2)
-,`size_qnt` decimal(10,2)
 ,`size_snum` int
-,`tag_classname` varchar(100)
-,`tag_id` int
-,`tag_name` varchar(100)
-,`tag_status_id` tinyint
+,`size_anum` int
+,`size_name` varchar(20)
+,`size_box` decimal(10,2)
+,`size_qnt` decimal(10,2)
+,`size_price` decimal(10,2)
+,`size_cprice` decimal(10,2)
 ,`unit_id` smallint
 ,`unit_name` varchar(100)
 ,`unit_rem` varchar(100)
@@ -1030,16 +918,12 @@ CREATE TABLE IF NOT EXISTS `ecom_vproduct_sizes` (
 -- Table structure for table `ecom_wishlist`
 --
 
-DROP TABLE IF EXISTS `ecom_wishlist`;
-CREATE TABLE IF NOT EXISTS `ecom_wishlist` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `ecom_wishlist` (
+  `id` int NOT NULL COMMENT 'PK',
   `token` varchar(50) NOT NULL COMMENT 'Token',
   `addat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date Time',
   `status_id` tinyint NOT NULL DEFAULT '0' COMMENT 'Status',
-  `prod_id` int NOT NULL COMMENT 'Product',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `wish_token` (`token`,`prod_id`),
-  KEY `prod_id` (`prod_id`)
+  `prod_id` int NOT NULL COMMENT 'Product'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
@@ -1048,12 +932,10 @@ CREATE TABLE IF NOT EXISTS `ecom_wishlist` (
 -- Table structure for table `phs_cod_gender`
 --
 
-DROP TABLE IF EXISTS `phs_cod_gender`;
-CREATE TABLE IF NOT EXISTS `phs_cod_gender` (
+CREATE TABLE `phs_cod_gender` (
   `id` tinyint NOT NULL COMMENT 'PK',
   `name` varchar(100) NOT NULL COMMENT 'Name',
-  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks',
-  PRIMARY KEY (`id`)
+  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
@@ -1070,13 +952,10 @@ INSERT INTO `phs_cod_gender` (`id`, `name`, `rem`) VALUES
 -- Table structure for table `phs_cod_status`
 --
 
-DROP TABLE IF EXISTS `phs_cod_status`;
-CREATE TABLE IF NOT EXISTS `phs_cod_status` (
+CREATE TABLE `phs_cod_status` (
   `id` tinyint NOT NULL COMMENT 'PK',
   `name` varchar(100) NOT NULL COMMENT 'Name',
-  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
@@ -1093,13 +972,10 @@ INSERT INTO `phs_cod_status` (`id`, `name`, `rem`) VALUES
 -- Table structure for table `phs_cod_yes_no`
 --
 
-DROP TABLE IF EXISTS `phs_cod_yes_no`;
-CREATE TABLE IF NOT EXISTS `phs_cod_yes_no` (
+CREATE TABLE `phs_cod_yes_no` (
   `id` tinyint NOT NULL COMMENT 'PK',
   `name` varchar(100) NOT NULL COMMENT 'Name',
-  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
@@ -1116,16 +992,12 @@ INSERT INTO `phs_cod_yes_no` (`id`, `name`, `rem`) VALUES
 -- Table structure for table `phs_lang`
 --
 
-DROP TABLE IF EXISTS `phs_lang`;
-CREATE TABLE IF NOT EXISTS `phs_lang` (
+CREATE TABLE `phs_lang` (
   `id` int NOT NULL COMMENT 'PK',
   `name` varchar(100) NOT NULL COMMENT 'Name',
   `code` varchar(10) NOT NULL COMMENT 'Language Code',
   `dir` varchar(10) NOT NULL DEFAULT 'ltr' COMMENT 'Direction',
-  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `code` (`code`)
+  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
@@ -1142,12 +1014,10 @@ INSERT INTO `phs_lang` (`id`, `name`, `code`, `dir`, `rem`) VALUES
 -- Table structure for table `phs_log`
 --
 
-DROP TABLE IF EXISTS `phs_log`;
-CREATE TABLE IF NOT EXISTS `phs_log` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `phs_log` (
+  `id` int NOT NULL COMMENT 'PK',
   `log_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Log Text',
-  `log_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Inserted AT',
-  PRIMARY KEY (`id`)
+  `log_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Inserted AT'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1156,17 +1026,13 @@ CREATE TABLE IF NOT EXISTS `phs_log` (
 -- Table structure for table `phs_pref`
 --
 
-DROP TABLE IF EXISTS `phs_pref`;
-CREATE TABLE IF NOT EXISTS `phs_pref` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK',
+CREATE TABLE `phs_pref` (
+  `id` int NOT NULL COMMENT 'PK',
   `key` varchar(50) NOT NULL COMMENT 'Key',
   `name` varchar(100) NOT NULL COMMENT 'Name',
   `value` varchar(100) NOT NULL COMMENT 'Value',
-  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `key` (`key`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
+  `rem` varchar(100) DEFAULT NULL COMMENT 'Remarks'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `phs_pref`
@@ -1183,7 +1049,7 @@ INSERT INTO `phs_pref` (`id`, `key`, `name`, `value`, `rem`) VALUES
 (8, 'Def_Workperiod', 'Default Work Period', '0', NULL),
 (9, 'IsWorkperiod', 'Is Copy have Work Period', 'true', NULL),
 (10, 'Def_GUI_ASide_Hidden', 'is ASide Hidden when minimized', 'false', NULL),
-(12, 'Copy_Title', 'Application Name', 'Folly CMS', NULL);
+(12, 'Copy_Title', 'Application Name', 'Sabbagh CMS', NULL);
 
 -- --------------------------------------------------------
 
@@ -1191,8 +1057,7 @@ INSERT INTO `phs_pref` (`id`, `key`, `name`, `value`, `rem`) VALUES
 -- Table structure for table `phs_program`
 --
 
-DROP TABLE IF EXISTS `phs_program`;
-CREATE TABLE IF NOT EXISTS `phs_program` (
+CREATE TABLE `phs_program` (
   `id` int NOT NULL COMMENT 'PK',
   `prog_id` int DEFAULT NULL COMMENT 'Parent',
   `sys_id` int NOT NULL DEFAULT '0' COMMENT 'System',
@@ -1207,12 +1072,7 @@ CREATE TABLE IF NOT EXISTS `phs_program` (
   `css` varchar(100) DEFAULT NULL COMMENT 'CSS File',
   `js` varchar(100) DEFAULT NULL COMMENT 'JS File',
   `attributes` varchar(512) DEFAULT NULL COMMENT 'Special Attributes',
-  `params` varchar(50) NOT NULL COMMENT 'Parameters',
-  PRIMARY KEY (`id`),
-  KEY `mprg_id` (`prog_id`),
-  KEY `type_id` (`type_id`),
-  KEY `status_id` (`status_id`),
-  KEY `sys_id` (`sys_id`)
+  `params` varchar(50) NOT NULL COMMENT 'Parameters'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
@@ -1251,12 +1111,9 @@ INSERT INTO `phs_program` (`id`, `prog_id`, `sys_id`, `grp_id`, `status_id`, `ty
 -- Table structure for table `phs_program_type`
 --
 
-DROP TABLE IF EXISTS `phs_program_type`;
-CREATE TABLE IF NOT EXISTS `phs_program_type` (
+CREATE TABLE `phs_program_type` (
   `id` tinyint NOT NULL COMMENT 'PK',
-  `name` varchar(100) NOT NULL COMMENT 'Name',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+  `name` varchar(100) NOT NULL COMMENT 'Name'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
@@ -1277,14 +1134,10 @@ INSERT INTO `phs_program_type` (`id`, `name`) VALUES
 -- Table structure for table `phs_system`
 --
 
-DROP TABLE IF EXISTS `phs_system`;
-CREATE TABLE IF NOT EXISTS `phs_system` (
+CREATE TABLE `phs_system` (
   `id` int NOT NULL COMMENT 'Id',
   `name` varchar(100) NOT NULL COMMENT 'Name',
-  `status_id` tinyint NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  KEY `status_id` (`status_id`)
+  `status_id` tinyint NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
@@ -1304,26 +1157,505 @@ INSERT INTO `phs_system` (`id`, `name`, `status_id`) VALUES
 -- Stand-in structure for view `phs_vprogram`
 -- (See below for the actual view)
 --
-DROP VIEW IF EXISTS `phs_vprogram`;
-CREATE TABLE IF NOT EXISTS `phs_vprogram` (
-`attributes` varchar(512)
-,`css` varchar(100)
-,`file` varchar(100)
-,`grp_id` tinyint
-,`icon` varchar(50)
-,`id` int
-,`js` varchar(100)
-,`name` varchar(100)
-,`open` tinyint
-,`ord` smallint
+CREATE TABLE `phs_vprogram` (
+`id` int
 ,`prog_id` int
+,`name` varchar(100)
+,`ord` smallint
+,`icon` varchar(50)
+,`grp_id` tinyint
+,`open` tinyint
 ,`status_id` tinyint
 ,`status_name` varchar(100)
+,`file` varchar(100)
+,`css` varchar(100)
+,`js` varchar(100)
+,`attributes` varchar(512)
 ,`sys_id` int
 ,`sys_name` varchar(100)
 ,`type_id` tinyint
 ,`type_name` varchar(100)
 );
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `cpy_branch`
+--
+ALTER TABLE `cpy_branch`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `cpy_perm`
+--
+ALTER TABLE `cpy_perm`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `prog_id` (`prog_id`),
+  ADD KEY `grp_id` (`grp_id`);
+
+--
+-- Indexes for table `cpy_perm_grp`
+--
+ALTER TABLE `cpy_perm_grp`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `wpstatus_id` (`wpstatus_id`);
+
+--
+-- Indexes for table `cpy_token`
+--
+ALTER TABLE `cpy_token`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `gid` (`gid`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `cpy_user`
+--
+ALTER TABLE `cpy_user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD UNIQUE KEY `logon` (`logon`),
+  ADD KEY `grp_id` (`grp_id`),
+  ADD KEY `status_id` (`status_id`),
+  ADD KEY `gender_id` (`gender_id`);
+
+--
+-- Indexes for table `ecom_about`
+--
+ALTER TABLE `ecom_about`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ecom_adv`
+--
+ALTER TABLE `ecom_adv`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ecom_amt_type`
+--
+ALTER TABLE `ecom_amt_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ecom_banner`
+--
+ALTER TABLE `ecom_banner`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ecom_brand`
+--
+ALTER TABLE `ecom_brand`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name1` (`name1`),
+  ADD UNIQUE KEY `name2` (`name2`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `ecom_cart`
+--
+ALTER TABLE `ecom_cart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `prod_id` (`prod_id`),
+  ADD KEY `cart_token` (`cust_id`),
+  ADD KEY `size_id` (`size_id`);
+
+--
+-- Indexes for table `ecom_cat`
+--
+ALTER TABLE `ecom_cat`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `ecom_curn`
+--
+ALTER TABLE `ecom_curn`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `curn_name` (`name`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `ecom_customer`
+--
+ALTER TABLE `ecom_customer`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `cust_logon` (`logon`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `ecom_faq`
+--
+ALTER TABLE `ecom_faq`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ecom_order`
+--
+ALTER TABLE `ecom_order`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cust_id` (`cust_id`),
+  ADD KEY `curn_id` (`curn_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `ecom_order_item`
+--
+ALTER TABLE `ecom_order_item`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `prod_id` (`prod_id`),
+  ADD KEY `size_id` (`size_id`);
+
+--
+-- Indexes for table `ecom_order_service`
+--
+ALTER TABLE `ecom_order_service`
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `service_id` (`service_id`),
+  ADD KEY `type_id` (`type_id`);
+
+--
+-- Indexes for table `ecom_order_status`
+--
+ALTER TABLE `ecom_order_status`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ecom_product`
+--
+ALTER TABLE `ecom_product`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `mnum` (`mnum`),
+  ADD KEY `brand_id` (`brand_id`),
+  ADD KEY `cat_id` (`cat_id`),
+  ADD KEY `tag_id` (`tag_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `ecom_prod_facts`
+--
+ALTER TABLE `ecom_prod_facts`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `prod_id` (`prod_id`,`name1`);
+
+--
+-- Indexes for table `ecom_prod_image`
+--
+ALTER TABLE `ecom_prod_image`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `prod_id` (`prod_id`);
+
+--
+-- Indexes for table `ecom_prod_review`
+--
+ALTER TABLE `ecom_prod_review`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `prod_id` (`prod_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `ecom_prod_size`
+--
+ALTER TABLE `ecom_prod_size`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `prod_id_uk` (`prod_id`,`name`),
+  ADD KEY `prod_id` (`prod_id`),
+  ADD KEY `unit_id` (`unit_id`);
+
+--
+-- Indexes for table `ecom_service`
+--
+ALTER TABLE `ecom_service`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `type_id` (`type_id`);
+
+--
+-- Indexes for table `ecom_slider_mst`
+--
+ALTER TABLE `ecom_slider_mst`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ecom_slider_trn`
+--
+ALTER TABLE `ecom_slider_trn`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `slid_id` (`slid_id`);
+
+--
+-- Indexes for table `ecom_tag`
+--
+ALTER TABLE `ecom_tag`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `ecom_unit`
+--
+ALTER TABLE `ecom_unit`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `ecom_wishlist`
+--
+ALTER TABLE `ecom_wishlist`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `wish_token` (`token`,`prod_id`),
+  ADD KEY `prod_id` (`prod_id`);
+
+--
+-- Indexes for table `phs_cod_gender`
+--
+ALTER TABLE `phs_cod_gender`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `phs_cod_status`
+--
+ALTER TABLE `phs_cod_status`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `phs_cod_yes_no`
+--
+ALTER TABLE `phs_cod_yes_no`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `phs_lang`
+--
+ALTER TABLE `phs_lang`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD UNIQUE KEY `code` (`code`);
+
+--
+-- Indexes for table `phs_log`
+--
+ALTER TABLE `phs_log`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `phs_pref`
+--
+ALTER TABLE `phs_pref`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `key` (`key`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `phs_program`
+--
+ALTER TABLE `phs_program`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `mprg_id` (`prog_id`),
+  ADD KEY `type_id` (`type_id`),
+  ADD KEY `status_id` (`status_id`),
+  ADD KEY `sys_id` (`sys_id`);
+
+--
+-- Indexes for table `phs_program_type`
+--
+ALTER TABLE `phs_program_type`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `phs_system`
+--
+ALTER TABLE `phs_system`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `cpy_branch`
+--
+ALTER TABLE `cpy_branch`
+  MODIFY `id` smallint NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `cpy_perm`
+--
+ALTER TABLE `cpy_perm`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=1051;
+
+--
+-- AUTO_INCREMENT for table `cpy_perm_grp`
+--
+ALTER TABLE `cpy_perm_grp`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `cpy_token`
+--
+ALTER TABLE `cpy_token`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK';
+
+--
+-- AUTO_INCREMENT for table `cpy_user`
+--
+ALTER TABLE `cpy_user`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=94;
+
+--
+-- AUTO_INCREMENT for table `ecom_about`
+--
+ALTER TABLE `ecom_about`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `ecom_adv`
+--
+ALTER TABLE `ecom_adv`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `ecom_banner`
+--
+ALTER TABLE `ecom_banner`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Id', AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `ecom_brand`
+--
+ALTER TABLE `ecom_brand`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `ecom_cart`
+--
+ALTER TABLE `ecom_cart`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=71;
+
+--
+-- AUTO_INCREMENT for table `ecom_cat`
+--
+ALTER TABLE `ecom_cat`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `ecom_curn`
+--
+ALTER TABLE `ecom_curn`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `ecom_customer`
+--
+ALTER TABLE `ecom_customer`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=108;
+
+--
+-- AUTO_INCREMENT for table `ecom_faq`
+--
+ALTER TABLE `ecom_faq`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `ecom_order`
+--
+ALTER TABLE `ecom_order`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `ecom_order_item`
+--
+ALTER TABLE `ecom_order_item`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=48;
+
+--
+-- AUTO_INCREMENT for table `ecom_product`
+--
+ALTER TABLE `ecom_product`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=276;
+
+--
+-- AUTO_INCREMENT for table `ecom_prod_facts`
+--
+ALTER TABLE `ecom_prod_facts`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=307;
+
+--
+-- AUTO_INCREMENT for table `ecom_prod_image`
+--
+ALTER TABLE `ecom_prod_image`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=206;
+
+--
+-- AUTO_INCREMENT for table `ecom_prod_review`
+--
+ALTER TABLE `ecom_prod_review`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK';
+
+--
+-- AUTO_INCREMENT for table `ecom_prod_size`
+--
+ALTER TABLE `ecom_prod_size`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=246;
+
+--
+-- AUTO_INCREMENT for table `ecom_service`
+--
+ALTER TABLE `ecom_service`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `ecom_slider_mst`
+--
+ALTER TABLE `ecom_slider_mst`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `ecom_slider_trn`
+--
+ALTER TABLE `ecom_slider_trn`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `ecom_tag`
+--
+ALTER TABLE `ecom_tag`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `ecom_unit`
+--
+ALTER TABLE `ecom_unit`
+  MODIFY `id` smallint NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `ecom_wishlist`
+--
+ALTER TABLE `ecom_wishlist`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK';
+
+--
+-- AUTO_INCREMENT for table `phs_log`
+--
+ALTER TABLE `phs_log`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK';
+
+--
+-- AUTO_INCREMENT for table `phs_pref`
+--
+ALTER TABLE `phs_pref`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'PK', AUTO_INCREMENT=13;
 
 -- --------------------------------------------------------
 
@@ -1332,7 +1664,6 @@ CREATE TABLE IF NOT EXISTS `phs_vprogram` (
 --
 DROP TABLE IF EXISTS `cpy_vuser`;
 
-DROP VIEW IF EXISTS `cpy_vuser`;
 CREATE VIEW `cpy_vuser`  AS SELECT `uu`.`id` AS `id`, `bb`.`id` AS `bran_id`, `bb`.`name` AS `bran_name`, `uu`.`grp_id` AS `grp_id`, `uu`.`status_id` AS `status_id`, `uu`.`gender_id` AS `gender_id`, `uu`.`name` AS `name`, `uu`.`logon` AS `logon`, `uu`.`password` AS `password`, `uu`.`image` AS `image` FROM (`cpy_user` `uu` join `cpy_branch` `bb`) WHERE (`uu`.`bran_id` = `bb`.`id`) ;
 
 -- --------------------------------------------------------
@@ -1342,7 +1673,6 @@ CREATE VIEW `cpy_vuser`  AS SELECT `uu`.`id` AS `id`, `bb`.`id` AS `bran_id`, `b
 --
 DROP TABLE IF EXISTS `ecom_vorders`;
 
-DROP VIEW IF EXISTS `ecom_vorders`;
 CREATE VIEW `ecom_vorders`  AS SELECT `o`.`id` AS `ord_id`, `o`.`rate` AS `ord_curn_rate`, `o`.`addat` AS `ord_addat`, `s`.`id` AS `status_id`, `s`.`name` AS `status_name`, `r`.`id` AS `curn_id`, `r`.`name` AS `curn_name`, `r`.`status_id` AS `curn_status_id`, `r`.`rate` AS `curn_rate`, `r`.`color` AS `curn_color`, `r`.`symbole` AS `curn_symbole`, `c`.`id` AS `cust_id`, `c`.`status_id` AS `cust_status_id`, `c`.`name` AS `cust_name`, `c`.`orgnum` AS `cust_orgnum`, `c`.`logon` AS `cust_logon`, `c`.`mobile` AS `cust_mobile`, `c`.`phone` AS `cust_phone`, `c`.`address` AS `cust_address` FROM (((`ecom_order` `o` join `ecom_curn` `r`) join `ecom_customer` `c`) join `ecom_order_status` `s`) WHERE ((`o`.`curn_id` = `r`.`id`) AND (`o`.`cust_id` = `c`.`id`) AND (`o`.`status_id` = `s`.`id`)) ;
 
 -- --------------------------------------------------------
@@ -1352,7 +1682,6 @@ CREATE VIEW `ecom_vorders`  AS SELECT `o`.`id` AS `ord_id`, `o`.`rate` AS `ord_c
 --
 DROP TABLE IF EXISTS `ecom_vorder_items`;
 
-DROP VIEW IF EXISTS `ecom_vorder_items`;
 CREATE VIEW `ecom_vorder_items`  AS SELECT `o`.`id` AS `ord_id`, `o`.`rate` AS `ord_curn_rate`, `o`.`addat` AS `ord_addat`, `o`.`status_id` AS `ord_status_id`, `r`.`id` AS `curn_id`, `r`.`name` AS `curn_name`, `r`.`status_id` AS `curn_status_id`, `r`.`rate` AS `curn_rate`, `r`.`color` AS `curn_color`, `r`.`symbole` AS `curn_symbole`, `cs`.`id` AS `cust_id`, `cs`.`status_id` AS `cust_status_id`, `cs`.`name` AS `cust_name`, `cs`.`orgnum` AS `cust_orgnum`, `cs`.`logon` AS `cust_logon`, `cs`.`mobile` AS `cust_mobile`, `cs`.`phone` AS `cust_phone`, `cs`.`address` AS `cust_address`, `i`.`id` AS `item_id`, `i`.`prod_id` AS `item_prod_id`, `i`.`size_id` AS `item_size_id`, `i`.`qnt` AS `item_qnt`, `i`.`price` AS `item_price`, `i`.`cprice` AS `item_cprice`, `i`.`amt` AS `item_amt`, `i`.`disc` AS `item_disc`, `i`.`net` AS `item_net`, `b`.`id` AS `brand_id`, `b`.`status_id` AS `brand_status_id`, `b`.`name1` AS `brand_name1`, `b`.`name2` AS `brand_name2`, `b`.`image` AS `brand_image`, `ct`.`id` AS `cat_id`, `ct`.`status_id` AS `cat_status_id`, `ct`.`order` AS `cat_order`, `ct`.`name1` AS `cat_name1`, `ct`.`name2` AS `cat_name2`, `ct`.`image` AS `cat_image`, `t`.`id` AS `tag_id`, `t`.`status_id` AS `tag_status_id`, `t`.`name` AS `tag_name`, `t`.`classname` AS `tag_classname`, `p`.`id` AS `prod_id`, `p`.`mnum` AS `prod_mnum`, `p`.`status_id` AS `prod_status_id`, `p`.`name1` AS `prod_name1`, `p`.`name2` AS `prod_name2`, `p`.`qnt` AS `prod_qnt`, `p`.`price` AS `prod_price`, `p`.`cprice` AS `prod_cprice`, `p`.`desc1` AS `prod_desc1`, `p`.`desc2` AS `prod_desc2`, `p`.`image` AS `prod_image`, `s`.`id` AS `size_id`, `s`.`snum` AS `size_snum`, `s`.`anum` AS `size_anum`, `s`.`name` AS `size_name`, `s`.`box` AS `size_box`, `s`.`qnt` AS `size_qnt`, `s`.`price` AS `size_price`, `s`.`cprice` AS `size_cprice`, `u`.`id` AS `unit_id`, `u`.`name` AS `unit_name`, `u`.`rem` AS `unit_rem` FROM (((((((((`ecom_order` `o` join `ecom_curn` `r`) join `ecom_customer` `cs`) join `ecom_order_item` `i`) join `ecom_product` `p`) join `ecom_brand` `b`) join `ecom_cat` `ct`) join `ecom_tag` `t`) join `ecom_prod_size` `s`) join `ecom_unit` `u`) WHERE ((`o`.`curn_id` = `r`.`id`) AND (`o`.`cust_id` = `cs`.`id`) AND (`p`.`brand_id` = `b`.`id`) AND (`p`.`cat_id` = `ct`.`id`) AND (`p`.`tag_id` = `t`.`id`) AND (`s`.`prod_id` = `p`.`id`) AND (`s`.`unit_id` = `u`.`id`) AND (`i`.`order_id` = `o`.`id`) AND (`i`.`prod_id` = `p`.`id`) AND (`i`.`size_id` = `s`.`id`)) ;
 
 -- --------------------------------------------------------
@@ -1362,7 +1691,6 @@ CREATE VIEW `ecom_vorder_items`  AS SELECT `o`.`id` AS `ord_id`, `o`.`rate` AS `
 --
 DROP TABLE IF EXISTS `ecom_vproducts`;
 
-DROP VIEW IF EXISTS `ecom_vproducts`;
 CREATE VIEW `ecom_vproducts`  AS SELECT `b`.`id` AS `brand_id`, `b`.`status_id` AS `brand_status_id`, `b`.`name1` AS `brand_name1`, `b`.`name2` AS `brand_name2`, `b`.`image` AS `brand_image`, `c`.`id` AS `cat_id`, `c`.`status_id` AS `cat_status_id`, `c`.`order` AS `cat_order`, `c`.`name1` AS `cat_name1`, `c`.`name2` AS `cat_name2`, `c`.`image` AS `cat_image`, `t`.`id` AS `tag_id`, `t`.`status_id` AS `tag_status_id`, `t`.`name` AS `tag_name`, `t`.`classname` AS `tag_classname`, `p`.`id` AS `prod_id`, `p`.`mnum` AS `prod_mnum`, `p`.`status_id` AS `prod_status_id`, `p`.`name1` AS `prod_name1`, `p`.`name2` AS `prod_name2`, `p`.`qnt` AS `prod_qnt`, `p`.`price` AS `prod_price`, `p`.`cprice` AS `prod_cprice`, `p`.`desc1` AS `prod_desc1`, `p`.`desc2` AS `prod_desc2`, `p`.`image` AS `prod_image` FROM (((`ecom_product` `p` join `ecom_brand` `b`) join `ecom_cat` `c`) join `ecom_tag` `t`) WHERE ((`p`.`brand_id` = `b`.`id`) AND (`p`.`cat_id` = `c`.`id`) AND (`p`.`tag_id` = `t`.`id`)) ;
 
 -- --------------------------------------------------------
@@ -1372,7 +1700,6 @@ CREATE VIEW `ecom_vproducts`  AS SELECT `b`.`id` AS `brand_id`, `b`.`status_id` 
 --
 DROP TABLE IF EXISTS `ecom_vproduct_sizes`;
 
-DROP VIEW IF EXISTS `ecom_vproduct_sizes`;
 CREATE VIEW `ecom_vproduct_sizes`  AS SELECT `b`.`id` AS `brand_id`, `b`.`status_id` AS `brand_status_id`, `b`.`name1` AS `brand_name1`, `b`.`name2` AS `brand_name2`, `b`.`image` AS `brand_image`, `c`.`id` AS `cat_id`, `c`.`status_id` AS `cat_status_id`, `c`.`order` AS `cat_order`, `c`.`name1` AS `cat_name1`, `c`.`name2` AS `cat_name2`, `c`.`image` AS `cat_image`, `t`.`id` AS `tag_id`, `t`.`status_id` AS `tag_status_id`, `t`.`name` AS `tag_name`, `t`.`classname` AS `tag_classname`, `p`.`id` AS `prod_id`, `p`.`mnum` AS `prod_mnum`, `p`.`status_id` AS `prod_status_id`, `p`.`name1` AS `prod_name1`, `p`.`name2` AS `prod_name2`, `p`.`qnt` AS `prod_qnt`, `p`.`price` AS `prod_price`, `p`.`cprice` AS `prod_cprice`, `p`.`desc1` AS `prod_desc1`, `p`.`desc2` AS `prod_desc2`, `p`.`image` AS `prod_image`, `s`.`id` AS `size_id`, `s`.`snum` AS `size_snum`, `s`.`anum` AS `size_anum`, `s`.`name` AS `size_name`, `s`.`box` AS `size_box`, `s`.`qnt` AS `size_qnt`, `s`.`price` AS `size_price`, `s`.`cprice` AS `size_cprice`, `u`.`id` AS `unit_id`, `u`.`name` AS `unit_name`, `u`.`rem` AS `unit_rem` FROM (((((`ecom_product` `p` join `ecom_brand` `b`) join `ecom_cat` `c`) join `ecom_tag` `t`) join `ecom_prod_size` `s`) join `ecom_unit` `u`) WHERE ((`p`.`brand_id` = `b`.`id`) AND (`p`.`cat_id` = `c`.`id`) AND (`p`.`tag_id` = `t`.`id`) AND (`s`.`prod_id` = `p`.`id`) AND (`s`.`unit_id` = `u`.`id`)) ;
 
 -- --------------------------------------------------------
@@ -1382,7 +1709,6 @@ CREATE VIEW `ecom_vproduct_sizes`  AS SELECT `b`.`id` AS `brand_id`, `b`.`status
 --
 DROP TABLE IF EXISTS `phs_vprogram`;
 
-DROP VIEW IF EXISTS `phs_vprogram`;
 CREATE VIEW `phs_vprogram`  AS SELECT `p`.`id` AS `id`, `p`.`prog_id` AS `prog_id`, `p`.`name` AS `name`, `p`.`ord` AS `ord`, ifnull(`p`.`icon`,' ') AS `icon`, `p`.`grp_id` AS `grp_id`, `p`.`open` AS `open`, `s`.`id` AS `status_id`, `s`.`name` AS `status_name`, `p`.`file` AS `file`, `p`.`css` AS `css`, `p`.`js` AS `js`, `p`.`attributes` AS `attributes`, `y`.`id` AS `sys_id`, `y`.`name` AS `sys_name`, `t`.`id` AS `type_id`, `t`.`name` AS `type_name` FROM (((`phs_program` `p` join `phs_system` `y`) join `phs_program_type` `t`) join `phs_cod_status` `s`) WHERE ((`p`.`sys_id` = `y`.`id`) AND (`p`.`type_id` = `t`.`id`) AND (`p`.`status_id` = `s`.`id`)) ;
 
 --
