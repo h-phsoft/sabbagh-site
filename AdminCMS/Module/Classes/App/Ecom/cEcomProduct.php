@@ -79,7 +79,7 @@ class cEcomProduct {
       $vLimit = ((($nPage - 1) * $nPageSize)) . ', ' . $nPageSize;
     }
     if ($vOrder == '') {
-      $vOrder = '`id`';
+      $vOrder = '`cat_id`, `mnum`';
     }
     $res = ph_Execute(self::getSelectStatement($vWhere, $vOrder, $vLimit));
     if ($res != '') {

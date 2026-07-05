@@ -27,7 +27,7 @@
           </li>
           <li>
             <i class="fa-solid fa-envelope"></i>
-            <span>info@sabbaghest.com</span>
+            <span><a href="mailto:info@sabbaghest.com">info@sabbaghest.com</a></span>
           </li>
         </ul>
       </div>

@@ -75,13 +75,7 @@ $aTags = cEcomTag::getArray();
         <form id="ph_Form">
           <div class="row">
             <div class="col-sm-8 py-2">
-              <div class="row pt-1">
-                <input id="fldId" class="form-control form-control-sm" type="hidden" value="0" autocomplete="off" required="true" />
-                <label for="fldMnum" class="col-form-label col-sm-2 text-center text-sm-end"><?php echo getLabel('Number'); ?></label>
-                <div class="col-sm-4">
-                  <input id="fldMnum" class="form-control form-control-sm" type="text" value="" autocomplete="off" required="true" />
-                </div>
-              </div>
+              <input id="fldId" class="form-control form-control-sm" type="hidden" value="0" autocomplete="off" required="true" />
               <div class="row pt-1">
                 <label for="fldBrandId" class="col-form-label col-sm-2 text-center text-sm-end"><?php echo getLabel('Brand'); ?></label>
                 <div class="col-sm-4">
@@ -106,6 +100,12 @@ $aTags = cEcomTag::getArray();
                     }
                     ?>
                   </select>
+                </div>
+              </div>
+              <div class="row pt-1">
+                <label for="fldMnum" class="col-form-label col-sm-2 text-center text-sm-end"><?php echo getLabel('Number'); ?></label>
+                <div class="col-sm-4">
+                  <input id="fldMnum" class="form-control form-control-sm" type="text" value="" autocomplete="off" required="true" />
                 </div>
               </div>
               <div class="row pt-1">
