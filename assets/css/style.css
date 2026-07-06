@@ -1142,12 +1142,12 @@ footer {
 
 /* ===== تحسين فلتر المنتجات للتمرير الأفقي ===== */
 .filter-container {
-  display: flex;
+  /*display: flex;*/
   flex-wrap: nowrap; /* منع الانتقال لسطر جديد */
   overflow-x: auto; /* تفعيل السكرول الأفقي */
   overflow-y: hidden;
   gap: 15px;
-  padding: 10px 15px;
+  /*padding: 10px 15px;*/
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch; /* تمرير سلس في iOS */
   scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */
@@ -1161,7 +1161,7 @@ footer {
 .filter-btn {
   flex: 0 0 auto; /* منع انكماش الأزرار */
   white-space: nowrap; /* منع نزول النص لسطر جديد */
-  padding: 10px 25px;
+  /*padding: 10px 25px;*/
   border: 2px solid var(--primary-blue) !important;
   background: var(--white);
   color: var(--primary-blue) !important;
