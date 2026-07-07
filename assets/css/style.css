@@ -532,35 +532,6 @@ footer {
   /* ---------------------------------- */
 }
 
-.filter-container {
-  gap: 15px;
-  flex-wrap: nowrap; /* منع الانتقال لسطر جديد */
-  overflow-x: auto; /* تفعيل السكرول الأفقي */
-  overflow-y: hidden;
-  padding: 10px 5px; /* مساحة إضافية لتحسين تجربة اللمس */
-  scroll-behavior: smooth; /* تمرير ناعم */
-}
-
-.filter-btn {
-  flex-shrink: 0; /* منع انكماش الأزرار */
-  white-space: nowrap; /* منع نزول النص لسطر جديد */
-  padding: 5px 10px;
-  border: none;
-  background: var(--white);
-  border: 2px solid var(--primary-blue) !important;
-  color: var(--primary-blue) !important;
-  border-radius: 525px;
-  cursor: pointer;
-  transition: 0.3s;
-  font-weight: 500;
-}
-
-.filter-btn:hover,
-.filter-btn.active {
-  background: var(--primary-blue) !important;
-  color: var(--white) !important;
-}
-
 [id^="cat-"] {
   scroll-margin-top: 150px;
 }
@@ -1142,15 +1113,18 @@ footer {
 
 /* ===== تحسين فلتر المنتجات للتمرير الأفقي ===== */
 .filter-container {
-  /*display: flex;*/
-  flex-wrap: nowrap; /* منع الانتقال لسطر جديد */
-  overflow-x: auto; /* تفعيل السكرول الأفقي */
+  display: flex;
+  flex-wrap: wrap; /* السماح بالالتفاف */
+  justify-content: center;
+  overflow-x: auto;
   overflow-y: hidden;
-  gap: 15px;
-  /*padding: 10px 15px;*/
+  gap: 10px;
+  padding: 5px 0px;
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch; /* تمرير سلس في iOS */
-  scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* إخفاء شريط التمرير في Chrome و Safari */
@@ -1159,9 +1133,9 @@ footer {
 }
 
 .filter-btn {
-  flex: 0 0 auto; /* منع انكماش الأزرار */
-  white-space: nowrap; /* منع نزول النص لسطر جديد */
-  /*padding: 10px 25px;*/
+  flex: 0 1 auto; /* السماح بالانكماش قليلاً */
+  white-space: nowrap;
+  padding: 5px 10px; /* تصغير الحشو قليلاً */
   border: 2px solid var(--primary-blue) !important;
   background: var(--white);
   color: var(--primary-blue) !important;
@@ -1169,8 +1143,12 @@ footer {
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
-  font-size: 15px;
-  scroll-snap-align: start; /* محاذاة عند التمرير */
+  font-size: 14px; /* تصغير حجم الخط قليلاً */
+  scroll-snap-align: start;
+  /* منع النص من الخروج */
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* إضافة snap scrolling */
@@ -1179,15 +1157,24 @@ footer {
 }
 
 /* تحسين للشاشات الصغيرة جداً */
+/* للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .filter-btn {
+    font-size: 12px;
+    max-width: 150px;
+  }
+}
+
+/* للشاشات الصغيرة جداً */
+@media (max-width: 480px) {
+  .filter-btn {
+    font-size: 11px;
+    max-width: 120px;
+  }
+}
 @media (max-width: 576px) {
   .filter-btn {
-    padding: 8px 18px;
     font-size: 13px;
-  }
-
-  .filter-container {
-    gap: 10px;
-    padding: 8px 10px;
   }
 }
 
