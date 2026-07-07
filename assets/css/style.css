@@ -1115,7 +1115,7 @@ footer {
 .filter-container {
   display: flex;
   flex-wrap: wrap; /* السماح بالالتفاف */
-  justify-content: center;
+  justify-content: center; /* توسيط جميع الأزرار */
   overflow-x: auto;
   overflow-y: hidden;
   gap: 10px;
@@ -1127,15 +1127,10 @@ footer {
   max-width: 100%;
 }
 
-/* إخفاء شريط التمرير في Chrome و Safari */
-.filter-container::-webkit-scrollbar {
-  display: none;
-}
-
 .filter-btn {
   flex: 0 1 auto; /* السماح بالانكماش قليلاً */
   white-space: nowrap;
-  padding: 5px 10px; /* تصغير الحشو قليلاً */
+  padding: 3px 8px; /* تصغير الحشو قليلاً */
   border: 2px solid var(--primary-blue) !important;
   background: var(--white);
   color: var(--primary-blue) !important;
