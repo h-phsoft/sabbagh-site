@@ -519,58 +519,6 @@ footer {
   color: var(--white);
 }
 
-/* Filter Section */
-.filter-section {
-  background: var(--light-bg);
-  padding: 30px 0;
-  margin-bottom: 40px;
-
-  /* --- إضافة التثبيت عند التمرير --- */
-  position: sticky;
-  top: 80px; /* عدّل هذه القيمة حسب ارتفاع الهيدر الفعلي + مسافة بسيطة */
-  z-index: 999; /* أقل من زيكس-إندكس الهيدر (1000) ليبقى تحته */
-  /* ---------------------------------- */
-}
-
-[id^="cat-"] {
-  scroll-margin-top: 150px;
-}
-
-.vr-filter-section {
-  position: sticky;
-  top: 100px;
-  background-image: linear-gradient(to bottom, rgba(207,244,252,0.95) , rgba(207,244,252,0.1));
-  color: var(--vr-filter-color);
-  padding: 30px 0;
-}
-
-.vr-filter-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.vr-filter-btn {
-  padding: 10px 25px;
-  border: none;
-  border-left: 0 solid var(--primary-blue) !important;
-  background: var(--white) !important;
-  color: var(--primary-blue) !important;
-  box-shadow: 0 0 2px lightgray;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-weight: 500;
-}
-
-.vr-filter-btn:hover,
-.vr-filter-btn.active {
-  border-left: 5px solid var(--primary-blue) !important;
-  padding-left: 20px;
-}
-
 .text-separated{
   font-weight: bold;
   letter-spacing: 15px;
@@ -1111,68 +1059,6 @@ footer {
   text-shadow: none;
 }
 
-/* ===== تحسين فلتر المنتجات للتمرير الأفقي ===== */
-.filter-container {
-  display: flex;
-  flex-wrap: wrap; /* السماح بالالتفاف */
-  justify-content: center; /* توسيط جميع الأزرار */
-  overflow-x: auto;
-  overflow-y: hidden;
-  gap: 10px;
-  padding: 5px 0px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  min-width: 0;
-  max-width: 100%;
-}
-
-.filter-btn {
-  flex: 0 1 auto; /* السماح بالانكماش قليلاً */
-  white-space: nowrap;
-  padding: 3px 8px; /* تصغير الحشو قليلاً */
-  border: 2px solid var(--primary-blue) !important;
-  background: var(--white);
-  color: var(--primary-blue) !important;
-  border-radius: 525px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  font-size: 14px; /* تصغير حجم الخط قليلاً */
-  scroll-snap-align: start;
-  /* منع النص من الخروج */
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* إضافة snap scrolling */
-.filter-container {
-  scroll-snap-type: x mandatory;
-}
-
-/* تحسين للشاشات الصغيرة جداً */
-/* للشاشات الصغيرة */
-@media (max-width: 768px) {
-  .filter-btn {
-    font-size: 12px;
-    max-width: 150px;
-  }
-}
-
-/* للشاشات الصغيرة جداً */
-@media (max-width: 480px) {
-  .filter-btn {
-    font-size: 11px;
-    max-width: 120px;
-  }
-}
-@media (max-width: 576px) {
-  .filter-btn {
-    font-size: 13px;
-  }
-}
-
 /* ===== تحسين عرض كرات المنتجات ===== */
 .products-grid {
   display: grid;
@@ -1266,5 +1152,269 @@ footer {
 
   .product-card-div h3 {
     font-size: 14px;
+  }
+}
+
+/* ===== فلتر المنتجات باستخدام Bootstrap Carousel (CSS) ===== */
+.filter-section {
+  background: var(--light-bg);
+  padding: 15px 0;
+  position: sticky;
+  top: 80px;
+  z-index: 999;
+  border-bottom: 1px solid rgba(90, 123, 156, 0.1);
+}
+
+.filter-carousel {
+  position: relative;
+  padding: 0 50px;
+}
+
+.filter-carousel .carousel-inner {
+  padding: 10px 0 25px 0;
+  overflow: hidden;
+}
+
+.filter-carousel .carousel-item {
+  transition: transform 0.6s ease;
+}
+
+.filter-carousel .carousel-item .d-flex {
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+/* ===== أزرار التنقل ===== */
+.filter-carousel .carousel-control-prev,
+.filter-carousel .carousel-control-next {
+  width: 40px;
+  height: 40px;
+  top: 45%;
+  transform: translateY(-50%);
+  background: var(--white);
+  border: 2px solid var(--primary-blue);
+  border-radius: 50%;
+  opacity: 1;
+  margin: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: absolute;
+  z-index: 5;
+}
+
+.filter-carousel .carousel-control-prev {
+  left: 0;
+}
+
+.filter-carousel .carousel-control-next {
+  right: 0;
+}
+
+.filter-carousel .carousel-control-prev:hover,
+.filter-carousel .carousel-control-next:hover {
+  background: var(--primary-blue);
+}
+
+.filter-carousel .carousel-control-prev-icon,
+.filter-carousel .carousel-control-next-icon {
+  background-image: none;
+  font-size: 24px;
+  color: var(--primary-blue);
+  width: auto;
+  height: auto;
+  line-height: 1;
+  font-weight: bold;
+}
+
+.filter-carousel .carousel-control-prev:hover .carousel-control-prev-icon,
+.filter-carousel .carousel-control-next:hover .carousel-control-next-icon {
+  color: var(--white);
+}
+
+.filter-carousel .carousel-control-prev-icon::before {
+  content: "‹";
+}
+
+.filter-carousel .carousel-control-next-icon::before {
+  content: "›";
+}
+
+/* ===== زر الكاتيغوري ===== */
+.filter-btn {
+  flex: 0 0 auto;
+  padding: 10px 24px;
+  border: 2px solid var(--primary-blue);
+  background: var(--white);
+  color: var(--primary-blue);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  margin: 0 2px;
+  text-decoration: none;
+}
+
+.filter-btn:hover {
+  background: var(--primary-blue);
+  color: var(--white) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(90, 123, 156, 0.3);
+}
+
+.filter-btn.active {
+  background: var(--primary-blue);
+  color: var(--white) !important;
+  box-shadow: 0 4px 15px rgba(90, 123, 156, 0.4);
+}
+
+/* ===== نقاط التمرير (Indicators) ===== */
+.filter-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 5px 0 0 0;
+  margin-top: -5px;
+}
+
+.filter-indicators .indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d0d7e0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.filter-indicators .indicator:hover {
+  background: var(--primary-blue);
+  transform: scale(1.3);
+}
+
+.filter-indicators .indicator.active {
+  background: var(--primary-blue);
+  width: 28px;
+  border-radius: 5px;
+}
+
+/* ===== عدد الأزرار حسب الشاشة (CSS فقط للتحكم) ===== */
+@media (min-width: 1200px) {
+  .filter-section {
+    top: 80px;
+  }
+  .filter-btn {
+    min-width: 120px;
+    font-size: 15px;
+    padding: 10px 24px;
+  }
+  .filter-carousel .carousel-item .d-flex {
+    gap: 14px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .filter-section {
+    top: 80px;
+  }
+  .filter-btn {
+    min-width: 110px;
+    font-size: 14px;
+    padding: 9px 20px;
+  }
+  .filter-carousel .carousel-item .d-flex {
+    gap: 12px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .filter-section {
+    top: 80px;
+  }
+  .filter-btn {
+    min-width: 100px;
+    font-size: 13px;
+    padding: 8px 18px;
+  }
+  .filter-carousel {
+    padding: 0 40px;
+  }
+  .filter-carousel .carousel-item .d-flex {
+    gap: 10px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .filter-section {
+    top: 120px;
+  }
+  .filter-btn {
+    min-width: 90px;
+    font-size: 12px;
+    padding: 7px 14px;
+  }
+  .filter-carousel {
+    padding: 0 35px;
+  }
+  .filter-carousel .carousel-control-prev,
+  .filter-carousel .carousel-control-next {
+    width: 32px;
+    height: 32px;
+  }
+  .filter-carousel .carousel-control-prev-icon,
+  .filter-carousel .carousel-control-next-icon {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 575px) {
+  .filter-section {
+    top: 120px;
+  }
+  .filter-btn {
+    min-width: 80px;
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+  .filter-carousel {
+    padding: 0 30px;
+  }
+  .filter-carousel .carousel-control-prev,
+  .filter-carousel .carousel-control-next {
+    width: 28px;
+    height: 28px;
+  }
+  .filter-carousel .carousel-control-prev-icon,
+  .filter-carousel .carousel-control-next-icon {
+    font-size: 16px;
+  }
+  .filter-indicators .indicator {
+    width: 8px;
+    height: 8px;
+  }
+  .filter-indicators .indicator.active {
+    width: 18px;
+  }
+}
+
+@media (max-width: 380px) {
+  .filter-section {
+    top: 120px;
+  }
+  .filter-btn {
+    min-width: 70px;
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+  .filter-carousel {
+    padding: 0 25px;
   }
 }

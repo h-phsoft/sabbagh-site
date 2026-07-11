@@ -3,8 +3,7 @@
     <div class="footer-grid">
       <div class="footer-col">
         <h4 class="footer-logo">
-          <!--<img src="assets/media/img/logo.png" height="60px" alt="Sabbagh"/>-->
-          Sabbagh
+          <img src="assets/media/img/logo.png" height="100px" alt="Sabbagh"/>
         </h4>
         <ul class="contact-info">
           <li>

@@ -36,17 +36,14 @@ $aProducts = cEcomProduct::getArray();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sabbagh - Manufacturing Beauty & Personal Care Products</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/media/img/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/media/img/logo.png">
+    <link rel="apple-touch-icon" href="assets/media/img/logo.png">
+
     <link rel="stylesheet" href="assets/vendors/bootstrap/css/bootstrap.ltr.css">
     <link rel="stylesheet" href="assets/vendors/bootstrap/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/vendors/bootstrap/ph-bootstrap-colors.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/media/img/logo.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/media/img/logo.png">
-    <link rel="apple-touch-icon" href="assets/media/img/logo.png">
   </head>
   <body>
     <?php include_once 'section/section-header.php'; ?>
@@ -56,6 +53,9 @@ $aProducts = cEcomProduct::getArray();
       ?>
     </div>
     <?php include_once 'section/section-footer.php'; ?>
+    <script>
+      var aCats = <?= json_encode($aCats ?? [], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
+    </script>
     <script src="assets/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/JS/app.js"></script>
   </body>
