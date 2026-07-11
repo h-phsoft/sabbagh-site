@@ -57,6 +57,6 @@ $aProducts = cEcomProduct::getArray();
       var aCats = <?= json_encode($aCats ?? [], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
     </script>
     <script src="assets/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/JS/app.js"></script>
+    <script src="assets/js/app.js"></script>
   </body>
 </html>
