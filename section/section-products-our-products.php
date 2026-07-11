@@ -6,7 +6,7 @@
       foreach ($aCats as $cat) {
         $aProds = cEcomProduct::getArray('cat_id=' . $cat->Id);
         ?>
-        <div id="cat-<?= $cat->Id ?>" class="col-12">
+        <div id="cat-<?= $cat->Id ?>" class="cat col-12">
           <div class="row">
             <div class="col-12 p-5 mb5 text-center">
               <h3><?= $vLang == 'en' ? $cat->Name1 : $cat->Name2 ?></h3>
