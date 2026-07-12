@@ -4,8 +4,17 @@
     <div class="slider-wrapper">
       <div class="slider-track" id="sliderTrack">
         <?php
+        $nFlg = 1;
         foreach ($aCats as $cat) {
-          $vActive = '';
+          if ($nQId == 0) {
+            if ($nFlg == 1) {
+              $vActive = 'active';
+            }
+          } else {
+            if ($nQId == $cat->Id) {
+              $vActive = 'active';
+            }
+          }
           ?>
           <div class="slide">
             <a class="filter-btn <?= $vActive; ?>" href="products/#cat-<?= $cat->Id ?>" data-catid="<?= $cat->Id ?>">
@@ -13,6 +22,8 @@
             </a>
           </div>
           <?php
+          $vActive = '';
+          $nFlg = 0;
         }
         ?>
       </div>

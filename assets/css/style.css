@@ -93,6 +93,19 @@ nav a:hover {
   color: var(--text-dark) !important;
 }
 
+@media (max-width: 480px) {
+  nav a {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  nav a {
+    font-size: 14px;
+  }
+}
+
+
 .btn-contact {
   background-color: var(--primary-blue) !important;
   color: var(--white);
@@ -992,15 +1005,9 @@ footer {
   position: relative;
 }
 
-.contact-header .container{
-  position: absolute;
-  top: 25%;
-  left: 8%;
-}
-
 .contact-header div h1{
   color: var(--white);
-  font-size: 60px;
+  font-size: 42px;
 }
 
 .contact-header div p{
@@ -1010,24 +1017,21 @@ footer {
 }
 
 .about-header{
+  position: relative;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
   background-image: url('../media/img/head-about-00.png');
   background-size: cover;
-  background-position: center;
+  background-position: top center;
   background-repeat: no-repeat;
-  height: 600px;
-  text-align: left;
-  position: relative;
-}
-
-.about-header .container{
-  position: absolute;
-  top: 25%;
-  left: 8%;
 }
 
 .about-header div h1{
   color: var(--white);
-  font-size: 60px;
+  font-size: 42px;
+  text-shadow: 1px 1px 1px black, -1px -1px 1px white;
 }
 
 .container h1{
@@ -1044,15 +1048,9 @@ footer {
   position: relative;
 }
 
-.prod-header .container{
-  position: absolute;
-  top: 25%;
-  left: 8%;
-}
-
 .prod-header div h1{
   color: var(--white);
-  font-size: 60px;
+  font-size: 42px;
 }
 
 .single-product-section .container h1 {
@@ -1164,19 +1162,19 @@ footer {
   border-bottom: 1px solid rgba(90, 123, 156, 0.1);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 480px) {
   .filter-section {
-    top: 120px;
+    top: 115px;
   }
 }
 @media (max-width: 768px) {
   .filter-section {
-    top: 120px;
+    top: 115px;
   }
 }
-@media (max-width: 480px) {
+@media (max-width: 1024px) {
   .filter-section {
-    top: 120px;
+    top: 115px;
   }
 }
 

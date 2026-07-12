@@ -36,7 +36,7 @@
           <?php
           foreach ($aCats as $cat) {
             ?>
-            <li><a href="products.php?qid=<?= $cat->Id ?>#cat-<?= $cat->Id ?>"><?= $vLang == 'en' ? $cat->Name1 : $cat->Name2 ?></a></li>
+            <li><a href="products/<?= $cat->Id ?>#cat-<?= $cat->Id ?>"><?= $vLang == 'en' ? $cat->Name1 : $cat->Name2 ?></a></li>
             <?php
           }
           ?>
@@ -45,16 +45,15 @@
       <div class="footer-col">
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="index.php">Home</a></li>
-          <li><a href="about.php">About us</a></li>
-          <li><a href="products.php">Products</a></li>
-          <li><a href="contact.php">Contact us</a></li>
-          <!--<li><a href="#">Privacy Policy</a></li>-->
+          <li><a href="home">Home</a></li>
+          <li><a href="about">About us</a></li>
+          <li><a href="products">Products</a></li>
+          <li><a href="contact">Contact us</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Follow Us</h4>
-        <div class="social-icons">
+        <div class="social-icons ps-2">
           <?php
           foreach ($aSocial as $social) {
             ?>
